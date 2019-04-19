@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#body {
+  height: 200px;
+  max-width: 800px;
+  width: 80%;
+  margin: auto;
+}
+/*# sourceMappingURL=style.css.map */

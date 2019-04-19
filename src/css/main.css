@@ -1,0 +1,204 @@
+.bubble {
+  position: absolute;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.bubble.animate {
+  -webkit-animation: grow 600ms ease 1;
+          animation: grow 600ms ease 1;
+}
+
+.bubbling {
+  position: relative;
+  overflow: hidden;
+}
+
+.rangeSlider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background-color: #99f;
+  margin: 13px 0;
+}
+
+.rangeSlider-wrapper:focus {
+  outline: none !important;
+  border: none !important;
+}
+
+.rangeSlider-wrapper *:focus {
+  outline: none !important;
+  border: none !important;
+}
+
+.rangeSlider-wrapper > span {
+  position: absolute;
+  top: -6.5px;
+  left: -7.5px;
+  display: block;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: #f99;
+  cursor: pointer;
+}
+
+.rangeSlider-wrapper > span::after {
+  font-family: Arial, Helvetica, sans-serif;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  height: 38px;
+  width: 38px;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  content: attr(data-value);
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
+  -webkit-transform: translate(-50%, -50%) scale(0);
+          transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  -webkit-transition: all 300ms ease-out;
+  transition: all 300ms ease-out;
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.rangeSlider-wrapper.active > span::after, .rangeSlider-wrapper:active > span::after {
+  background-color: inherit;
+  -webkit-transform: translate(-50%, -50%) scale(1);
+          transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.rangeSlider-wrapper.small {
+  height: 2px;
+  margin: 8px 0;
+}
+
+.rangeSlider-wrapper.small > span {
+  top: -5px;
+  left: -6px;
+  height: 12px;
+  width: 12px;
+}
+
+.toolTip-wrapper {
+  position: fixed;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.toolTip-wrapper .toolTip {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #99f;
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  border-radius: 4px;
+  -webkit-animation: spring 100ms ease 1;
+          animation: spring 100ms ease 1;
+  width: fit-content;
+  max-width: 220px;
+}
+
+.toolTip-wrapper .toolTip > .text {
+  z-index: 1;
+  display: block;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  white-space: pre-line;
+}
+
+.toolTip-wrapper .toolTip > .toolTip-pointer {
+  z-index: -1;
+  position: absolute;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  height: 15px;
+  width: 15px;
+  background-color: #99f;
+}
+
+@-webkit-keyframes spring {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  80% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes spring {
+  0% {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+  }
+  80% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@-webkit-keyframes grow {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0) translate3d(0, 0, 0);
+            transform: scale(0) translate3d(0, 0, 0);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(1.2) translate3d(0, 0, 0);
+            transform: scale(1.2) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes grow {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0) translate3d(0, 0, 0);
+            transform: scale(0) translate3d(0, 0, 0);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(1.2) translate3d(0, 0, 0);
+            transform: scale(1.2) translate3d(0, 0, 0);
+  }
+}
+/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,158 @@
+.bubble {
+  position: absolute;
+  transform-origin: center;
+  border-radius: 50%;
+  background-color: rgba($color: #000000, $alpha: 0.3);
+
+  &.animate {
+    animation: grow 600ms ease 1;
+  }
+}
+
+.bubbling {
+  position: relative;
+  overflow: hidden;
+}
+
+.rangeSlider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  background-color: #99f;
+  margin: 13px 0;
+
+  &:focus {
+    outline: none !important;
+    border: none !important;
+  }
+
+  *:focus {
+    outline: none !important;
+    border: none !important;
+  }
+
+  >span {
+    position: absolute;
+    top: -6.5px;
+    left: -7.5px;
+    display: block;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: #f99;
+    cursor: pointer;
+
+    &::after {
+      font-family: Arial, Helvetica, sans-serif;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      height: 38px;
+      width: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      content: attr(data-value);
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: white;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      transition: all 300ms ease-out;
+      box-shadow: 0 0 8px rgba($color: #000000, $alpha: 0.3);
+    }
+
+  }
+
+  &.active,
+  &:active {
+    >span {
+      &::after {
+        background-color: inherit;
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+  }
+
+  &.small {
+    height: 2px;
+    margin: 8px 0;
+
+    >span {
+      top: -5px;
+      left: -6px;
+      height: 12px;
+      width: 12px;
+    }
+  }
+}
+
+.toolTip-wrapper {
+  position: fixed;
+  width: fit-content;
+  pointer-events: none;
+  z-index: 999;
+
+  .toolTip {
+    width: fit-content;
+    height: fit-content;
+    background-color: #99f;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 4px;
+    animation: spring 100ms ease 1;
+    width: fit-content;
+    max-width: 220px;
+
+    > {
+      .text {
+        z-index: 1;
+        display: block;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+        white-space: pre-line;
+      }
+
+      .toolTip-pointer {
+        z-index: -1;
+        position: absolute;
+        transform-origin: center;
+        height: 15px;
+        width: 15px;
+        background-color: #99f;
+      }
+    }
+  }
+}
+
+@keyframes spring {
+  0% {
+    transform: scale(0.8);
+  }
+
+  80% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes grow {
+  0% {
+    opacity: 0;
+    transform: scale(0) translate3d(0, 0, 0);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.2) translate3d(0, 0, 0);
+  }
+}

@@ -166,7 +166,7 @@ function create(tag = 'div', props = {}) {
   }
 
   el.bubble = function bubble() {
-    html.bubble(el);
+    bubble(el);
   }
 
   return el;

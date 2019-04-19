@@ -105,6 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 /* harmony import */ var _rangeSlider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
 /* harmony import */ var _tooltip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
+/* harmony import */ var _toggler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -126,9 +127,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var exprt = _objectSpread({}, _html__WEBPACK_IMPORTED_MODULE_1__, {
   rangeSlider: _rangeSlider__WEBPACK_IMPORTED_MODULE_2__["rangeSlider"],
-  toolTip: _tooltip__WEBPACK_IMPORTED_MODULE_3__["toolTip"]
+  toolTip: _tooltip__WEBPACK_IMPORTED_MODULE_3__["toolTip"],
+  toggler: _toggler__WEBPACK_IMPORTED_MODULE_4__["toggler"]
 });
 
 /* harmony default export */ __webpack_exports__["default"] = (exprt); // export {
@@ -177,7 +180,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(3)(false);
 // Module
-exports.push([module.i, ".bubble {\n  position: absolute;\n  -webkit-transform-origin: center;\n          transform-origin: center;\n  border-radius: 50%;\n  background-color: rgba(0, 0, 0, .3);\n}\n\n.bubble.animate {\n  -webkit-animation: grow 600ms ease 1;\n          animation: grow 600ms ease 1;\n}\n\n.bubbling {\n  position: relative;\n  overflow: hidden;\n}\n\n.rangeSlider-wrapper {\n  position: relative;\n  width: 100%;\n  height: 4px;\n  background-color: #99f;\n  margin: 13px 0;\n}\n\n.rangeSlider-wrapper:focus {\n  outline: none !important;\n  border: none !important;\n}\n\n.rangeSlider-wrapper *:focus {\n  outline: none !important;\n  border: none !important;\n}\n\n.rangeSlider-wrapper > span {\n  position: absolute;\n  top: -6.5px;\n  left: -7.5px;\n  display: block;\n  height: 15px;\n  width: 15px;\n  border-radius: 50%;\n  background-color: #f99;\n  cursor: pointer;\n}\n\n.rangeSlider-wrapper > span::after {\n  font-family: Arial, Helvetica, sans-serif;\n  position: absolute;\n  top: 5px;\n  left: 5px;\n  height: 38px;\n  width: 38px;\n  border-radius: 50%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  content: attr(data-value);\n  font-size: 12.8px;\n  font-size: 0.8rem;\n  font-weight: bold;\n  color: white;\n  -webkit-transform: translate(-50%, -50%) scale(0);\n          transform: translate(-50%, -50%) scale(0);\n  opacity: 0;\n  -webkit-transition: all 300ms ease-out;\n  transition: all 300ms ease-out;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n          box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n}\n\n.rangeSlider-wrapper.active > span::after, .rangeSlider-wrapper:active > span::after {\n  background-color: inherit;\n  -webkit-transform: translate(-50%, -50%) scale(1);\n          transform: translate(-50%, -50%) scale(1);\n  opacity: 1;\n}\n\n.rangeSlider-wrapper.small {\n  height: 2px;\n  margin: 8px 0;\n}\n\n.rangeSlider-wrapper.small > span {\n  top: -5px;\n  left: -6px;\n  height: 12px;\n  width: 12px;\n}\n\n.toolTip-wrapper {\n  position: fixed;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  pointer-events: none;\n  z-index: 999;\n}\n\n.toolTip-wrapper .toolTip {\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  background-color: #99f;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .2);\n          box-shadow: 0 0 8px rgba(0, 0, 0, .2);\n  padding: 10px;\n  border-radius: 4px;\n  -webkit-animation: spring 100ms ease 1;\n          animation: spring 100ms ease 1;\n  width: fit-content;\n  max-width: 220px;\n}\n\n.toolTip-wrapper .toolTip > .text {\n  z-index: 1;\n  display: block;\n  color: white;\n  font-family: Arial, Helvetica, sans-serif;\n  white-space: pre-line;\n}\n\n.toolTip-wrapper .toolTip > .toolTip-pointer {\n  z-index: -1;\n  position: absolute;\n  -webkit-transform-origin: center;\n          transform-origin: center;\n  height: 15px;\n  width: 15px;\n  background-color: #99f;\n}\n\n@-webkit-keyframes spring {\n  0% {\n    -webkit-transform: scale(0.8);\n            transform: scale(0.8);\n  }\n  80% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2);\n  }\n  100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n\n@keyframes spring {\n  0% {\n    -webkit-transform: scale(0.8);\n            transform: scale(0.8);\n  }\n  80% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2);\n  }\n  100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n\n@-webkit-keyframes grow {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0) translate3d(0, 0, 0);\n            transform: scale(0) translate3d(0, 0, 0);\n  }\n  20% {\n    opacity: 1;\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.2) translate3d(0, 0, 0);\n            transform: scale(1.2) translate3d(0, 0, 0);\n  }\n}\n\n@keyframes grow {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0) translate3d(0, 0, 0);\n            transform: scale(0) translate3d(0, 0, 0);\n  }\n  20% {\n    opacity: 1;\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.2) translate3d(0, 0, 0);\n            transform: scale(1.2) translate3d(0, 0, 0);\n  }\n}", ""]);
+exports.push([module.i, ".bubble {\n  position: absolute;\n  -webkit-transform-origin: center;\n          transform-origin: center;\n  border-radius: 50%;\n  background-color: rgba(0, 0, 0, .3);\n}\n\n.bubble.animate {\n  -webkit-animation: grow 600ms ease 1;\n          animation: grow 600ms ease 1;\n}\n\n.bubbling {\n  position: relative;\n  overflow: hidden;\n}\n\n.toggler-wrapper {\n  position: relative;\n  display: block;\n  height: 30px;\n  width: 60px;\n  border-radius: 15px;\n  background-color: #99f;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n\n.toggler-wrapper *:focus {\n  outline: none !important;\n}\n\n.toggler-wrapper > span {\n  position: absolute;\n  left: 0;\n  top: 0;\n  height: 30px;\n  width: 30px;\n  border-radius: 50%;\n  background-color: #f99;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n          box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n  -webkit-transform: translate3d(0, 0, 0);\n          transform: translate3d(0, 0, 0);\n  -webkit-transition: all 300ms ease;\n  transition: all 300ms ease;\n  margin: 0 !important;\n}\n\n.toggler-wrapper > input[type=checkbox]:checked + span.toggler_btn {\n  background-color: #7dda85;\n  -webkit-transform: translate3d(100%, 0, 0);\n          transform: translate3d(100%, 0, 0);\n}\n\n.rangeSlider-wrapper {\n  position: relative;\n  height: 4px;\n  background-color: #99f;\n  margin: 13px 5px;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n\n.rangeSlider-wrapper *:focus, .rangeSlider-wrapper:focus {\n  outline: none !important;\n}\n\n.rangeSlider-wrapper > span {\n  position: absolute;\n  top: -6.5px;\n  left: -7.5px;\n  display: block;\n  height: 15px;\n  width: 15px;\n  border-radius: 50%;\n  background-color: #f99;\n}\n\n.rangeSlider-wrapper > span::after {\n  font-family: Arial, Helvetica, sans-serif;\n  position: absolute;\n  top: 5px;\n  left: 5px;\n  height: 38px;\n  width: 38px;\n  border-radius: 50%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  content: attr(data-value);\n  font-size: 12.8px;\n  font-size: 0.8rem;\n  font-weight: bold;\n  color: white;\n  -webkit-transform: translate(-50%, -50%) scale(0);\n          transform: translate(-50%, -50%) scale(0);\n  opacity: 0;\n  -webkit-transition: all 300ms ease-out;\n  transition: all 300ms ease-out;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n          box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n}\n\n.rangeSlider-wrapper.active > span::after, .rangeSlider-wrapper:active > span::after {\n  background-color: inherit;\n  -webkit-transform: translate(-50%, -50%) scale(1);\n          transform: translate(-50%, -50%) scale(1);\n  opacity: 1;\n}\n\n.rangeSlider-wrapper.small {\n  height: 2px;\n  margin: 18px 5px;\n}\n\n.rangeSlider-wrapper.small > span {\n  top: -5px;\n  left: -6px;\n  height: 12px;\n  width: 12px;\n}\n\n.toolTip-wrapper {\n  position: fixed;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  pointer-events: none;\n  z-index: 999;\n}\n\n.toolTip-wrapper .toolTip {\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  background-color: #99f;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .2);\n          box-shadow: 0 0 8px rgba(0, 0, 0, .2);\n  padding: 10px;\n  border-radius: 4px;\n  -webkit-animation: spring 100ms ease 1;\n          animation: spring 100ms ease 1;\n  width: fit-content;\n  max-width: 220px;\n}\n\n.toolTip-wrapper .toolTip > .text {\n  z-index: 1;\n  display: block;\n  color: white;\n  font-family: Arial, Helvetica, sans-serif;\n  white-space: pre-line;\n}\n\n.toolTip-wrapper .toolTip > .toolTip-pointer {\n  z-index: -1;\n  position: absolute;\n  -webkit-transform-origin: center;\n          transform-origin: center;\n  height: 15px;\n  width: 15px;\n  background-color: #99f;\n}\n\n@-webkit-keyframes spring {\n  0% {\n    -webkit-transform: scale(0.8);\n            transform: scale(0.8);\n  }\n  80% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2);\n  }\n  100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n\n@keyframes spring {\n  0% {\n    -webkit-transform: scale(0.8);\n            transform: scale(0.8);\n  }\n  80% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2);\n  }\n  100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n\n@-webkit-keyframes grow {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0) translate3d(0, 0, 0);\n            transform: scale(0) translate3d(0, 0, 0);\n  }\n  20% {\n    opacity: 1;\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.2) translate3d(0, 0, 0);\n            transform: scale(1.2) translate3d(0, 0, 0);\n  }\n}\n\n@keyframes grow {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0) translate3d(0, 0, 0);\n            transform: scale(0) translate3d(0, 0, 0);\n  }\n  20% {\n    opacity: 1;\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.2) translate3d(0, 0, 0);\n            transform: scale(1.2) translate3d(0, 0, 0);\n  }\n}", ""]);
 
 
 
@@ -984,7 +987,7 @@ function create() {
     el.append(props.children);
   }
 
-  el.bubble = function bubble() {
+  el.bubble = function createBubble() {
     bubble(el);
   };
 
@@ -1051,7 +1054,7 @@ function bubble(el) {
 
 function input() {
   var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  props.type = 'text';
+  if (!props.type) props.type = 'text';
   return create('input', props);
 }
 /**
@@ -1189,6 +1192,7 @@ function rangeSlider() {
   var step = params.step || 1;
   var diff = max - min;
   var width = 0;
+  var tmout = null;
   mainWrapper.value = params.value || min;
 
   if (params.size) {
@@ -1196,7 +1200,9 @@ function rangeSlider() {
   }
 
   if (params.value) {
-    setValue(params.value);
+    setTimeout(function () {
+      setValue(params.value);
+    }, 0);
   }
 
   mainWrapper.addEventListener('mousedown', onmousedown);
@@ -1238,6 +1244,10 @@ function rangeSlider() {
 
     if (x <= width && x >= 0) {
       calculateValue(x);
+    } else if (mainWrapper.value !== max && x > width) {
+      setValue(max);
+    } else if (mainWrapper.value !== min && x < 0) {
+      setValue(min);
     }
   }
 
@@ -1263,12 +1273,27 @@ function rangeSlider() {
 
 
   function setValue(value) {
-    mainWrapper.focus();
+    if (value > max) {
+      value = max;
+    } else if (value < min) {
+      value = min;
+    }
+
+    value = parseInt(value);
+    if (tmout) clearTimeout(tmout);
+    makeActive();
     width = mainWrapper.offsetWidth;
     var remainder = value % step;
 
     if (remainder >= step / 2) {
-      value += step - remainder;
+      var tmp = value;
+      tmp += step - remainder;
+
+      if (tmp > max) {
+        value -= remainder;
+      } else {
+        value = tmp;
+      }
     } else {
       value -= remainder;
     }
@@ -1282,6 +1307,9 @@ function rangeSlider() {
     var x = (value - min) / diff;
     x *= width;
     btn.style.transform = "translate3d(".concat(x, "px, 0, 0)");
+    tmout = setTimeout(function () {
+      removeActive();
+    }, 1000);
   }
 
   mainWrapper.setValue = setValue;
@@ -1426,6 +1454,91 @@ function toolTip(opts) {
   }
 
   opts.element.removeAttribute('title');
+}
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toggler", function() { return toggler; });
+/* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+
+/**
+ * @callback onchange
+ * @param {Boolean} value 
+ */
+
+/**
+ * 
+ * @typedef toggler
+ * @property {onchange} onchange 
+ * @property {function():Boolean} value 
+ * @property {function(Boolean):void} setvalue 
+ */
+
+/**
+ * 
+ * @param {Object} params 
+ * @param {Boolean} [params.value] 
+ * @param {onchange} [params.onchange] 
+ * @param {Number} [params.size]
+ * @param {string} [params.valType='bool'] possible value 'bool' or ''on/off'
+ * @returns {toggler & HTMLElement}
+ */
+
+function toggler() {
+  var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var checkbox = _html__WEBPACK_IMPORTED_MODULE_0__["input"]({
+    type: 'checkbox',
+    style: {
+      display: 'none'
+    }
+  });
+  var btn = _html__WEBPACK_IMPORTED_MODULE_0__["span"]({
+    className: 'toggler_btn'
+  });
+  var mainWrapper = _html__WEBPACK_IMPORTED_MODULE_0__["create"]('label', {
+    tabIndex: 0,
+    role: 'input',
+    className: 'toggler-wrapper',
+    children: [checkbox, btn]
+  });
+
+  if (params.onchange) {
+    mainWrapper.onchange = params.onchange;
+  }
+
+  if (params.value !== undefined) {
+    if (params.value === true || params.value === 'on') {
+      checkbox.checked = true;
+    }
+  }
+
+  if (params.size) {
+    var h = params.size;
+    var w = h * 2;
+    mainWrapper.style.width = w + 'px';
+    mainWrapper.style.height = h + 'px';
+    mainWrapper.style.borderRadius = h / 2 + 'px';
+    btn.style.height = h + 'px';
+    btn.style.width = h + 'px';
+  }
+
+  checkbox.onchange = function () {
+    if (params.valType === 'on/off') {
+      if (checkbox.checked) {
+        mainWrapper.value = 'on';
+      } else {
+        mainWrapper.value = 'off';
+      }
+    } else {
+      mainWrapper.value = checkbox.checked;
+    }
+  };
+
+  return mainWrapper;
 }
 
 /***/ })

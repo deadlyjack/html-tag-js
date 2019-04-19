@@ -20,11 +20,15 @@ import {
 import {
   toolTip
 } from './tooltip';
+import {
+  toggler
+} from './toggler';
 
 const exprt = {
   ...html,
   rangeSlider,
-  toolTip
+  toolTip,
+  toggler
 };
 
 export default exprt;

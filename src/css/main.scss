@@ -14,21 +14,54 @@
   overflow: hidden;
 }
 
-.rangeSlider-wrapper {
+.toggler-wrapper {
   position: relative;
-  width: 100%;
-  height: 4px;
+  display: block;
+  height: 30px;
+  width: 60px;
+  border-radius: 15px;
   background-color: #99f;
-  margin: 13px 0;
-
-  &:focus {
-    outline: none !important;
-    border: none !important;
-  }
+  cursor: pointer;
+  user-select: none;
 
   *:focus {
     outline: none !important;
-    border: none !important;
+  }
+
+
+  >span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: #f99;
+    box-shadow: 0 0 8px rgba($color: #000000, $alpha: 0.3);
+    transform: translate3d(0, 0, 0);
+    transition: all 300ms ease;
+    margin: 0 !important;
+  }
+
+  >input[type=checkbox]:checked {
+    &+span.toggler_btn {
+      background-color: rgb(125, 218, 133);
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+}
+
+.rangeSlider-wrapper {
+  position: relative;
+  height: 4px;
+  background-color: #99f;
+  margin: 13px 5px;
+  cursor: pointer;
+  user-select: none;
+
+  *:focus,
+  &:focus {
+    outline: none !important;
   }
 
   >span {
@@ -40,7 +73,6 @@
     width: 15px;
     border-radius: 50%;
     background-color: #f99;
-    cursor: pointer;
 
     &::after {
       font-family: Arial, Helvetica, sans-serif;
@@ -78,7 +110,7 @@
 
   &.small {
     height: 2px;
-    margin: 8px 0;
+    margin: 18px 5px;
 
     >span {
       top: -5px;

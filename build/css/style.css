@@ -20,9 +20,6 @@ html > div,
 html > span,
 body > div,
 body > span {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -34,10 +31,61 @@ body > span {
           justify-content: center;
 }
 
-#body {
-  height: 200px;
-  max-width: 800px;
+html > div:not(:first-child),
+html > span:not(:first-child),
+body > div:not(:first-child),
+body > span:not(:first-child) {
+  margin-top: 20px;
+}
+
+.demo {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.demo h2,
+.demo h3,
+.demo h4 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-indent: 10px;
+  background-color: #989898;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 40px;
+  border-radius: 4px;
+}
+
+.demo > * {
+  text-align: left;
   width: 80%;
-  margin: auto;
+  margin-top: 15px;
+}
+
+#toggler {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#toggler *:not(:first-child) {
+  margin-left: 15px;
+}
+
+#slider > div {
+  margin-top: 35px;
 }
 /*# sourceMappingURL=style.css.map */

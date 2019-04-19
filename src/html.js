@@ -231,7 +231,7 @@ function bubble(el) {
  * @returns {HTMLInputElement}
  */
 function input(props = {}) {
-  props.type = 'text';
+  if (!props.type) props.type = 'text';
   return create('input', props);
 }
 

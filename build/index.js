@@ -1,25 +1,70 @@
-let body = html.get('#body');
-let slider = html.rangeSlider({
+let body = html.get('#slider');
+let slider1 = html.rangeSlider({
   min: 0,
   max: 100,
-  step: 1,
-  size: 'small'
+  step: 13,
+  value: 46
 });
 
-slider.onchange = function () {
-  console.log(this.value);
-}
-
-let setvalue = document.querySelector('#setValue');
-let input = document.querySelector('#sliderValue');
-
-if (setvalue) {
-  setvalue.onclick = function () {
-    if (input.value) {
-      slider.setValue(input.value);
-    }
+let input1 = html.input({
+  type: 'number',
+  placeholder: 'change value'
+});
+input1.oninput = function () {
+  if (input1.value) {
+    slider1.setValue(input1.value);
   }
 }
 
+body.appendChild(slider1);
+body.appendChild(input1);
 
-body.appendChild(slider);
+let slider2 = html.rangeSlider({
+  min: 0,
+  max: 100,
+  step: 0.1,
+  value: 46,
+  size: 'small'
+});
+
+let input = html.input({
+  type: 'number',
+  placeholder: 'change value'
+});
+input.oninput = function () {
+  if (input.value) {
+    slider2.setValue(input.value);
+  }
+}
+
+body.appendChild(slider2);
+body.appendChild(input);
+
+body = html.get('#toggler');
+let toggler = html.toggler({
+  size: 40,
+  valType: 'on/off',
+  value: true
+});
+
+
+toggler.onchange = function (value) {
+  console.log(this.value);
+}
+body.appendChild(toggler);
+
+toggler = html.toggler({
+  size: 30,
+  valType: 'on/off',
+  value: true
+});
+
+body.appendChild(toggler);
+
+toggler = html.toggler({
+  size: 20,
+  valType: 'on/off',
+  value: true
+});
+
+body.appendChild(toggler);

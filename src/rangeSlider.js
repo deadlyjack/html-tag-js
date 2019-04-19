@@ -43,6 +43,7 @@ export function rangeSlider(params = {}) {
   let step = params.step || 1;
   let diff = max - min;
   let width = 0;
+  let tmout = null;
 
   mainWrapper.value = params.value || min;
 
@@ -50,7 +51,9 @@ export function rangeSlider(params = {}) {
     mainWrapper.classList.add(params.size);
   }
   if (params.value) {
-    setValue(params.value);
+    setTimeout(() => {
+      setValue(params.value);
+    }, 0);
   }
 
   mainWrapper.addEventListener('mousedown', onmousedown);
@@ -92,6 +95,10 @@ export function rangeSlider(params = {}) {
 
     if (x <= width && x >= 0) {
       calculateValue(x);
+    } else if (mainWrapper.value !== max && x > width) {
+      setValue(max);
+    } else if (mainWrapper.value !== min && x < 0) {
+      setValue(min);
     }
   }
 
@@ -118,12 +125,28 @@ export function rangeSlider(params = {}) {
    * @param {Number} value 
    */
   function setValue(value) {
-    mainWrapper.focus();
+
+    if (value > max) {
+      value = max;
+    } else if (value < min) {
+      value = min;
+    }
+
+    value = parseInt(value);
+    if (tmout) clearTimeout(tmout);
+    makeActive();
     width = mainWrapper.offsetWidth;
 
     let remainder = value % step;
     if (remainder >= step / 2) {
-      value += (step - remainder);
+      let tmp = value;
+      tmp += (step - remainder);
+
+      if (tmp > max) {
+        value -= remainder
+      } else {
+        value = tmp;
+      }
     } else {
       value -= remainder;
     }
@@ -138,6 +161,10 @@ export function rangeSlider(params = {}) {
     x *= width;
 
     btn.style.transform = `translate3d(${x}px, 0, 0)`;
+
+    tmout = setTimeout(() => {
+      removeActive();
+    }, 1000);
   }
 
   mainWrapper.setValue = setValue;

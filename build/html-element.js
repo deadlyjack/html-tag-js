@@ -100,625 +100,51 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return a; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bubble", function() { return bubble; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "button", function() { return button; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "create", function() { return create; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "div", function() { return div; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "get", function() { return get; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAll", function() { return getAll; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "img", function() { return img; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "input", function() { return input; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rangeSlider", function() { return rangeSlider; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "span", function() { return span; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toolTip", function() { return toolTip; });
 /* harmony import */ var _css_main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _css_main_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_main_css__WEBPACK_IMPORTED_MODULE_0__);
-
-/**
- * @typedef {Object} elementExtended
- * @property {function(eventList):void} removeEvents removes all events added to element
- * @property {function():void} assignEvents reassign all events that are removed from element
- * @property {function():void} bubble add bubble effect on click
- */
-
-/**
- * @typedef {Object} createOptions
- * @property {HTMLElement[] | HTMLAllCollection} children
- * @property {Object} attr calls HTMLElement.setAttribute(String: name, String: value);
- */
-
-/**
- * @typedef {Object} inputNumber
- * @property {Number|String} min Returns / Sets the min value of input.
- * @property {Number|String} max Returns / Sets the max value of input.
- * @property {String|Number} step Returns / Sets the increment and decrement step of input.
- */
-
-/**
- * @typedef {Object} inputCheckbox
- * @property {Boolean} checked Returns / Sets the current state of the element when type is checkbox or radio.
- * @property {Boolean} defaultChecked Returns / Sets the default state of a radio button or checkbox as originally 
- * specified in HTML that created this object.
- * @property {Boolean} indeterminate Returns whether the checkbox or radio button is in indeterminate state. For checkboxes, 
- * the effect is that the appearance of the checkbox is obscured/greyed in some way as to indicate its state is indeterminate 
- * (not checked but not unchecked). Does not affect the value of the checked attribute, and clicking the checkbox will set the value to false.
- */
-
-/**
- * @typedef {Object} inputImage
- * @property {String} alt Returns / Sets the element's alt attribute, containing alternative text to use when type is image.
- * @property {String} height  Returns / Sets the element's height attribute, which defines the height of the image displayed for the button, 
- * if the value of type is image.
- * @property {String} src Returns / Sets the element's src attribute, which specifies a URI for the location of an 
- * image to display on the graphical submit button, if the value of type is image; otherwise it is ignored.
- * @property {String} width Returns / Sets the document's width attribute, which defines the width of the image displayed for the button, 
- * if the value of type is image.
- */
-
-/**
- * @typedef {Object} inputFile
- * @property {String} accept Returns / Sets the element's accept attribute, containing comma-separated list of file types accepted by the 
- * server when type is file.
- * @property {FileList} files Returns/accepts a FileList object, which contains a list of File objects representing the files selected for upload.
- */
-
-/**
- * Create new HTML tag
- * @param {String} tag HTMl element tag name 
- * @param {HTMLElement & createOptions} props
- * @returns {HTMLElement & elementExtended}
- */
-
-function create() {
-  var tag = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'div';
-  var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var html = this;
-  var el = document.createElement(tag);
-  var eventFunctions = [];
-  var oldEventListener = el.addEventListener.bind(el);
-  /**@override addEventListener of page */
-
-  el.addEventListener = addEventListener;
-  /**@property */
-
-  el.assignEvents = assignEvents;
-  /**@property */
-
-  el.removeEvents = removeEvents;
-  /**
-   * removes all event from page.
-   * @param {String[]|String} events
-   * @returns {void}
-   */
-
-  function removeEvents(events) {
-    if (events) {
-      for (var _i = 0, _eventFunctions = eventFunctions; _i < _eventFunctions.length; _i++) {
-        var event = _eventFunctions[_i];
-
-        if (Array.isArray(events) && events.indexOf(event.type)) {
-          el.removeEventListener(event.type, event.listener);
-        } else if (typeof events === 'string' && event.type === events) {
-          el.removeEventListener(event.type, event.listener);
-        }
-      }
-
-      return;
-    }
-
-    for (var _i2 = 0, _eventFunctions2 = eventFunctions; _i2 < _eventFunctions2.length; _i2++) {
-      var _event = _eventFunctions2[_i2];
-      el.removeEventListener(_event.type, _event.listener);
-    }
-  }
-  /**
-   * assign all event that were removed from page
-   * @returns {void}
-   */
-
-
-  function assignEvents() {
-    for (var _i3 = 0, _eventFunctions3 = eventFunctions; _i3 < _eventFunctions3.length; _i3++) {
-      var event = _eventFunctions3[_i3];
-      oldEventListener(event.type, event.listener, event.options);
-    }
-  }
-  /**
-   * 
-   * @param {String} type A case-sensitive string representing the event type to listen for.
-   * @param {CallableFunction} listener The object which receives a notification 
-   * (an object that implements the Event interface) when an event of the specified type occurs. 
-   * This must be an object implementing the EventListener interface, or a JavaScript function. 
-   * See The event listener callback for details on the callback itself.
-   * @param {Object} [options] An options object that specifies characteristics about the event listener.
-   * @param {Boolean} [options.capture] A Boolean indicating that events of this type will be dispatched 
-   * to the registered listener before being dispatched to any EventTarget beneath it in the DOM tree.
-   * @param {Boolean} [options.once] A Boolean indicating that the listener should be invoked at most 
-   * once after being added. If true, the listener would be automatically removed when invoked.
-   * @param {Boolean} [options.passive] A Boolean which, if true, indicates that the function specified 
-   * by listener will never call preventDefault(). If a passive listener does call preventDefault(), 
-   * the user agent will do nothing other than generate a console warning. See Improving scrolling 
-   * performance with passive listeners to learn more.
-   * @param {Boolean} [options.mozSystemGroup] "experimental" A Boolean indicating that the listener 
-   * should be added to the system group. Available only in code running in XBL or in the chrome of the 
-   * Firefox browser.
-   * @returns {void}
-   */
-
-
-  function addEventListener(type, listener, options) {
-    eventFunctions[eventFunctions.length] = {
-      type: type,
-      listener: listener,
-      options: options
-    };
-    oldEventListener(type, listener, options);
-  }
-
-  for (var prop in props) {
-    if (props[prop] === undefined) {
-      return console.error("invalid value of \"".concat(prop, "\""));
-    }
-
-    if (prop == 'children' && Array.isArray(props[prop])) {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = props[prop][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var htmlel = _step.value;
-          el.appendChild(htmlel);
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-    } else if (prop == 'attr') {
-      for (var p in props[prop]) {
-        el.setAttribute(p, props[prop][p]);
-      }
-    } else if (props[prop].constructor.name === 'Object') {
-      for (var _p in props[prop]) {
-        el[prop][_p] = props[prop][_p];
-      }
-    } else el[prop] = props[prop];
-  }
-  /**
-   * @function
-   * @param {HTMLElement | HTMLAllCollection | HTMLElement[]} nodes
-   */
-
-
-  el.append = function (nodes) {
-    nodes = Array.isArray(nodes) ? nodes : [nodes];
-
-    for (var i = 0; i < nodes.length; ++i) {
-      el.appendChild(nodes[i]);
-    }
-  };
-
-  if (props.children) {
-    el.append(props.children);
-  }
-
-  el.bubble = function bubble() {
-    html.bubble(el);
-  };
-
-  return el;
-}
-/**
- * get first mathing element from DOM
- * @param {String} selector CSS selector 
- * @returns {HTMLElement}
- */
-
-
-function get(selector) {
-  return document.querySelector(selector);
-}
-/**
- * get all matching element from DOM
- * @param {String} selector CSS selector
- * @returns {HTMLElement[]}
- */
-
-
-function getAll(selector) {
-  return document.querySelectorAll(selector);
-}
-/**
- * 
- * @param {element} el 
- */
-
-
-function bubble(el) {
-  var bubble = create('i', {
-    className: 'bubble'
-  });
-  el.addEventListener('click', bubbles);
-
-  function bubbles(e) {
-    var elClient = el.getBoundingClientRect();
-    bubble.classList.add('animate');
-    el.classList.add('bubbling');
-    bubble.style.height = elClient.width + 'px';
-    bubble.style.width = elClient.width + 'px';
-    bubble.style.top = e.clientY - elClient.top - elClient.width / 2 + 'px';
-    bubble.style.left = e.clientX - elClient.left - elClient.width / 2 + 'px';
-    setTimeout(function assignProps() {
-      el.removeEvents();
-      el.appendChild(bubble);
-    }, 0);
-    setTimeout(function removeBubble() {
-      bubble.classList.remove('animate');
-      el.classList.remove('bubbling');
-      el.assignEvents();
-      el.removeChild(bubble);
-    }, 580);
-  }
-}
-/**
- * 
- * @param {HTMLInputElement} props 
- * @returns {HTMLInputElement}
- */
-
-
-function input() {
-  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  props.type = 'text';
-  return create('input', props);
-}
-/**
- * 
- * @param {HTMLSpanElement} props 
- * @returns {HTMLSpanElement} 
- */
-
-
-function span() {
-  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return create('span', props);
-}
-/**
- * 
- * @param {String} text 
- * @param {HTMLButtonElement} [props] 
- * @returns {HTMLButtonElement} 
- */
-
-
-function button() {
-  var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  if (text) {
-    props.textContent = text;
-  }
-
-  var button = create('span', props);
-  button.bubble();
-  return button;
-}
-/**
- * 
- * @param {HTMLDivElement} props 
- * @returns {HTMLDivElement} 
- */
-
-
-function div() {
-  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return create('div', props);
-}
-/**
- * 
- * @param {String} src 
- * @param {String} alt 
- * @param {HTMLImageElement} props 
- * @returns {HTMLImageElement} 
- */
-
-
-function img() {
-  var src = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var alt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-  var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  props.src = src;
-  props.alt = alt;
-  return create('img', props);
-}
-/**
- * 
- * @param {String} href 
- * @param {Node} child 
- * @param {HTMLAnchorElement} props 
- * @returns {HTMLAnchorElement} 
- */
-
-
-function a() {
-  var href = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-  var child = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  props.href = href;
-
-  if (child) {
-    props.children = [child];
-  }
-
-  return create('a', props);
-}
-/**
- * @callback onchange
- * @param {Number} value 
- */
-
-/**
- * 
- * @typedef slider
- * @property {onchange} onchange 
- * @property {function():Number} value 
- * @property {function(Number):void} setvalue 
- */
-
-/**
- * 
- * @param {Object} params 
- * @param {Number} params.min 
- * @param {Number} params.max 
- * @param {Number} [params.step] 
- * @param {Number} [params.value ]
- * @param {onchange} [params.onchange] 
- * @param {string} [params.size] 
- * @returns {slider & HTMLElement}
- */
-
-
-function rangeSlider() {
-  var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var mainWrapper = div({
-    role: 'input',
-    tabIndex: 0,
-    className: 'rangeSlider-wrapper',
-    attr: {
-      'data-value': 0
-    }
-  });
-  var btn = span({
-    className: 'rangeSlider-button'
-  });
-  var min = params.min || 0;
-  var max = params.max || 100;
-  var step = params.step || 1;
-  mainWrapper.value = params.value || min;
-
-  if (params.size) {
-    mainWrapper.classList.add(params.size);
-  }
-
-  function calculateValue(x, res) {
-    var diff = max - min;
-    var width = mainWrapper.offsetWidth;
-    var value = x / width * diff;
-    value += min;
-    var remainder = value % step;
-
-    if (remainder >= step / 2) {
-      value += step - remainder;
-    } else {
-      value -= remainder;
-    }
-
-    if (mainWrapper.onchange) {
-      mainWrapper.onchange(value);
-    }
-
-    mainWrapper.value = value;
-    btn.setAttribute('data-value', (value + '').substr(0, 4));
-    x = (value - min) / diff;
-    x *= width; // btn.style.left = x + 'px';
-
-    if (res) console.log(res);
-    btn.style.transform = "translate3d(".concat(x, "px, 0, 0)");
-  }
-
-  mainWrapper.addEventListener('mousedown', onmousedown);
-  mainWrapper.addEventListener('focus', makeActive);
-  mainWrapper.addEventListener('touchstart', onmousedown);
-
-  function makeActive() {
-    mainWrapper.classList.add('active');
-    mainWrapper.onblur = removeActive;
-  }
-
-  function removeActive() {
-    mainWrapper.classList.remove('active');
-    mainWrapper.onblur = null;
-  }
-  /**
-   * 
-   * @param {MouseEvent} e 
-   */
-
-
-  function onmousedown(e) {
-    mainWrapper.focus();
-    document.onmousemove = document.ontouchmove = onmousemove;
-    document.onmouseup = document.ontouchend = onmouseup;
-    onmousemove(e);
-  }
-  /**
-   * 
-   * @param {MouseEvent | TouchEvent} e 
-   */
-
-
-  function onmousemove(e) {
-    var x = e.clientX || e.touches[0].clientX;
-    var width = mainWrapper.offsetWidth;
-    var wrapperX = mainWrapper.getBoundingClientRect().x;
-    x -= wrapperX;
-
-    if (x <= width && x >= 0) {
-      calculateValue(x);
-    }
-  }
-
-  function onmouseup() {
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-
-  mainWrapper.appendChild(btn);
-  return mainWrapper;
-}
-/**
- * 
- * @param {Object} opts 
- * @param {String} opts.title 
- * @param {element} opts.element 
- * @param {String} opts.direction 
- * @param {Boolean} opts.watchChange
- */
-
-
-function toolTip(opts) {
-  if (!opts.element) return console.error('element is undefined');
-  if (!opts.direction) opts.direction = 'left';
-  var title = opts.title || opts.element.getAttribute('title') || opts.element.getAttribute('data-title') || '';
-  var toolTip = create('div', {
-    className: 'toolTip'
-  });
-  var toolTipPointer = create('span', {
-    className: 'toolTip-pointer'
-  });
-  var wrapper = create('div', {
-    className: 'toolTip-wrapper',
-    attr: {
-      "data-direction": opts.direction
-    }
-  });
-  var text = create('span', {
-    textContent: title,
-    className: 'text'
-  });
-  /**
-   * @type {MutationObserver}
-   */
-
-  var observer;
-  toolTip.appendChild(toolTipPointer);
-  toolTip.appendChild(text);
-  wrapper.appendChild(toolTip);
-  opts.element.onmouseenter = mouseEnter;
-  opts.element.onmouseleave = mouseLeave;
-
-  function mouseEnter() {
-    var elClient = opts.element.getBoundingClientRect();
-
-    if (opts.direction) {
-      if (opts.direction === 'left') {
-        wrapper.style.left = elClient.left + 'px';
-        wrapper.style.top = elClient.top + elClient.height / 2 + 'px';
-        toolTipPointer.style.right = "0";
-        toolTipPointer.style.top = "50%";
-        toolTipPointer.style.transform = 'translate3d(50%, -50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(-100%, -50%, 0px)';
-      }
-
-      if (opts.direction === 'right') {
-        wrapper.style.left = elClient.right + 'px';
-        wrapper.style.top = elClient.top + elClient.height / 2 + 'px';
-        toolTipPointer.style.left = "0";
-        toolTipPointer.style.top = "50%";
-        toolTipPointer.style.transform = 'translate3d(-50%, -50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(0%, -50%, 0px)';
-      }
-
-      if (opts.direction === 'top') {
-        wrapper.style.left = elClient.left + elClient.width / 2 + 'px';
-        wrapper.style.top = elClient.top + 'px';
-        toolTipPointer.style.left = "50%";
-        toolTipPointer.style.bottom = "0";
-        toolTipPointer.style.transform = 'translate3d(-50%, 50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(-50%, -100%, 0px)';
-      }
-
-      if (opts.direction === 'bottom') {
-        wrapper.style.left = elClient.left + elClient.width / 2 + 'px';
-        wrapper.style.top = elClient.bottom + 'px';
-        toolTipPointer.style.left = "50%";
-        toolTipPointer.style.top = "0";
-        toolTipPointer.style.transform = 'translate3d(-50%, -50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(-50%, 0%, 0px)';
-      }
-    }
-
-    if (opts.watchChange) {
-      observer = new MutationObserver(function (changes, observer) {
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
-
-        try {
-          for (var _iterator2 = changes[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var change = _step2.value;
-
-            if (change.type === 'attributes') {
-              text.textContent = opts.element.getAttribute('title') || opts.element.getAttribute('data-title');
-            }
-          }
-        } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-              _iterator2["return"]();
-            }
-          } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
-            }
-          }
-        }
-      });
-      observer.observe(opts.element, {
-        attributes: true
-      });
-    }
-
-    document.body.appendChild(wrapper);
-  }
-
-  function mouseLeave() {
-    if (!toolTip.parentElement) return;
-    document.body.removeChild(wrapper);
-
-    if (opts.watchChange && observer) {
-      observer.disconnect;
-    }
-  }
-
-  opts.element.removeAttribute('title');
-}
-
-
+/* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
+/* harmony import */ var _rangeSlider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
+/* harmony import */ var _tooltip__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+ // import {
+//   a,
+//   bubble,
+//   button,
+//   create,
+//   div,
+//   get,
+//   getAll,
+//   img,
+//   input,
+//   span
+// } from './html';
+
+
+
+
+var exprt = _objectSpread({}, _html__WEBPACK_IMPORTED_MODULE_1__, {
+  rangeSlider: _rangeSlider__WEBPACK_IMPORTED_MODULE_2__["rangeSlider"],
+  toolTip: _tooltip__WEBPACK_IMPORTED_MODULE_3__["toolTip"]
+});
+
+/* harmony default export */ __webpack_exports__["default"] = (exprt); // export {
+//   a,
+//   bubble,
+//   button,
+//   create,
+//   div,
+//   get,
+//   getAll,
+//   img,
+//   input,
+//   rangeSlider,
+//   span,
+//   toolTip
+// }
 
 /***/ }),
 /* 1 */
@@ -1345,6 +771,663 @@ module.exports = function (css) {
 };
 
 
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return a; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bubble", function() { return bubble; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "button", function() { return button; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "create", function() { return create; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "div", function() { return div; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "get", function() { return get; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAll", function() { return getAll; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "img", function() { return img; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "input", function() { return input; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "span", function() { return span; });
+/**
+ * @typedef {Object} elementExtended
+ * @property {function(eventList):void} removeEvents removes all events added to element
+ * @property {function():void} assignEvents reassign all events that are removed from element
+ * @property {function():void} bubble add bubble effect on click
+ */
+
+/**
+ * @typedef {Object} createOptions
+ * @property {HTMLElement[] | HTMLAllCollection} children
+ * @property {Object} attr calls HTMLElement.setAttribute(String: name, String: value);
+ */
+
+/**
+ * @typedef {Object} inputNumber
+ * @property {Number|String} min Returns / Sets the min value of input.
+ * @property {Number|String} max Returns / Sets the max value of input.
+ * @property {String|Number} step Returns / Sets the increment and decrement step of input.
+ */
+
+/**
+ * @typedef {Object} inputCheckbox
+ * @property {Boolean} checked Returns / Sets the current state of the element when type is checkbox or radio.
+ * @property {Boolean} defaultChecked Returns / Sets the default state of a radio button or checkbox as originally 
+ * specified in HTML that created this object.
+ * @property {Boolean} indeterminate Returns whether the checkbox or radio button is in indeterminate state. For checkboxes, 
+ * the effect is that the appearance of the checkbox is obscured/greyed in some way as to indicate its state is indeterminate 
+ * (not checked but not unchecked). Does not affect the value of the checked attribute, and clicking the checkbox will set the value to false.
+ */
+
+/**
+ * @typedef {Object} inputImage
+ * @property {String} alt Returns / Sets the element's alt attribute, containing alternative text to use when type is image.
+ * @property {String} height  Returns / Sets the element's height attribute, which defines the height of the image displayed for the button, 
+ * if the value of type is image.
+ * @property {String} src Returns / Sets the element's src attribute, which specifies a URI for the location of an 
+ * image to display on the graphical submit button, if the value of type is image; otherwise it is ignored.
+ * @property {String} width Returns / Sets the document's width attribute, which defines the width of the image displayed for the button, 
+ * if the value of type is image.
+ */
+
+/**
+ * @typedef {Object} inputFile
+ * @property {String} accept Returns / Sets the element's accept attribute, containing comma-separated list of file types accepted by the 
+ * server when type is file.
+ * @property {FileList} files Returns/accepts a FileList object, which contains a list of File objects representing the files selected for upload.
+ */
+
+/**
+ * Create new HTML tag
+ * @param {String} tag HTMl element tag name 
+ * @param {HTMLElement & createOptions} props
+ * @returns {HTMLElement & elementExtended}
+ */
+function create() {
+  var tag = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'div';
+  var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var html = this;
+  var el = document.createElement(tag);
+  var eventFunctions = [];
+  var oldEventListener = el.addEventListener.bind(el);
+  /**@override addEventListener of page */
+
+  el.addEventListener = addEventListener;
+  /**@property */
+
+  el.assignEvents = assignEvents;
+  /**@property */
+
+  el.removeEvents = removeEvents;
+  /**
+   * removes all event from page.
+   * @param {String[]|String} events
+   * @returns {void}
+   */
+
+  function removeEvents(events) {
+    if (events) {
+      for (var _i = 0, _eventFunctions = eventFunctions; _i < _eventFunctions.length; _i++) {
+        var event = _eventFunctions[_i];
+
+        if (Array.isArray(events) && events.indexOf(event.type)) {
+          el.removeEventListener(event.type, event.listener);
+        } else if (typeof events === 'string' && event.type === events) {
+          el.removeEventListener(event.type, event.listener);
+        }
+      }
+
+      return;
+    }
+
+    for (var _i2 = 0, _eventFunctions2 = eventFunctions; _i2 < _eventFunctions2.length; _i2++) {
+      var _event = _eventFunctions2[_i2];
+      el.removeEventListener(_event.type, _event.listener);
+    }
+  }
+  /**
+   * assign all event that were removed from page
+   * @returns {void}
+   */
+
+
+  function assignEvents() {
+    for (var _i3 = 0, _eventFunctions3 = eventFunctions; _i3 < _eventFunctions3.length; _i3++) {
+      var event = _eventFunctions3[_i3];
+      oldEventListener(event.type, event.listener, event.options);
+    }
+  }
+  /**
+   * 
+   * @param {String} type A case-sensitive string representing the event type to listen for.
+   * @param {CallableFunction} listener The object which receives a notification 
+   * (an object that implements the Event interface) when an event of the specified type occurs. 
+   * This must be an object implementing the EventListener interface, or a JavaScript function. 
+   * See The event listener callback for details on the callback itself.
+   * @param {Object} [options] An options object that specifies characteristics about the event listener.
+   * @param {Boolean} [options.capture] A Boolean indicating that events of this type will be dispatched 
+   * to the registered listener before being dispatched to any EventTarget beneath it in the DOM tree.
+   * @param {Boolean} [options.once] A Boolean indicating that the listener should be invoked at most 
+   * once after being added. If true, the listener would be automatically removed when invoked.
+   * @param {Boolean} [options.passive] A Boolean which, if true, indicates that the function specified 
+   * by listener will never call preventDefault(). If a passive listener does call preventDefault(), 
+   * the user agent will do nothing other than generate a console warning. See Improving scrolling 
+   * performance with passive listeners to learn more.
+   * @param {Boolean} [options.mozSystemGroup] "experimental" A Boolean indicating that the listener 
+   * should be added to the system group. Available only in code running in XBL or in the chrome of the 
+   * Firefox browser.
+   * @returns {void}
+   */
+
+
+  function addEventListener(type, listener, options) {
+    eventFunctions[eventFunctions.length] = {
+      type: type,
+      listener: listener,
+      options: options
+    };
+    oldEventListener(type, listener, options);
+  }
+
+  for (var prop in props) {
+    if (props[prop] === undefined) {
+      return console.error("invalid value of \"".concat(prop, "\""));
+    }
+
+    if (prop == 'children' && Array.isArray(props[prop])) {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = props[prop][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var htmlel = _step.value;
+          el.appendChild(htmlel);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    } else if (prop == 'attr') {
+      for (var p in props[prop]) {
+        el.setAttribute(p, props[prop][p]);
+      }
+    } else if (props[prop].constructor.name === 'Object') {
+      for (var _p in props[prop]) {
+        el[prop][_p] = props[prop][_p];
+      }
+    } else el[prop] = props[prop];
+  }
+  /**
+   * @function
+   * @param {HTMLElement | HTMLAllCollection | HTMLElement[]} nodes
+   */
+
+
+  el.append = function (nodes) {
+    nodes = Array.isArray(nodes) ? nodes : [nodes];
+
+    for (var i = 0; i < nodes.length; ++i) {
+      el.appendChild(nodes[i]);
+    }
+  };
+
+  if (props.children) {
+    el.append(props.children);
+  }
+
+  el.bubble = function bubble() {
+    html.bubble(el);
+  };
+
+  return el;
+}
+/**
+ * get first mathing element from DOM
+ * @param {String} selector CSS selector 
+ * @returns {HTMLElement}
+ */
+
+
+function get(selector) {
+  return document.querySelector(selector);
+}
+/**
+ * get all matching element from DOM
+ * @param {String} selector CSS selector
+ * @returns {HTMLElement[]}
+ */
+
+
+function getAll(selector) {
+  return document.querySelectorAll(selector);
+}
+/**
+ * 
+ * @param {element} el 
+ */
+
+
+function bubble(el) {
+  var bubble = create('i', {
+    className: 'bubble'
+  });
+  el.addEventListener('click', bubbles);
+
+  function bubbles(e) {
+    var elClient = el.getBoundingClientRect();
+    bubble.classList.add('animate');
+    el.classList.add('bubbling');
+    bubble.style.height = elClient.width + 'px';
+    bubble.style.width = elClient.width + 'px';
+    bubble.style.top = e.clientY - elClient.top - elClient.width / 2 + 'px';
+    bubble.style.left = e.clientX - elClient.left - elClient.width / 2 + 'px';
+    setTimeout(function assignProps() {
+      el.removeEvents();
+      el.appendChild(bubble);
+    }, 0);
+    setTimeout(function removeBubble() {
+      bubble.classList.remove('animate');
+      el.classList.remove('bubbling');
+      el.assignEvents();
+      el.removeChild(bubble);
+    }, 580);
+  }
+}
+/**
+ * 
+ * @param {HTMLInputElement} props 
+ * @returns {HTMLInputElement}
+ */
+
+
+function input() {
+  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  props.type = 'text';
+  return create('input', props);
+}
+/**
+ * 
+ * @param {HTMLSpanElement} props 
+ * @returns {HTMLSpanElement} 
+ */
+
+
+function span() {
+  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return create('span', props);
+}
+/**
+ * 
+ * @param {String} text 
+ * @param {HTMLButtonElement} [props] 
+ * @returns {HTMLButtonElement} 
+ */
+
+
+function button() {
+  var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (text) {
+    props.textContent = text;
+  }
+
+  var button = create('span', props);
+  button.bubble();
+  return button;
+}
+/**
+ * 
+ * @param {HTMLDivElement} props 
+ * @returns {HTMLDivElement} 
+ */
+
+
+function div() {
+  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return create('div', props);
+}
+/**
+ * 
+ * @param {String} src 
+ * @param {String} alt 
+ * @param {HTMLImageElement} props 
+ * @returns {HTMLImageElement} 
+ */
+
+
+function img() {
+  var src = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var alt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  props.src = src;
+  props.alt = alt;
+  return create('img', props);
+}
+/**
+ * 
+ * @param {String} href 
+ * @param {Node} child 
+ * @param {HTMLAnchorElement} props 
+ * @returns {HTMLAnchorElement} 
+ */
+
+
+function a() {
+  var href = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var child = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var props = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  props.href = href;
+
+  if (child) {
+    props.children = [child];
+  }
+
+  return create('a', props);
+}
+
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rangeSlider", function() { return rangeSlider; });
+/* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+
+/**
+ * @callback onchange
+ * @param {Number} value 
+ */
+
+/**
+ * 
+ * @typedef slider
+ * @property {onchange} onchange 
+ * @property {function():Number} value 
+ * @property {function(Number):void} setvalue 
+ */
+
+/**
+ * 
+ * @param {Object} params 
+ * @param {Number} params.min 
+ * @param {Number} params.max 
+ * @param {Number} [params.step] 
+ * @param {Number} [params.value ]
+ * @param {onchange} [params.onchange] 
+ * @param {string} [params.size] 
+ * @returns {slider & HTMLElement}
+ */
+
+function rangeSlider() {
+  var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var mainWrapper = _html__WEBPACK_IMPORTED_MODULE_0__["div"]({
+    role: 'input',
+    tabIndex: 0,
+    className: 'rangeSlider-wrapper',
+    attr: {
+      'data-value': 0
+    }
+  });
+  var btn = _html__WEBPACK_IMPORTED_MODULE_0__["span"]({
+    className: 'rangeSlider-button'
+  });
+  var min = params.min || 0;
+  var max = params.max || 100;
+  var step = params.step || 1;
+  var diff = max - min;
+  var width = 0;
+  mainWrapper.value = params.value || min;
+
+  if (params.size) {
+    mainWrapper.classList.add(params.size);
+  }
+
+  if (params.value) {
+    setValue(params.value);
+  }
+
+  mainWrapper.addEventListener('mousedown', onmousedown);
+  mainWrapper.addEventListener('focus', makeActive);
+  mainWrapper.addEventListener('touchstart', onmousedown);
+
+  function makeActive() {
+    mainWrapper.classList.add('active');
+    mainWrapper.onblur = removeActive;
+  }
+
+  function removeActive() {
+    mainWrapper.classList.remove('active');
+    mainWrapper.onblur = null;
+  }
+  /**
+   * 
+   * @param {MouseEvent} e 
+   */
+
+
+  function onmousedown(e) {
+    mainWrapper.focus();
+    document.onmousemove = document.ontouchmove = onmousemove;
+    document.onmouseup = document.ontouchend = onmouseup;
+    onmousemove(e);
+  }
+  /**
+   * 
+   * @param {MouseEvent | TouchEvent} e 
+   */
+
+
+  function onmousemove(e) {
+    var x = e.clientX || e.touches[0].clientX;
+    var wrapperX = mainWrapper.getBoundingClientRect().x;
+    width = mainWrapper.offsetWidth;
+    x -= wrapperX;
+
+    if (x <= width && x >= 0) {
+      calculateValue(x);
+    }
+  }
+
+  function onmouseup() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+  /**
+   * 
+   * @param {Number} x 
+   */
+
+
+  function calculateValue(x) {
+    var value = x / width * diff;
+    value += min;
+    setValue(value);
+  }
+  /**
+   * 
+   * @param {Number} value 
+   */
+
+
+  function setValue(value) {
+    mainWrapper.focus();
+    width = mainWrapper.offsetWidth;
+    var remainder = value % step;
+
+    if (remainder >= step / 2) {
+      value += step - remainder;
+    } else {
+      value -= remainder;
+    }
+
+    if (mainWrapper.onchange) {
+      mainWrapper.onchange(value);
+    }
+
+    mainWrapper.value = value;
+    btn.setAttribute('data-value', (value + '').substr(0, 4));
+    var x = (value - min) / diff;
+    x *= width;
+    btn.style.transform = "translate3d(".concat(x, "px, 0, 0)");
+  }
+
+  mainWrapper.setValue = setValue;
+  mainWrapper.appendChild(btn);
+  return mainWrapper;
+}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toolTip", function() { return toolTip; });
+/* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+
+/**
+ * 
+ * @param {Object} opts 
+ * @param {String} opts.title 
+ * @param {element} opts.element 
+ * @param {String} opts.direction 
+ * @param {Boolean} opts.watchChange
+ */
+
+function toolTip(opts) {
+  if (!opts.element) return console.error('element is undefined');
+  if (!opts.direction) opts.direction = 'left';
+  var title = opts.title || opts.element.getAttribute('title') || opts.element.getAttribute('data-title') || '';
+  var toolTip = _html__WEBPACK_IMPORTED_MODULE_0__["create"]('div', {
+    className: 'toolTip'
+  });
+  var toolTipPointer = _html__WEBPACK_IMPORTED_MODULE_0__["create"]('span', {
+    className: 'toolTip-pointer'
+  });
+  var wrapper = _html__WEBPACK_IMPORTED_MODULE_0__["create"]('div', {
+    className: 'toolTip-wrapper',
+    attr: {
+      "data-direction": opts.direction
+    }
+  });
+  var text = _html__WEBPACK_IMPORTED_MODULE_0__["create"]('span', {
+    textContent: title,
+    className: 'text'
+  });
+  /**
+   * @type {MutationObserver}
+   */
+
+  var observer;
+  toolTip.appendChild(toolTipPointer);
+  toolTip.appendChild(text);
+  wrapper.appendChild(toolTip);
+  opts.element.onmouseenter = mouseEnter;
+  opts.element.onmouseleave = mouseLeave;
+
+  function mouseEnter() {
+    var elClient = opts.element.getBoundingClientRect();
+
+    if (opts.direction) {
+      if (opts.direction === 'left') {
+        wrapper.style.left = elClient.left + 'px';
+        wrapper.style.top = elClient.top + elClient.height / 2 + 'px';
+        toolTipPointer.style.right = "0";
+        toolTipPointer.style.top = "50%";
+        toolTipPointer.style.transform = 'translate3d(50%, -50%, 0) rotate(45deg)';
+        wrapper.style.transform = 'translate3d(-100%, -50%, 0px)';
+      }
+
+      if (opts.direction === 'right') {
+        wrapper.style.left = elClient.right + 'px';
+        wrapper.style.top = elClient.top + elClient.height / 2 + 'px';
+        toolTipPointer.style.left = "0";
+        toolTipPointer.style.top = "50%";
+        toolTipPointer.style.transform = 'translate3d(-50%, -50%, 0) rotate(45deg)';
+        wrapper.style.transform = 'translate3d(0%, -50%, 0px)';
+      }
+
+      if (opts.direction === 'top') {
+        wrapper.style.left = elClient.left + elClient.width / 2 + 'px';
+        wrapper.style.top = elClient.top + 'px';
+        toolTipPointer.style.left = "50%";
+        toolTipPointer.style.bottom = "0";
+        toolTipPointer.style.transform = 'translate3d(-50%, 50%, 0) rotate(45deg)';
+        wrapper.style.transform = 'translate3d(-50%, -100%, 0px)';
+      }
+
+      if (opts.direction === 'bottom') {
+        wrapper.style.left = elClient.left + elClient.width / 2 + 'px';
+        wrapper.style.top = elClient.bottom + 'px';
+        toolTipPointer.style.left = "50%";
+        toolTipPointer.style.top = "0";
+        toolTipPointer.style.transform = 'translate3d(-50%, -50%, 0) rotate(45deg)';
+        wrapper.style.transform = 'translate3d(-50%, 0%, 0px)';
+      }
+    }
+
+    if (opts.watchChange) {
+      observer = new MutationObserver(function (changes, observer) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = changes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var change = _step.value;
+
+            if (change.type === 'attributes') {
+              text.textContent = opts.element.getAttribute('title') || opts.element.getAttribute('data-title');
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      });
+      observer.observe(opts.element, {
+        attributes: true
+      });
+    }
+
+    document.body.appendChild(wrapper);
+  }
+
+  function mouseLeave() {
+    if (!toolTip.parentElement) return;
+    document.body.removeChild(wrapper);
+
+    if (opts.watchChange && observer) {
+      observer.disconnect;
+    }
+  }
+
+  opts.element.removeAttribute('title');
+}
+
 /***/ })
-/******/ ]);
+/******/ ])["default"];
 });

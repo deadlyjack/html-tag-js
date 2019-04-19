@@ -9,6 +9,7 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: 'html-element.js',
     library: 'html',
+    libraryExport: 'default',
     libraryTarget: 'umd'
   },
   module: {

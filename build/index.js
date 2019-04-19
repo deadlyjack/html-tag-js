@@ -10,4 +10,16 @@ slider.onchange = function () {
   console.log(this.value);
 }
 
+let setvalue = document.querySelector('#setValue');
+let input = document.querySelector('#sliderValue');
+
+if (setvalue) {
+  setvalue.onclick = function () {
+    if (input.value) {
+      slider.setValue(input.value);
+    }
+  }
+}
+
+
 body.appendChild(slider);

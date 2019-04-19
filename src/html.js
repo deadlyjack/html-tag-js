@@ -165,7 +165,7 @@ function create(tag = 'div', props = {}) {
     el.append(props.children);
   }
 
-  el.bubble = function bubble() {
+  el.bubble = function createBubble() {
     bubble(el);
   }
 

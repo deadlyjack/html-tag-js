@@ -132,7 +132,7 @@ export function rangeSlider(params = {}) {
       value = min;
     }
 
-    value = parseInt(value);
+    value = parseFloat(value);
     if (tmout) clearTimeout(tmout);
     makeActive();
     width = mainWrapper.offsetWidth;

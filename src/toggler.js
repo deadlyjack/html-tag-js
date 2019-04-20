@@ -74,6 +74,12 @@ export function toggler(params = {}) {
     }
   };
 
+  mainWrapper.setvalue = function (value) {
+    value = !!value;
+
+    checkbox.checked = value;
+  }
+
 
   return mainWrapper;
 }

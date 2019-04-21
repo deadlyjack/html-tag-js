@@ -14,7 +14,9 @@
   "keywords": [
     "html",
     "element",
-    "javascript"
+    "javascript",
+    "HTMLElement",
+    "DOM Manipulation"
   ],
   "author": "delleven jack",
   "license": "MIT",

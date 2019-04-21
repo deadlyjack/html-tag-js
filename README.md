@@ -135,7 +135,7 @@ const slider = html.rangeSlider({
 
 ###### Methods
 * **onchange** function:*public*
-* **setValue** function:*public*
+* **setvalue** function:*public*
 
 ### Toggler
 
@@ -156,4 +156,4 @@ const toggler = html.toggler({
 
 ###### Methods
 * **onchange** function:*public*
-* **setValue** function:*public*
+* **setvalue** function:*public*

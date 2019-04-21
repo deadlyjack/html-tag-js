@@ -1084,7 +1084,7 @@ function button() {
     props.textContent = text;
   }
 
-  var button = create('span', props);
+  var button = create('button', props);
   button.bubble();
   return button;
 }
@@ -1201,7 +1201,7 @@ function rangeSlider() {
 
   if (params.value) {
     setTimeout(function () {
-      setValue(params.value);
+      setvalue(params.value);
     }, 0);
   }
 
@@ -1245,9 +1245,9 @@ function rangeSlider() {
     if (x <= width && x >= 0) {
       calculateValue(x);
     } else if (mainWrapper.value !== max && x > width) {
-      setValue(max);
+      setvalue(max);
     } else if (mainWrapper.value !== min && x < 0) {
-      setValue(min);
+      setvalue(min);
     }
   }
 
@@ -1264,7 +1264,7 @@ function rangeSlider() {
   function calculateValue(x) {
     var value = x / width * diff;
     value += min;
-    setValue(value);
+    setvalue(value);
   }
   /**
    * 
@@ -1272,7 +1272,7 @@ function rangeSlider() {
    */
 
 
-  function setValue(value) {
+  function setvalue(value) {
     if (value > max) {
       value = max;
     } else if (value < min) {
@@ -1283,7 +1283,9 @@ function rangeSlider() {
     if (tmout) clearTimeout(tmout);
     makeActive();
     width = mainWrapper.offsetWidth;
-    var remainder = value % step;
+    var remainder = value / step;
+    remainder %= 1;
+    remainder *= step;
 
     if (remainder >= step / 2) {
       var tmp = value;
@@ -1312,7 +1314,7 @@ function rangeSlider() {
     }, 1000);
   }
 
-  mainWrapper.setValue = setValue;
+  mainWrapper.setvalue = setvalue;
   mainWrapper.appendChild(btn);
   return mainWrapper;
 }
@@ -1536,6 +1538,11 @@ function toggler() {
     } else {
       mainWrapper.value = checkbox.checked;
     }
+  };
+
+  mainWrapper.setvalue = function (value) {
+    value = !!value;
+    checkbox.checked = value;
   };
 
   return mainWrapper;

@@ -52,7 +52,7 @@ export function rangeSlider(params = {}) {
   }
   if (params.value) {
     setTimeout(() => {
-      setValue(params.value);
+      setvalue(params.value);
     }, 0);
   }
 
@@ -96,9 +96,9 @@ export function rangeSlider(params = {}) {
     if (x <= width && x >= 0) {
       calculateValue(x);
     } else if (mainWrapper.value !== max && x > width) {
-      setValue(max);
+      setvalue(max);
     } else if (mainWrapper.value !== min && x < 0) {
-      setValue(min);
+      setvalue(min);
     }
   }
 
@@ -117,14 +117,14 @@ export function rangeSlider(params = {}) {
     let value = x / width * diff;
     value += min;
 
-    setValue(value);
+    setvalue(value);
   }
 
   /**
    * 
    * @param {Number} value 
    */
-  function setValue(value) {
+  function setvalue(value) {
 
     if (value > max) {
       value = max;
@@ -137,7 +137,9 @@ export function rangeSlider(params = {}) {
     makeActive();
     width = mainWrapper.offsetWidth;
 
-    let remainder = value % step;
+    let remainder = value / step;
+    remainder %= 1;
+    remainder *= step;
     if (remainder >= step / 2) {
       let tmp = value;
       tmp += (step - remainder);
@@ -167,7 +169,7 @@ export function rangeSlider(params = {}) {
     }, 1000);
   }
 
-  mainWrapper.setValue = setValue;
+  mainWrapper.setvalue = setvalue;
   mainWrapper.appendChild(btn);
 
   return mainWrapper;

@@ -254,7 +254,7 @@ function button(text = '', props = {}) {
   if (text) {
     props.textContent = text;
   }
-  let button = create('span', props);
+  let button = create('button', props);
   button.bubble();
 
   return button;

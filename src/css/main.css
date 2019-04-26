@@ -87,7 +87,7 @@
 .rangeSlider-wrapper > span::after {
   font-family: Arial, Helvetica, sans-serif;
   position: absolute;
-  top: 5px;
+  top: 6px;
   left: 5px;
   height: 38px;
   width: 38px;

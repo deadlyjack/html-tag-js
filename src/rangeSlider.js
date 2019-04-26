@@ -44,6 +44,16 @@ export function rangeSlider(params = {}) {
   let diff = max - min;
   let width = 0;
   let tmout = null;
+  let length = (function calcLength() {
+    let l = step + '';
+    let lar = l.split('.');
+    if (lar.length > 1) {
+      let l = lar[1].length;
+      return l > 2 ? 2 : l;
+    } else {
+      return 0;
+    }
+  });
 
   mainWrapper.value = params.value || min;
 
@@ -154,10 +164,19 @@ export function rangeSlider(params = {}) {
     }
 
     if (mainWrapper.onchange) {
+      mainWrapper.value = value;
       mainWrapper.onchange(value);
     }
     mainWrapper.value = value;
-    btn.setAttribute('data-value', (value + '').substr(0, 4));
+    let val = value + '';
+    let l = length();
+    val = val.split('.');
+    if (l > 0 && val.length > 1) {
+      val = val[0] + '.' + val[1].substr(0, l);
+    } else {
+      val = val[0];
+    }
+    btn.setAttribute('data-value', val);
 
     let x = (value - min) / diff;
     x *= width;

@@ -88,4 +88,26 @@ body > span:not(:first-child) {
 #slider > div {
   margin-top: 35px;
 }
+
+input {
+  height: 30px;
+  min-width: 120px;
+  text-indent: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+button {
+  height: 30px;
+  min-width: 60px;
+  border: none;
+  margin-left: 15px;
+  border-radius: 4px;
+  mix-blend-mode: difference;
+  text-transform: uppercase;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
+  background: -webkit-gradient(linear, left top, right top, from(#C6FFDD), color-stop(#FBD786), to(#f7797d));
+  background: linear-gradient(to right, #C6FFDD, #FBD786, #f7797d);
+}
 /*# sourceMappingURL=style.css.map */

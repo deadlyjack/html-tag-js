@@ -1193,6 +1193,19 @@ function rangeSlider() {
   var diff = max - min;
   var width = 0;
   var tmout = null;
+
+  var length = function calcLength() {
+    var l = step + '';
+    var lar = l.split('.');
+
+    if (lar.length > 1) {
+      var _l = lar[1].length;
+      return _l > 2 ? 2 : _l;
+    } else {
+      return 0;
+    }
+  };
+
   mainWrapper.value = params.value || min;
 
   if (params.size) {
@@ -1301,11 +1314,22 @@ function rangeSlider() {
     }
 
     if (mainWrapper.onchange) {
+      mainWrapper.value = value;
       mainWrapper.onchange(value);
     }
 
     mainWrapper.value = value;
-    btn.setAttribute('data-value', (value + '').substr(0, 4));
+    var val = value + '';
+    var l = length();
+    val = val.split('.');
+
+    if (l > 0 && val.length > 1) {
+      val = val[0] + '.' + val[1].substr(0, l);
+    } else {
+      val = val[0];
+    }
+
+    btn.setAttribute('data-value', val);
     var x = (value - min) / diff;
     x *= width;
     btn.style.transform = "translate3d(".concat(x, "px, 0, 0)");

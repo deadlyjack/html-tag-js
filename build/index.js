@@ -2,7 +2,7 @@ let body = html.get('#slider');
 let slider1 = html.rangeSlider({
   min: 0,
   max: 100,
-  step: 13,
+  step: 10,
   value: 46
 });
 

@@ -115,6 +115,8 @@ export function rangeSlider(params = {}) {
   function onmouseup() {
     document.onmouseup = null;
     document.onmousemove = null;
+    document.ontouchmove = null;
+    document.ontouchend = null;
   }
 
 

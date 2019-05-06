@@ -89,7 +89,7 @@ export function select(opts={}) {
     if (divClient.bottom + _height > window.innerHeight) {
       optionsContainer.style.transform = 'translate(0, -100%)';
 
-      if (divClient.top - _height < 0) {
+      if (divClient.bottom - _height < 0) {
         let tmpHeight = _height;
         tmpHeight -= (_height + divClient.bottom + 20) - window.innerHeight;
         
@@ -112,7 +112,10 @@ export function select(opts={}) {
     let current_height = 0;
     let inc_factor = 1;
     function animateHeight() {
-      if (current_height < _height) {
+
+      if (current_height + inc_factor > _height) {
+        optionsContainer.style.height = _height + 'px';
+      }else if (current_height < _height) {
         current_height += inc_factor;
         inc_factor += spead;
         optionsContainer.style.height = current_height + 'px';
@@ -131,7 +134,11 @@ export function select(opts={}) {
     let current_height = containerHeight;
     let inc_factor = 1;
     function animateHeight() {
-      if (current_height > 0) {
+      if (current_height - inc_factor < 0) {
+        optionsContainer.style.height = '0';
+        document.body.removeChild(mask);
+        document.body.removeChild(optionsContainer);
+      } else if (current_height > 0) {
         current_height -= inc_factor;
         inc_factor+=spead;
         optionsContainer.style.height = current_height + 'px';

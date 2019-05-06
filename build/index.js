@@ -73,3 +73,6 @@ toggler = html.toggler({
 });
 
 body.appendChild(toggler);
+
+
+html.select(document.querySelector('select'), {height: 30, spead: 2});

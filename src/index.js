@@ -18,6 +18,9 @@ import {
   rangeSlider
 } from './rangeSlider';
 import {
+  select
+} from './custom-select';
+import {
   toolTip
 } from './tooltip';
 import {
@@ -28,7 +31,8 @@ const exprt = {
   ...html,
   rangeSlider,
   toolTip,
-  toggler
+  toggler,
+  select
 };
 
 export default exprt;

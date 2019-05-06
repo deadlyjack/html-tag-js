@@ -2,22 +2,20 @@ import * as html from './html';
 
 /**
  * 
- * @param {HTMLSelectElement} element 
  * @param {Object} [opts]
+ * @param {HTMLSelectElement} [opts.select] 
  * @param {Number} [opts.height]
  * @param {Number} [opts.width]
  * @param {Number} [opts.spead]
  */
-export function select(element, opts={}) {
+export function select(opts={}) {
   
-  const elementClient = element.getBoundingClientRect();
   const div = html.div({
     className: '__select'
   });
   const placeholder = html.span({
     className: '__placeholder'
   })
-  const options = element.options;
   const optionsContainer = html.div({
     className: '__options'
   });
@@ -25,56 +23,63 @@ export function select(element, opts={}) {
     className: '__mask',
     onclick: hide
   });
+  const scrollbarWidth = getScrollbarWidth();
   let containerHeight = 0;
-  let height = opts.height || elementClient.height;
-  let width = opts.width || elementClient.width;
+  let height = opts.height;
+  let width = opts.width;
   let spead = opts.spead || 1;
   let obj = {};
   
-  element.style.display = 'none';
+  if (opts.select) {
+    obj.select = opts.select;
+    const options = opts.select.options;
+    opts.select.style.display = 'none';
+    opts.select.parentElement.insertBefore(div, opts.element);
+
+    for (let i = 0; i < options.length; ++i) {
+      let option = html.div({
+        className: '__option',
+        attr: {
+          "data-value": options[i].value
+        },
+        textContent: options[i].textContent,
+        style: {
+          height: height + 'px'
+        }
+      });
+
+      option.addEventListener('click', optionOnselect);
+
+      if (options[i].selected) {
+        div.setAttribute('data-value', options[i].value);
+        placeholder.textContent = options[i].textContent;
+      }
+
+      optionsContainer.appendChild(option);
+    }
+
+    if (!div.getAttribute('data-value')) {
+      div.setAttribute('data-value', options[0].value);
+      placeholder.textContent = options[0].textContent;
+    }
+  } else {
+    obj.select = div;
+  }
+
   div.appendChild(placeholder);
   placeholder.style.height = height + 'px';
   if (width) {
     placeholder.style.width = width + 'px';
+    optionsContainer.style.width = width + 'px';
   }
 
   obj.onchange = function () { };
-
-  for (let i = 0; i < options.length; ++ i) {
-    let option = html.span({
-      className: '__option',
-      attr: {
-        "data-value": options[i].value
-      },
-      textContent: options[i].textContent,
-      style: {
-        height: height+'px'
-      }
-    });
-
-    option.addEventListener('click', optionOnselect);
-
-    if (options[i].selected) {
-      div.setAttribute('data-value', options[i].value);
-      placeholder.textContent = options[i].textContent;
-    }
-
-    optionsContainer.appendChild(option);
-  }
-
-  if (!div.getAttribute('data-value')) {
-    div.setAttribute('data-value', options[0].value);
-    placeholder.textContent = options[0].textContent;
-  }
-
-  element.parentElement.insertBefore(div, element);
-
 
   function show() {
     document.body.appendChild(mask);
     document.body.appendChild(optionsContainer);
     let divClient = div.getBoundingClientRect();
-    let _height = options.length * (height || 40);
+    let _height = optionsContainer.children.length * (height || 40);
 
     optionsContainer.style.top = divClient.top + 'px';
     optionsContainer.style.left = divClient.left + 'px';
@@ -85,11 +90,17 @@ export function select(element, opts={}) {
       optionsContainer.style.transform = 'translate(0, -100%)';
 
       if (divClient.top - _height < 0) {
-        _height = _height - (_height - divClient.bottom - 20);
-        optionsContainer.style.removeProperty('transform');
-      } else {
-        optionsContainer.style.width = (divClient.width + 40) + 'px';
+        let tmpHeight = _height;
+        tmpHeight -= (_height + divClient.bottom + 20) - window.innerHeight;
+        
+        if (tmpHeight < 300) {
+          _height += (divClient.top - _height - 20);
+        } else {
+          _height = tmpHeight;
+          optionsContainer.style.removeProperty('transform');
+        }
         optionsContainer.style.overflowY = 'scroll';
+        optionsContainer.style.width = (divClient.width + scrollbarWidth)+ 'px';
       }
 
     } else {
@@ -148,15 +159,110 @@ export function select(element, opts={}) {
       selected.classList.remove('__selected');
 
     el.classList.add('__selected');
-    element.value = value;
     div.setAttribute('data-value', value);
     placeholder.textContent = text;
     obj.onchange(value);
+    if (opts.select) opts.select.value = value;
     hide();
   }
 
+  /**
+   * 
+   * @param {HTMLSpanElement|HTMLOptionElement|String} option 
+   * @param {String|Number} [value] 
+   */
+  function addOption(option, value='') {
+    if (typeof option !== 'string') {
+      value = value || option.value || option.getAttribute('data-value') || '';
+      option = option.textContent;
+    }
+
+    if (opts.select) {
+      let op = html.create('option', {
+        textContent: option,
+        attr: {
+          value
+        }
+      });
+      opts.select.appendChild(op);
+    }
+
+    option = html.div({
+      className: '__option',
+      attr: {
+        "data-value": value
+      },
+      textContent: option,
+      style: {
+        height: height ? height + 'px' : 'fit-content'
+      }
+    });
+
+    if (placeholder.textContent === '') {
+      placeholder.textContent = option.textContent;
+      if (opts.select) opts.select.value = value;
+      div.setAttribute('data-value', value);
+    }
+
+    option.addEventListener('click', optionOnselect);
+    optionsContainer.appendChild(option);
+
+    document.body.appendChild(optionsContainer);
+    let client = optionsContainer.getBoundingClientRect();
+    placeholder.style.width = client.width + 'px';
+    document.body.removeChild(optionsContainer);
+  }
+
+  function value() {
+    return div.getAttribute('data-value');
+  }
+
+  function setvalue(value) {
+    if (opts.select) opts.select.value = value;
+    let selected = optionsContainer.querySelector('.__selected');
+    if (selected)
+      selected.classList.remove('__selected');
+    
+    let allOptions = optionsContainer.children;
+
+    for (let i = 0; i < allOptions; ++i){
+      if (allOptions[i].getAttribute('data-value') === value) {
+        allOptions[i].classList.add('__selected');
+        placeholder.textContent = allOptions[i].textContent;
+        break;
+      }
+    }
+  }
+
+  function getScrollbarWidth() {
+    var outer = document.createElement("div");
+    outer.style.visibility = "hidden";
+    outer.style.width = "100px";
+    outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+
+    document.body.appendChild(outer);
+
+    var widthNoScroll = outer.offsetWidth;
+    // force scrollbars
+    outer.style.overflow = "scroll";
+
+    // add innerdiv
+    var inner = document.createElement("div");
+    inner.style.width = "100%";
+    outer.appendChild(inner);
+
+    var widthWithScroll = inner.offsetWidth;
+
+    // remove divs
+    outer.parentNode.removeChild(outer);
+
+    return widthNoScroll - widthWithScroll;
+  }
+
   obj.customSelect = optionsContainer;
-  obj.select = element;
+  obj.addOption = addOption;
+  obj.value = value;
+  obj.setvalue = setvalue;
 
   return obj;
 }

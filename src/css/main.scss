@@ -203,8 +203,8 @@
 
   >.__placeholder{
     content: attr(data-text);
-    height: 100%;
-    width: 100%;
+    height: fit-content;
+    width: fit-content;
     display: flex;
     align-items: center;
     box-sizing: border-box;
@@ -237,9 +237,8 @@ body{
   >.__options{
     width: fit-content;
     margin: 0 !important;
+    display: block;
     position: fixed;
-    display: flex;
-    flex-direction: column;
     border-radius: 4px;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     top: 0;
@@ -250,7 +249,6 @@ body{
 
     >.__option{
       flex-shrink: 0;
-      width: 100%;
       display: flex;
       align-items: center;
       cursor: default;

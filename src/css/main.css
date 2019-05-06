@@ -261,8 +261,12 @@
 
 .__select > .__placeholder {
   content: attr(data-text);
-  height: 100%;
-  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -305,14 +309,8 @@ body > .__options {
   width: -moz-fit-content;
   width: fit-content;
   margin: 0 !important;
+  display: block;
   position: fixed;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   border-radius: 4px;
   -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
@@ -326,7 +324,6 @@ body > .__options {
 body > .__options > .__option {
   -ms-flex-negative: 0;
       flex-shrink: 0;
-  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

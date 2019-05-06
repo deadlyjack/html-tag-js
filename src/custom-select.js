@@ -5,6 +5,7 @@ import * as html from './html';
  * @param {Object} [opts]
  * @param {HTMLSelectElement} [opts.select] 
  * @param {Number} [opts.height]
+ * @param {Number} [opts.maxheight]
  * @param {Number} [opts.width]
  * @param {Number} [opts.spead]
  */
@@ -86,7 +87,7 @@ export function select(opts={}) {
     optionsContainer.style.width = divClient.width + 'px';
     optionsContainer.style.height = '0';
 
-    if (divClient.bottom + _height > window.innerHeight) {
+    if (divClient.bottom + _height > window.innerHeight || (opts.maxheight && _height > opts.maxheight)) {
       optionsContainer.style.transform = 'translate(0, -100%)';
 
       if (divClient.bottom - _height < 0) {
@@ -99,6 +100,11 @@ export function select(opts={}) {
           _height = tmpHeight;
           optionsContainer.style.removeProperty('transform');
         }
+
+        if (opts.maxheight && _height > opts.maxheight) {
+          _height = opts.maxheight;
+        }
+
         optionsContainer.style.overflowY = 'scroll';
         optionsContainer.style.width = (divClient.width + scrollbarWidth)+ 'px';
       }
@@ -122,8 +128,11 @@ export function select(opts={}) {
         requestAnimationFrame(animateHeight);
       }
     }
-
     animateHeight();
+
+    let selected = optionsContainer.querySelector('.__selected');
+    if (selected)
+      selected.scrollIntoView();
   }
 
   placeholder.onclick = show;
@@ -232,7 +241,7 @@ export function select(opts={}) {
     
     let allOptions = optionsContainer.children;
 
-    for (let i = 0; i < allOptions; ++i){
+    for (let i = 0; i < allOptions.length; ++i){
       if (allOptions[i].getAttribute('data-value') === value) {
         allOptions[i].classList.add('__selected');
         placeholder.textContent = allOptions[i].textContent;

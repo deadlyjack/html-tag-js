@@ -75,7 +75,7 @@ toggler = html.toggler({
 body.appendChild(toggler);
 
 
-let select = html.select({ select: document.querySelector('select'), height: 30, spead: 2 });
+let select = html.select({ select: document.querySelector('select'), height: 30, spead: 2, maxheight: 150});
 
 if (select.customSelect) {
   let options = ['ajit kumar', 'anamika sar', 'shreyash menon', 'saurav arya', 'sanjana gelam', 'aishwarya gupta', 'rajdeep sharma', 'anjali maurya', 'aishwarya kaur', 'shubham choudhary'];

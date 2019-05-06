@@ -1362,6 +1362,7 @@ __webpack_require__.r(__webpack_exports__);
  * @param {Object} [opts]
  * @param {HTMLSelectElement} [opts.select] 
  * @param {Number} [opts.height]
+ * @param {Number} [opts.maxheight]
  * @param {Number} [opts.width]
  * @param {Number} [opts.spead]
  */
@@ -1445,7 +1446,7 @@ function select() {
     optionsContainer.style.width = divClient.width + 'px';
     optionsContainer.style.height = '0';
 
-    if (divClient.bottom + _height > window.innerHeight) {
+    if (divClient.bottom + _height > window.innerHeight || opts.maxheight && _height > opts.maxheight) {
       optionsContainer.style.transform = 'translate(0, -100%)';
 
       if (divClient.bottom - _height < 0) {
@@ -1457,6 +1458,10 @@ function select() {
         } else {
           _height = tmpHeight;
           optionsContainer.style.removeProperty('transform');
+        }
+
+        if (opts.maxheight && _height > opts.maxheight) {
+          _height = opts.maxheight;
         }
 
         optionsContainer.style.overflowY = 'scroll';
@@ -1482,6 +1487,8 @@ function select() {
     }
 
     animateHeight();
+    var selected = optionsContainer.querySelector('.__selected');
+    if (selected) selected.scrollIntoView();
   }
 
   placeholder.onclick = show;
@@ -1586,7 +1593,7 @@ function select() {
     if (selected) selected.classList.remove('__selected');
     var allOptions = optionsContainer.children;
 
-    for (var _i = 0; _i < allOptions; ++_i) {
+    for (var _i = 0; _i < allOptions.length; ++_i) {
       if (allOptions[_i].getAttribute('data-value') === value) {
         allOptions[_i].classList.add('__selected');
 

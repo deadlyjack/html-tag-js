@@ -18,7 +18,7 @@ export function select(element, opts={}) {
     className: '__placeholder'
   })
   const options = element.options;
-  const optoinsContainer = html.div({
+  const optionsContainer = html.div({
     className: '__options'
   });
   const mask = html.div({
@@ -27,8 +27,9 @@ export function select(element, opts={}) {
   });
   let containerHeight = 0;
   let height = opts.height || elementClient.height;
-  let width = (opts.width || elementClient.width)+20;
+  let width = opts.width || elementClient.width;
   let spead = opts.spead || 1;
+  let obj = {};
   
   element.style.display = 'none';
   div.appendChild(placeholder);
@@ -36,6 +37,8 @@ export function select(element, opts={}) {
   if (width) {
     placeholder.style.width = width + 'px';
   }
+
+  obj.onchange = function () { };
 
   for (let i = 0; i < options.length; ++ i) {
     let option = html.span({
@@ -56,7 +59,7 @@ export function select(element, opts={}) {
       placeholder.textContent = options[i].textContent;
     }
 
-    optoinsContainer.appendChild(option);
+    optionsContainer.appendChild(option);
   }
 
   if (!div.getAttribute('data-value')) {
@@ -69,27 +72,28 @@ export function select(element, opts={}) {
 
   function show() {
     document.body.appendChild(mask);
-    document.body.appendChild(optoinsContainer);
+    document.body.appendChild(optionsContainer);
     let divClient = div.getBoundingClientRect();
     let _height = options.length * (height || 40);
 
-    optoinsContainer.style.top = divClient.top + 'px';
-    optoinsContainer.style.left = divClient.left + 'px';
-    optoinsContainer.style.width = divClient.width + 'px';
-    optoinsContainer.style.height = '0';
+    optionsContainer.style.top = divClient.top + 'px';
+    optionsContainer.style.left = divClient.left + 'px';
+    optionsContainer.style.width = divClient.width + 'px';
+    optionsContainer.style.height = '0';
 
     if (divClient.bottom + _height > window.innerHeight) {
-      optoinsContainer.style.transform = 'translate(0, -100%)';
+      optionsContainer.style.transform = 'translate(0, -100%)';
 
       if (divClient.top - _height < 0) {
         _height = _height - (_height - divClient.bottom - 20);
-        optoinsContainer.style.removeProperty('transform');
+        optionsContainer.style.removeProperty('transform');
+      } else {
+        optionsContainer.style.width = (divClient.width + 40) + 'px';
+        optionsContainer.style.overflowY = 'scroll';
       }
 
-      optoinsContainer.style.overflowY = 'scroll';
-      optoinsContainer.style.width = (divClient.width + 40) + 'px';
     } else {
-      optoinsContainer.style.removeProperty('overflow-y');
+      optionsContainer.style.removeProperty('overflow-y');
     }
 
     containerHeight = _height;
@@ -100,7 +104,7 @@ export function select(element, opts={}) {
       if (current_height < _height) {
         current_height += inc_factor;
         inc_factor += spead;
-        optoinsContainer.style.height = current_height + 'px';
+        optionsContainer.style.height = current_height + 'px';
         requestAnimationFrame(animateHeight);
       }
     }
@@ -112,17 +116,18 @@ export function select(element, opts={}) {
 
 
   function hide() {
+    optionsContainer.style.removeProperty('overflow-y');
     let current_height = containerHeight;
     let inc_factor = 1;
     function animateHeight() {
       if (current_height > 0) {
         current_height -= inc_factor;
         inc_factor+=spead;
-        optoinsContainer.style.height = current_height + 'px';
+        optionsContainer.style.height = current_height + 'px';
         requestAnimationFrame(animateHeight);
       } else {
         document.body.removeChild(mask);
-        document.body.removeChild(optoinsContainer);
+        document.body.removeChild(optionsContainer);
       }
     }
 
@@ -138,9 +143,20 @@ export function select(element, opts={}) {
     let value = el.getAttribute('data-value');
     let text = el.textContent;
 
+    let selected = optionsContainer.querySelector('.__selected');
+    if(selected)
+      selected.classList.remove('__selected');
+
+    el.classList.add('__selected');
     element.value = value;
     div.setAttribute('data-value', value);
     placeholder.textContent = text;
+    obj.onchange(value);
     hide();
   }
+
+  obj.customSelect = optionsContainer;
+  obj.select = element;
+
+  return obj;
 }

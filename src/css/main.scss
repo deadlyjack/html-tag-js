@@ -194,7 +194,7 @@
   height: 40px;
   width: fit-content;
   max-height: fit-content;
-  border-bottom: solid 1px #666;
+  border-bottom: solid 2px #666;
   display: flex;
 
   &:hover{
@@ -208,18 +208,19 @@
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    padding: 0 10px;
+    padding: 0 2px;
     font-size: 0.95em;
     text-transform: none;
     
     &::after{
       display: inline-flex;
       height: 100%;
-      font-size: 1em;
+      font-size: 0.65em;
       align-items: center;
       justify-content: center;
-      content: '\21F3';
+      content: '\25BC';
       margin-left: auto;
+      color: #666;
     }
   }
 
@@ -256,6 +257,12 @@ body{
       padding:0 5px;
       box-sizing: border-box;
       white-space: pre-wrap;
+
+      &.__selected,
+      &.__selected:hover{
+        background-color: #96f;
+        color: white;
+      }
 
       &:hover{
         background-color: #fcf;

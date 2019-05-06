@@ -249,7 +249,7 @@
   max-height: -webkit-fit-content;
   max-height: -moz-fit-content;
   max-height: fit-content;
-  border-bottom: solid 1px #666;
+  border-bottom: solid 2px #666;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -271,7 +271,7 @@
           align-items: center;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  padding: 0 10px;
+  padding: 0 2px;
   font-size: 0.95em;
   text-transform: none;
 }
@@ -281,15 +281,16 @@
   display: -ms-inline-flexbox;
   display: inline-flex;
   height: 100%;
-  font-size: 1em;
+  font-size: 0.65em;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  content: '\21F3';
+  content: '\25BC';
   margin-left: auto;
+  color: #666;
 }
 
 body > .__mask {
@@ -337,6 +338,11 @@ body > .__options > .__option {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   white-space: pre-wrap;
+}
+
+body > .__options > .__option.__selected, body > .__options > .__option.__selected:hover {
+  background-color: #96f;
+  color: white;
 }
 
 body > .__options > .__option:hover {

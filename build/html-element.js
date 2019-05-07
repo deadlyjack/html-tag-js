@@ -1577,10 +1577,19 @@ function select() {
 
     option.addEventListener('click', optionOnselect);
     optionsContainer.appendChild(option);
-    document.body.appendChild(optionsContainer);
+    var removeContainer = false;
+
+    if (!optionsContainer.parentElement) {
+      document.body.appendChild(optionsContainer);
+      removeContainer = true;
+    }
+
     var client = optionsContainer.getBoundingClientRect();
     placeholder.style.width = client.width + 'px';
-    document.body.removeChild(optionsContainer);
+
+    if (removeContainer) {
+      document.body.removeChild(optionsContainer);
+    }
   }
 
   function value() {

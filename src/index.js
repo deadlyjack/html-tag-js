@@ -27,13 +27,18 @@ import {
   toggler
 } from './toggler';
 
-const exprt = {
-  ...html,
+let exprt = {
   rangeSlider,
   toolTip,
   toggler,
   select
-};
+}
+
+for (let key in html) {
+  exprt[key] = html[key];
+}
+
+export const xprt = exprt;
 
 export default exprt;
 

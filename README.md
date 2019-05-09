@@ -19,6 +19,44 @@ path/to/html-element-js/build/html-element.js
 
 ### Usage
 
+#### Import in webpack
+
+###### To import all
+
+```javascript
+import html from 'html-element-js';
+```
+
+###### To only import html
+
+```javascript
+import * as html from '/node-modules/src/html';
+```
+
+**If you are importing a part of library please import css**
+
+```javascript
+import '/node-modules/src/css/main.css';
+```
+
+##### To only import rangeSlider
+
+```javascript
+import {rangeSlider} from '/node-modules/src/rangeSlider';
+```
+
+##### To only import toggler
+
+```javascript
+import {toggler} from '/node-modules/src/toggler';
+```
+
+##### To only import custom select
+
+```javascript
+import {select} from '/node-modules/src/custrom-select';
+```
+
 #### Create a new element
 
 ###### To create a span tag
@@ -157,3 +195,27 @@ const toggler = html.toggler({
 ###### Methods
 * **onchange** function:*public*
 * **setvalue** function:*public*
+
+### Custom select
+
+Creates a toggle button equivalent to input type checkbox or radio
+
+```javascript
+const toggler = html.select({
+  spead: 2, //min 1 max any. Greater value fater opening animation. See in demo
+  height: 30, //height of option
+  maxheight: 300 //max height of option container.
+});
+```
+
+###### options
+* **spead** number (spead of animation of opening select options)
+* **height** number (height of option)
+* **maxheight** number (max height of option container)
+* **select** Element (Select element from DOM)
+
+###### Methods
+* **addOption** function:*public*
+* **removeOption** function:*public*
+* **setvalue** funtion:*public*
+* **value** function:*public*

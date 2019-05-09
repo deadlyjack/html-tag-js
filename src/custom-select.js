@@ -30,6 +30,7 @@ export function select(opts={}) {
   let width = opts.width;
   let spead = opts.spead || 1;
   let obj = {};
+  let assOptions = [];
   
   if (opts.select) {
     obj.select = opts.select;
@@ -48,6 +49,8 @@ export function select(opts={}) {
           height: height + 'px'
         }
       });
+
+      allOptions[options[i].value] = option;
 
       option.addEventListener('click', optionOnselect);
 
@@ -214,6 +217,8 @@ export function select(opts={}) {
       }
     });
 
+    allOptions[value] = option;
+
     if (placeholder.textContent === '') {
       placeholder.textContent = option.textContent;
       if (opts.select) opts.select.value = value;
@@ -233,6 +238,16 @@ export function select(opts={}) {
     if (removeContainer) {
       document.body.removeChild(optionsContainer);
     }
+  }
+
+  function removeOption(option) {
+    let _option = allOptions[option];
+    if (_option) {
+      _option.parentElement.removeChild(_option);
+      delete allOptions[option];
+      return true;
+    }
+    return false;
   }
 
   function value() {
@@ -285,6 +300,7 @@ export function select(opts={}) {
   obj.addOption = addOption;
   obj.value = value;
   obj.setvalue = setvalue;
+  obj.removeOption = removeOption;
 
   return obj;
 }

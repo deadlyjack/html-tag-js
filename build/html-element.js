@@ -1389,7 +1389,7 @@ function select() {
   var width = opts.width;
   var spead = opts.spead || 1;
   var obj = {};
-  var assOptions = [];
+  var allOptions = [];
 
   if (opts.select) {
     obj.select = opts.select;

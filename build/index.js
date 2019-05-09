@@ -85,4 +85,8 @@ if (select.customSelect) {
   }
 }
 
+setTimeout(() => {
+  select.removeOption('rajdeep sharma');
+}, 4000);
+
 console.log(select);

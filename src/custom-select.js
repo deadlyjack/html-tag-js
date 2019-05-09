@@ -30,7 +30,7 @@ export function select(opts={}) {
   let width = opts.width;
   let spead = opts.spead || 1;
   let obj = {};
-  let assOptions = [];
+  let allOptions = [];
   
   if (opts.select) {
     obj.select = opts.select;

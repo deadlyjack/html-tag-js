@@ -2,7 +2,7 @@
   "name": "html-element-js",
   "version": "0.0.230",
   "description": "A simple library for create and manipulating DOM using JavaScript DOM api.",
-  "main": "src/index.js",
+  "main": "build/html-element.js",
   "scripts": {
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"

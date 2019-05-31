@@ -75,18 +75,17 @@ toggler = html.toggler({
 body.appendChild(toggler);
 
 
-let select = html.select({ select: document.querySelector('select'), height: 30, spead: 2, maxheight: 150});
+let select = html.select({
+  select: document.querySelector('select'),
+  height: 30,
+  spead: 2,
+  maxheight: 150
+});
 
 if (select.customSelect) {
-  let options = ['ajit kumar', 'anamika sar', 'shreyash menon', 'saurav arya', 'sanjana gelam', 'aishwarya gupta', 'rajdeep sharma', 'anjali maurya', 'aishwarya kaur', 'shubham choudhary'];
+  let options = ['random word', 'moon', 'sun', 'planet', 'so many options', 'more options', 'just one more option', 'what is option', 'choose', 'all of them', 'none of them', 'option A', 'option B', 'option C'];
 
-  for (let i = 0; i < 10; ++i){
+  for (let i = 0; i < options.length; ++i) {
     select.addOption(options[i], options[i]);
   }
 }
-
-setTimeout(() => {
-  select.removeOption('rajdeep sharma');
-}, 4000);
-
-console.log(select);

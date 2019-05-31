@@ -97,7 +97,6 @@
 
   }
 
-  &.active,
   &:active {
     >span {
       &::after {
@@ -189,7 +188,7 @@
   }
 }
 
-.__select{
+.__select {
   position: relative;
   height: 40px;
   width: fit-content;
@@ -197,11 +196,11 @@
   border-bottom: solid 2px #666;
   display: flex;
 
-  &:hover{
+  &:hover {
     background-color: #eef;
   }
 
-  >.__placeholder{
+  >.__placeholder {
     content: attr(data-text);
     height: fit-content;
     width: fit-content;
@@ -211,8 +210,8 @@
     padding: 0 2px;
     font-size: 0.95em;
     text-transform: none;
-    
-    &::after{
+
+    &::after {
       display: inline-flex;
       height: 100%;
       font-size: 0.65em;
@@ -224,11 +223,11 @@
     }
   }
 
-  
+
 }
 
-body{
-  >.__mask{
+body {
+  >.__mask {
     position: fixed;
     height: 100vh;
     width: 100vw;
@@ -236,7 +235,8 @@ body{
     top: 0;
     left: 0;
   }
-  >.__options{
+
+  >.__options {
     width: fit-content;
     margin: 0 !important;
     display: block;
@@ -249,22 +249,22 @@ body{
     overflow: hidden;
     z-index: 9999;
 
-    >.__option{
+    >.__option {
       flex-shrink: 0;
       display: flex;
       align-items: center;
       cursor: default;
-      padding:0 5px;
+      padding: 0 5px;
       box-sizing: border-box;
       white-space: pre-wrap;
 
       &.__selected,
-      &.__selected:hover{
+      &.__selected:hover {
         background-color: #96f;
         color: white;
       }
 
-      &:hover{
+      &:hover {
         background-color: #fcf;
       }
     }

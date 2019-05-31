@@ -114,7 +114,7 @@
           box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
-.rangeSlider-wrapper.active > span::after, .rangeSlider-wrapper:active > span::after {
+.rangeSlider-wrapper:active > span::after {
   background-color: inherit;
   -webkit-transform: translate(-50%, -50%) scale(1);
           transform: translate(-50%, -50%) scale(1);

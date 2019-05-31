@@ -1,6 +1,6 @@
 {
   "name": "html-element-js",
-  "version": "0.0.231",
+  "version": "0.0.232",
   "description": "A simple library for create and manipulating DOM using JavaScript DOM api.",
   "main": "build/html-element.js",
   "scripts": {

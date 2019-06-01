@@ -79,7 +79,7 @@ let select = html.select({
   select: document.querySelector('select'),
   height: 30,
   spead: 2,
-  maxheight: 450
+  maxheight: 350
 });
 
 if (select.customSelect) {

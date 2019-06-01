@@ -137,11 +137,15 @@ export function select(opts = {}) {
 
     optionsContainer.style.removeProperty('transform');
     if (divClient.bottom + logicalHeight > window.innerHeight) { //checks if height of options container crosses bottom
-      optionsContainer.style.transform = 'translate(0, -100%)';
 
       if (divClient.bottom - logicalHeight < 0) { //checks if height of options container cross top
         if (tmpHeightTop > tmpHeightBottom) {
-          _height = tmpHeightTop > logicalHeight ? logicalHeight : tmpHeightTop;
+          if (tmpHeightTop > logicalHeight) {
+            _height = logicalHeight;
+          } else {
+            _height = tmpHeightTop;
+            optionsContainer.style.transform = `translate(0, ${ -_height + divClient.height}px)`;
+          }
         } else {
           _height = tmpHeightBottom > logicalHeight ? logicalHeight : tmpHeightBottom;
           optionsContainer.style.removeProperty('overflow-y');
@@ -149,7 +153,11 @@ export function select(opts = {}) {
       }
 
       if (_height !== logicalHeight) {
-        _height = logicalHeight;
+
+        if (_height > logicalHeight) {
+          _height = logicalHeight;
+        }
+
         scroll = true;
         optionsContainer.style.width = (divClient.width + scrollbarWidth) + 'px';
       }

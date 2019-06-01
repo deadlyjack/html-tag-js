@@ -154,7 +154,8 @@ export function select(opts = {}) {
         optionsContainer.style.width = (divClient.width + scrollbarWidth) + 'px';
       }
 
-    } else if (_height < opts.maxheight) {
+    } else if (_height <= opts.maxheight) {
+      optionsContainer.style.width = divClient.width + 'px';
       optionsContainer.style.removeProperty('overflow-y');
     } else {
       optionsContainer.style.width = (divClient.width + scrollbarWidth) + 'px';

@@ -89,3 +89,7 @@ if (select.customSelect) {
     select.addOption(options[i], options[i]);
   }
 }
+
+select.onchange = function (val) {
+  console.log(val);
+}

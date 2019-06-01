@@ -31,7 +31,10 @@ export function select(opts = {}) {
   let width = opts.width;
   let spead = opts.spead || 1;
   let obj = {};
-  let allOptions = [];
+  /**
+   * @type {Element}
+   */
+  let selectOption;
 
   (function init() {
     opts.maxheight = opts.maxheight || 600;
@@ -43,30 +46,18 @@ export function select(opts = {}) {
       opts.select.parentElement.insertBefore(div, opts.element);
 
       for (let i = 0; i < options.length; ++i) {
-        let option = html.div({
-          className: '__option',
-          attr: {
-            "data-value": options[i].value
-          },
-          textContent: options[i].textContent,
-          style: {
-            height: height + 'px'
-          }
-        });
 
-        allOptions.push(options[i].value);
-        option.addEventListener('click', optionOnselect);
+        addOption(options[i], undefined, true);
 
         if (options[i].selected) {
-          setvalue(options[i].value);
+          setTimeout(() => {
+            setvalue(null, i);
+          }, 5);
         }
-
-        optionsContainer.appendChild(option);
       }
 
       if (!div.getAttribute('data-value')) {
-        div.setAttribute('data-value', options[0].value);
-        placeholder.textContent = options[0].textContent;
+        setvalue(null, 0);
       }
     } else {
       obj.select = div;
@@ -92,30 +83,25 @@ export function select(opts = {}) {
      * @param {KeyboardEvent} e 
      */
     function onkeypress(e) {
-      let val = value();
-      let len = allOptions.length - 1;
-      let index = allOptions.indexOf(val);
+      let id;
       if (e.which === 38) {
-        val = allOptions[index === 0 ? len : index - 1];
+        let option = selectOption.previousElementSibling
+        if (option) {
+          id = option.getAttribute('data-id');
+        } else {
+          id = selectOption.parentElement.lastElementChild.getAttribute('data-id');
+        }
       } else if (e.which === 40) {
-        val = allOptions[index === len ? 0 : index + 1];
-      } else {
-        //TODO: match and select next item with key
-        // let char = String.fromCharCode(e.which);
-        // let options = [];
-        // let matchingWord = [];
-        // optionsContainer.children.forEach(el=>{
-        //   options[el.getAttribute('data-value')] = el;
-        // });
-
-        // for(let key in options){
-        //   if(options[key][0] === char){
-        //     matchingWord.push(options[key])
-        //   }
-        // }
+        let option = selectOption.nextElementSibling
+        if (option) {
+          id = option.getAttribute('data-id');
+        } else {
+          id = selectOption.parentElement.firstElementChild.getAttribute('data-id');
+        }
       }
-
-      setvalue(val);
+      if (id) {
+        setvalue(null, id);
+      }
     }
   })()
 
@@ -227,18 +213,9 @@ export function select(opts = {}) {
      * @type {HTMLSpanElement}
      */
     let el = this;
-    let value = el.getAttribute('data-value');
-    let text = el.textContent;
+    let id = el.getAttribute('data-id');
 
-    let selected = optionsContainer.querySelector('.__selected');
-    if (selected)
-      selected.classList.remove('__selected');
-
-    el.classList.add('__selected');
-    div.setAttribute('data-value', value);
-    placeholder.textContent = text;
-    obj.onchange(value);
-    if (opts.select) opts.select.value = value;
+    setvalue(null, id);
     hide();
   }
 
@@ -247,13 +224,13 @@ export function select(opts = {}) {
    * @param {HTMLSpanElement|HTMLOptionElement|String} option 
    * @param {String|Number} [value] 
    */
-  function addOption(option, value = '') {
+  function addOption(option, value = '', preventAddingOption) {
     if (typeof option !== 'string') {
       value = value || option.value || option.getAttribute('data-value') || '';
       option = option.textContent;
     }
 
-    if (opts.select) {
+    if (opts.select && !preventAddingOption) {
       let op = html.create('option', {
         textContent: option,
         attr: {
@@ -266,15 +243,14 @@ export function select(opts = {}) {
     option = html.div({
       className: '__option',
       attr: {
-        "data-value": value
+        "data-value": value,
+        "data-id": optionsContainer.childElementCount
       },
       textContent: option,
       style: {
         height: height ? height + 'px' : 'fit-content'
       }
     });
-
-    allOptions.push(value);
 
     if (placeholder.textContent === '') {
       placeholder.textContent = option.textContent;
@@ -301,7 +277,6 @@ export function select(opts = {}) {
     let _option = optionsContainer.querySelector(`[data-value='${option}']`);
     if (_option) {
       _option.parentElement.removeChild(_option);
-      allOptions.splice(allOptions.indexOf(option) + 1, 1);
       return true;
     }
     return false;
@@ -311,17 +286,32 @@ export function select(opts = {}) {
     return div.getAttribute('data-value');
   }
 
-  function setvalue(value) {
+  function setvalue(value, id = 0) {
+    let option;
+
+    if (!value) {
+      option = optionsContainer.querySelector(`[data-id='${id}']`);
+    } else {
+      option = optionsContainer.querySelector(`[data-value='${value}']`);
+    }
+
+    if (!option) return;
+
+    value = option.getAttribute('data-value');
+
     if (opts.select) opts.select.value = value;
     let selected = optionsContainer.querySelector('.__selected');
     if (selected)
       selected.classList.remove('__selected');
 
-    let option = optionsContainer.querySelector(`[data-value='${value}']`);
-    if (option) {
-      option.classList.add('__selected');
-      div.setAttribute('data-value', value);
-      placeholder.textContent = option.textContent;
+    option.classList.add('__selected');
+    div.setAttribute('data-value', value);
+    placeholder.textContent = option.textContent;
+    obj.onchange(value);
+    selectOption = option;
+    if (opts.select) opts.select.value = value;
+
+    if (!isInView(option)) {
       scrollIntoView(option);
     }
   }
@@ -357,8 +347,22 @@ export function select(opts = {}) {
    */
   function scrollIntoView(el) {
     let parent = el.parentElement;
-
     parent.scrollTop = el.offsetTop;
+  }
+
+  /**
+   * 
+   * @param {Element} el 
+   */
+  function isInView(el) {
+    let parent = el.parentElement;
+    let parentClient = parent.getBoundingClientRect();
+    let elClient = el.getBoundingClientRect();
+
+    if (parentClient.bottom <= elClient.top || parentClient.top >= elClient.bottom) {
+      return false;
+    }
+    return true;
   }
 
   obj.customSelect = optionsContainer;

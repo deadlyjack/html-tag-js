@@ -78,8 +78,7 @@ body.appendChild(toggler);
 let select = html.select({
   select: document.querySelector('select'),
   height: 30,
-  spead: 2,
-  maxheight: 350
+  spead: 4
 });
 
 if (select.customSelect) {

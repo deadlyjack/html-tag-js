@@ -1,5 +1,7 @@
 # html-element-js
 
+**NOTE:** Please no install this library for prduction because this library is very unstable.
+
 A simple library for creating and manipulating DOM using JavaScript DOM api.
 See [demo](https://deadlyjack.github.io/html-element-js/build/)
 

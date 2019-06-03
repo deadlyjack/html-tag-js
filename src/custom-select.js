@@ -130,12 +130,18 @@ export function select(opts = {}) {
             _height = logicalHeight;
           } else {
             _height = tmpHeightTop;
-            optionsContainer.style.transform = `translate(0, ${ -_height + divClient.height}px)`;
           }
+          optionsContainer.style.transform = `translate(0, ${ -_height + divClient.height}px)`;
         } else {
           _height = tmpHeightBottom > logicalHeight ? logicalHeight : tmpHeightBottom;
-          optionsContainer.style.removeProperty('overflow-y');
         }
+      } else {
+        if (_height > logicalHeight) {
+          _height = logicalHeight;
+          scroll = true;
+          optionsContainer.style.width = (divClient.width + scrollbarWidth) + 'px';
+        }
+        optionsContainer.style.transform = `translate(0, ${ -_height + divClient.height}px)`;
       }
 
       if (_height !== logicalHeight) {

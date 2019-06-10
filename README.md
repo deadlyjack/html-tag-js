@@ -1,6 +1,6 @@
 # html-element-js
 
-**NOTE:** Please no install this library for prduction because this library is very unstable.
+**NOTE:** Please do not install this library for prduction because this library is very unstable.
 
 A simple library for creating and manipulating DOM using JavaScript DOM api.
 See [demo](https://deadlyjack.github.io/html-element-js/build/)
@@ -23,7 +23,7 @@ path/to/html-element-js/build/html-element.js
 
 #### Import in webpack
 
-###### To import all
+##### To import all
 
 ```javascript
 import html from 'html-element-js';
@@ -61,22 +61,16 @@ import {select} from '/node-modules/src/custrom-select';
 
 #### Create a new element
 
-###### To create a span tag
+##### To create a span tag
 
 ```javascript
-const span = html.create('span');
-```
-
-or
-
-```javascript
-const span = html.span();
+const span = html.tag('span');
 ```
 
 ###### Creating element with options
 
 ```javascript
-const span = html.span({
+const span = html.tag('span' ,{
   textContent: 'This is span tag',
   className: 'myspan',
   id: 'span1'
@@ -84,42 +78,12 @@ const span = html.span({
 ```
 
 ##### HTML tags
-* create tag `html.create(tagname:String, options?:HTMLOptions)` anchor tag
-* a `html.a(options?)` anchor tag
-* button `html.button(options?)` button tag
-* div `html.div(options?)` div tag
-* img `html.img(src:String, alt:String, options?)` img tag
-* input `html.input(options?)` input tag
 
-#### Get element(s) from DOM
-
-###### Get first matching element
-
-```javascript
-const mydiv = html.get('.mydiv'); //returns HTMLElement
-```
-
-is equivalent to 
-
-```javascript
-const mydiv = document.querySelector('.mydiv'); //returns HTMLElement
-```
-
-###### Get all matching elements
-
-```javascript
-const mydivCollection = html.getAll('.mydiv'); //returns HTMLAllCollection
-```
-
-is equivalent to
-
-```javascript
-const mydivCollection = document.querySelectorAll('.mydiv'); //returns HTMLAllCollection
-```
+* create tag `html.tag(tagName:String, options?:Object)` anchor tag
 
 ### Remove event listeners
 
-###### Remove all EventListeners
+#### Remove all EventListeners
 
 ```javascript
 const mydiv = html.div();
@@ -130,7 +94,7 @@ mydiv.addEventListener('click', function(e){
 mydiv.removeEvents(); //remvoes all event listener
 ```
 
-###### Remove specific EventListeners
+#### Remove specific EventListeners
 
 ```javascript
 const mydiv = html.div();
@@ -139,16 +103,6 @@ mydiv.addEventListener('click', function(e){
 }); //adds a event listener
 
 mydiv.removeEvents('click'); //remvoes all click event listener
-```
-
-### Add bubble effect
-
-```javascript
-const mydiv = html.div({
-  className: 'bubble'
-});
-
-mydiv.bubble();
 ```
 
 see [demo](https://deadlyjack.github.io/html-element-js/#bubble)

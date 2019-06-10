@@ -1,4 +1,4 @@
-import * as html from './html';
+import tag from './html';
 
 /**
  * 
@@ -8,23 +8,23 @@ import * as html from './html';
  * @param {String} opts.direction 
  * @param {Boolean} opts.watchChange
  */
-export function toolTip(opts) {
+export default function toolTip(opts) {
   if (!opts.element) return console.error('element is undefined');
   if (!opts.direction) opts.direction = 'left';
   let title = opts.title || opts.element.getAttribute('title') || opts.element.getAttribute('data-title') || '';
-  let toolTip = html.create('div', {
+  let toolTip = tag('div', {
     className: 'toolTip'
   });
-  let toolTipPointer = html.create('span', {
+  let toolTipPointer = tag('span', {
     className: 'toolTip-pointer'
   });
-  let wrapper = html.create('div', {
+  let wrapper = tag('div', {
     className: 'toolTip-wrapper',
     attr: {
       "data-direction": opts.direction
     }
   });
-  let text = html.create('span', {
+  let text = tag('span', {
     textContent: title,
     className: 'text'
   });

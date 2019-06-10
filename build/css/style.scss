@@ -27,6 +27,17 @@ body {
   display: flex;
   flex-direction: column;
 
+  &.row {
+    padding: 10px 0;
+    max-width: 80%;
+    flex-direction: row;
+    margin: 0 auto;
+
+    >* {
+      margin-right: auto;
+    }
+  }
+
   h2,
   h3,
   h4 {
@@ -72,11 +83,17 @@ input {
 button {
   height: 30px;
   min-width: 60px;
+  max-width: max-content;
+  padding: 0 10px;
+  box-sizing: border-box;
   border: none;
-  margin-left: 15px;
   border-radius: 4px;
   mix-blend-mode: difference;
   text-transform: uppercase;
-  transition: all 300ms ease;
-  background: linear-gradient(to right, #C6FFDD, #FBD786, #f7797d);
+  transition: all 100ms ease;
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.6);
+
+  &:active {
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
+  }
 }

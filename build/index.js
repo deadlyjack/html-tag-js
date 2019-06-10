@@ -1,4 +1,4 @@
-let body = html.get('#slider');
+let body = html.tag(document.querySelector('#slider'));
 let slider1 = html.rangeSlider({
   min: 0,
   max: 100,
@@ -6,7 +6,7 @@ let slider1 = html.rangeSlider({
   value: 46
 });
 
-let input1 = html.input({
+let input1 = html.tag('input', {
   type: 'number',
   placeholder: 'change value'
 });
@@ -27,13 +27,27 @@ let slider2 = html.rangeSlider({
   size: 'small'
 });
 
-let input = html.input({
+let input = html.tag('input', {
   type: 'number',
   placeholder: 'change value'
 });
-let button = html.button('inc');
-button.onclick = function () {
+let buttonInc = html.tag('button', {
+  textContent: 'inc',
+  style: {
+    marginLeft: '5px',
+  }
+});
+let buttonDec = html.tag('button', {
+  textContent: 'dec',
+  style: {
+    marginLeft: '5px',
+  }
+});
+buttonInc.onclick = function () {
   slider2.setvalue(slider2.value + 1);
+}
+buttonDec.onclick = function () {
+  slider2.setvalue(slider2.value - 1);
 }
 input.oninput = function () {
   if (input.value) {
@@ -43,9 +57,10 @@ input.oninput = function () {
 
 body.appendChild(slider2);
 body.appendChild(input);
-body.appendChild(button);
+body.appendChild(buttonInc);
+body.appendChild(buttonDec);
 
-body = html.get('#toggler');
+body = html.tag(document.querySelector('#toggler'));
 let toggler = html.toggler({
   size: 40,
   valType: 'on/off',
@@ -91,4 +106,19 @@ if (select.customSelect) {
 
 select.onchange = function (val) {
   console.log(val);
+}
+
+const testBtn = html.tag(document.querySelector('#test-button'));
+const removeBtn = document.querySelector('#remove-button');
+const assignBtn = document.querySelector('#assign-button');
+
+testBtn.addEventListener('click', () => console.log('%cHello World', 'font-size:2em; color:#66f'));
+testBtn.addEventListener('click', () => console.log('%cHello World', 'font-size:1.8em; color:#6f6'));
+testBtn.addEventListener('click', () => console.log('%cHello World', 'font-size:1.6em; color:#f66'));
+
+removeBtn.onclick = () => {
+  testBtn.removeEvents();
+}
+assignBtn.onclick = () => {
+  testBtn.assignRemovedEvents();
 }

@@ -114,7 +114,7 @@
           box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
-.rangeSlider-wrapper:active > span::after {
+.rangeSlider-wrapper.active > span::after, .rangeSlider-wrapper:active > span::after {
   background-color: inherit;
   -webkit-transform: translate(-50%, -50%) scale(1);
           transform: translate(-50%, -50%) scale(1);
@@ -314,8 +314,8 @@ body > .__options {
   display: block;
   position: fixed;
   border-radius: 4px;
-  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 30, 0.6);
+          box-shadow: 0 0 8px rgba(0, 0, 30, 0.6);
   top: 0;
   left: 0;
   background-color: white;

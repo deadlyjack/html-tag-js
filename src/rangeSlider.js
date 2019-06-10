@@ -1,4 +1,5 @@
-import * as html from './html';
+import tag from './html';
+
 /**
  * @callback onchange
  * @param {Number} value 
@@ -23,10 +24,10 @@ import * as html from './html';
  * @param {string} [params.size] 
  * @returns {slider & HTMLElement}
  */
-export function rangeSlider(params = {}) {
+export default function rangeSlider(params = {}) {
 
 
-  let mainWrapper = html.div({
+  let mainWrapper = tag('div', {
     role: 'input',
     tabIndex: 0,
     className: 'rangeSlider-wrapper',
@@ -34,7 +35,7 @@ export function rangeSlider(params = {}) {
       'data-value': 0
     }
   });
-  let btn = html.span({
+  let btn = tag('span', {
     className: 'rangeSlider-button'
   });
 
@@ -105,9 +106,9 @@ export function rangeSlider(params = {}) {
 
     if (x <= width && x >= 0) {
       calculateValue(x);
-    } else if (mainWrapper.value !== max && x > width) {
+    } else if (x > width && mainWrapper.value !== max) {
       setvalue(max);
-    } else if (mainWrapper.value !== min && x < 0) {
+    } else if (x < 0 && mainWrapper.value !== min) {
       setvalue(min);
     }
   }

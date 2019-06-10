@@ -1,4 +1,4 @@
-import * as html from './html';
+import tag from './html';
 
 /**
  * 
@@ -9,19 +9,19 @@ import * as html from './html';
  * @param {Number} [opts.width]
  * @param {Number} [opts.spead]
  */
-export function select(opts = {}) {
+export default function select(opts = {}) {
 
-  const div = html.div({
+  const div = tag('div', {
     className: '__select',
     tabIndex: 0
   });
-  const placeholder = html.span({
+  const placeholder = tag('span', {
     className: '__placeholder'
   })
-  const optionsContainer = html.div({
+  const optionsContainer = tag('div', {
     className: '__options'
   });
-  const mask = html.div({
+  const mask = tag('div', {
     className: '__mask',
     onclick: hide
   });
@@ -106,8 +106,8 @@ export function select(opts = {}) {
   })()
 
   function show() {
-    document.body.appendChild(mask);
-    document.body.appendChild(optionsContainer);
+    mask.restore(document.body);
+    optionsContainer.restore(document.body);
     let divClient = div.getBoundingClientRect();
     let _height = optionsContainer.children.length * (height || 40);
     let scroll = false;
@@ -197,16 +197,16 @@ export function select(opts = {}) {
     function animateHeight() {
       if (current_height - inc_factor < 0) {
         optionsContainer.style.height = '0';
-        document.body.removeChild(mask);
-        document.body.removeChild(optionsContainer);
+        mask.remove();
+        optionsContainer.remove();
       } else if (current_height > 0) {
         current_height -= inc_factor;
         inc_factor += spead;
         optionsContainer.style.height = current_height + 'px';
         requestAnimationFrame(animateHeight);
       } else {
-        document.body.removeChild(mask);
-        document.body.removeChild(optionsContainer);
+        mask.remove();
+        optionsContainer.remove();
       }
     }
 
@@ -237,7 +237,7 @@ export function select(opts = {}) {
     }
 
     if (opts.select && !preventAddingOption) {
-      let op = html.create('option', {
+      let op = tag('option', {
         textContent: option,
         attr: {
           value
@@ -246,7 +246,7 @@ export function select(opts = {}) {
       opts.select.appendChild(op);
     }
 
-    option = html.div({
+    option = tag('div', {
       className: '__option',
       attr: {
         "data-value": value,

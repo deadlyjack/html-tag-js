@@ -1,4 +1,5 @@
-import * as html from './html';
+import tag from './html'
+
 /**
  * @callback onchange
  * @param {Boolean} value 
@@ -22,18 +23,18 @@ import * as html from './html';
  * @returns {toggler & HTMLElement}
  */
 
-export function toggler(params = {}) {
+export default function toggler(params = {}) {
 
-  let checkbox = html.input({
+  let checkbox = tag('input', {
     type: 'checkbox',
     style: {
       display: 'none'
     }
   });
-  let btn = html.span({
+  let btn = tag('span', {
     className: 'toggler_btn'
   });
-  let mainWrapper = html.create('label', {
+  let mainWrapper = tag('label', {
     tabIndex: 0,
     role: 'input',
     className: 'toggler-wrapper',

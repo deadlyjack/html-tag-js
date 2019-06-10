@@ -1,84 +1,107 @@
 /**
- * @typedef {Object} elementExtended
- * @property {function(eventList):void} removeEvents removes all events added to element
- * @property {function():void} assignEvents reassign all events that are removed from element
- * @property {function():void} bubble add bubble effect on click
+ * @typedef {('a'| 'abbr'| 'address'| 'applet'| 'area'| 'article'| 'aside'| 'audio'| 'b'| 'base'| 'basefont'| 'bdi'| 'bdo'| 'blockquote'| 'body'| 'br'| 'button'| 'canvas'| 'caption'| 'cite'| 'code'| 'col'| 'colgroup'| 'data'| 'datalist'| 'dd'| 'del'| 'details'| 'dfn'| 'dialog'| 'dir'| 'div'| 'dl'| 'dt'| 'em'| 'embed'| 'fieldset'| 'figcaption'| 'figure'| 'font'| 'footer'| 'form'| 'frame'| 'frameset'| 'h1'| 'h2'| 'h3'| 'h4'| 'h5'| 'h6'| 'head'| 'header'| 'hgroup'| 'hr'| 'html'| 'i'| 'iframe'| 'img'| 'input'| 'ins'| 'kbd'| 'label'| 'legend'| 'li'| 'link'| 'main'| 'map'| 'mark'| 'marquee'| 'menu'| 'meta'| 'meter'| 'nav'| 'noscript'| 'object'| 'ol'| 'optgroup'| 'option'| 'output'| 'p'| 'param'| 'picture'| 'pre'| 'progress'| 'q'| 'rp'| 'rt'| 'ruby'| 's'| 'samp'| 'script'| 'section'| 'select'| 'slot'| 'small'| 'source'| 'span'| 'strong'| 'style'| 'sub'| 'summary'| 'sup'| 'table'| 'tbody'| 'td'| 'template'| 'textarea'| 'tfoot'| 'th'| 'thead'| 'time'| 'title'| 'tr'| 'track'| 'u'| 'ul'| 'var'| 'video'| 'wbr')} tagNames
  */
 
 /**
- * @typedef {Object} createOptions
- * @property {HTMLElement[] | HTMLAllCollection} children
- * @property {Object} attr calls HTMLElement.setAttribute(String: name, String: value);
+ * @typedef {Object} elementProperties
+ * @property {string} accessKey
+ * @property {string} autocapitalize
+ * @property {string} className Returns the value of element's class content attribute. Can be set to change it.
+ * @property {string} contentEditable where a value of "true" means the element is editable and a value of "false" means it isn't.
+ * @property {Node} child child of this element.
+ * @property {Node[]} children children of the this element.
+ * @property {function():void} click
+ * @property {string} dir text content direction
+ * @property {boolean} draggable
+ * @property {boolean} hidden
+ * @property {string} id Returns the value of element's id content attribute. Can be set to change it.
+ * @property {string} innerText
+ * @property {string} lang
+ * @property {boolean} noModule Is a Boolean indicating whether an import script can be executed in user agents that support module scripts.
+ * @property {string} nodeValue
+ * @property {function(Event):void} onfullscreenchange
+ * @property {function(Event):void} onfullscreenerror
+ * @property {string} outerHTML
+ * @property {number} scrollLeft
+ * @property {number} scrollTop
+ * @property {boolean} spellcheck
+ * @property {boolean} translate
+ * @property {string} slot Returns the value of element's slot content attribute. Can be set to chnage it.
+ * @property {CSSStyleDeclation} style An object representing the declarations of an element's style attributes.
+ * @property {number} tabIndex Position of the element in the tabbing order.
+ * @property {string} textContent
  */
 
 /**
- * @typedef {Object} inputNumber
- * @property {Number|String} min Returns / Sets the min value of input.
- * @property {Number|String} max Returns / Sets the max value of input.
- * @property {String|Number} step Returns / Sets the increment and decrement step of input.
+ * @typedef {Object} elementCustromProps
+ * @property {function(string|string[]|null):void} assignEvents remove event listeners from the element
+ * @property {function(string|string[]|null):void} removeRemovedEvents assigns the removed event listeners to the element
+ * @property {function():void} remove Removes the element from DOM.
+ * @property {function(parentElement|null):void} restore Restores the element to the DOM.
  */
 
 /**
- * @typedef {Object} inputCheckbox
- * @property {Boolean} checked Returns / Sets the current state of the element when type is checkbox or radio.
- * @property {Boolean} defaultChecked Returns / Sets the default state of a radio button or checkbox as originally 
- * specified in HTML that created this object.
- * @property {Boolean} indeterminate Returns whether the checkbox or radio button is in indeterminate state. For checkboxes, 
- * the effect is that the appearance of the checkbox is obscured/greyed in some way as to indicate its state is indeterminate 
- * (not checked but not unchecked). Does not affect the value of the checked attribute, and clicking the checkbox will set the value to false.
+ * 
+ * @param {tagNames|HTMLElement} tagName A string that specifies the type of element to be created. The nodeName of the created element is initialized with the value of tagName. Don't use qualified names (like "html:a") with this method. When called on an HTML document, createElement() converts tagName to lower case before creating the element. In Firefox, Opera, and Chrome, createElement(null) works like createElement("null").
+ * @param {elementProperties} options HTMLElment properties and attributes
+ * @returns {HTMLElement & elementCustromProps}
  */
 
-/**
- * @typedef {Object} inputImage
- * @property {String} alt Returns / Sets the element's alt attribute, containing alternative text to use when type is image.
- * @property {String} height  Returns / Sets the element's height attribute, which defines the height of the image displayed for the button, 
- * if the value of type is image.
- * @property {String} src Returns / Sets the element's src attribute, which specifies a URI for the location of an 
- * image to display on the graphical submit button, if the value of type is image; otherwise it is ignored.
- * @property {String} width Returns / Sets the document's width attribute, which defines the width of the image displayed for the button, 
- * if the value of type is image.
- */
+export default function tag(tagName, options = {}) {
+  const instanceofHtmlElement = tagName instanceof HTMLElement;
+  if (!instanceofHtmlElement && typeof tagName !== 'string') throw new Error(`{tag} is invalid value of tag`);
+  const el = instanceofHtmlElement ? tagName : document.createElement(tagName);
+  el.oldEventListener = el.addEventListener.bind(el);
 
-/**
- * @typedef {Object} inputFile
- * @property {String} accept Returns / Sets the element's accept attribute, containing comma-separated list of file types accepted by the 
- * server when type is file.
- * @property {FileList} files Returns/accepts a FileList object, which contains a list of File objects representing the files selected for upload.
- */
+  el.addEventListener = addEventListener.bind(el);
+  el.assignRemovedEvents = assignRemovedEvents.bind(el);
+  el.append = append.bind(el);
+  el.get = get.bind(el);
+  el.getAll = getAll.bind(el);
+  el.removeEvents = removeEvents.bind(el);
+  el.remove = remove.bind(el);
+  el.restore = restore.bind(el);
 
-/**
- * Create new HTML tag
- * @param {String} tag HTMl element tag name 
- * @param {HTMLElement & createOptions} props
- * @returns {HTMLElement & elementExtended}
- */
-function create(tag = 'div', props = {}) {
-  let html = this;
-  let el = document.createElement(tag);
-  let eventFunctions = [];
-  let oldEventListener = el.addEventListener.bind(el);
+  for (let prop in options) {
 
-  /**@override addEventListener of page */
-  el.addEventListener = addEventListener;
+    if (options[prop] === undefined) {
+      continue;
+    }
 
-  /**@property */
-  el.assignEvents = assignEvents;
+    if (prop === 'child') {
+      let el = options[prop];
+      if (el instanceof Node) el.append(el);
+    } else if (prop == 'children' && Array.isArray(options[prop])) {
+      const els = options[prop];
+      for (let htmlel of els) {
+        el.append(htmlel);
+      }
+    } else if (prop == 'attr') {
+      for (let p in options[prop]) {
+        el.setAttribute(p, options[prop][p]);
+      }
+    } else if (options[prop].constructor.name === 'Object') {
+      for (let p in options[prop]) {
+        el[prop][p] = options[prop][p];
+      }
+    } else el[prop] = options[prop];
+  }
 
-  /**@property */
-  el.removeEvents = removeEvents;
+  return el;
 
   /**
-   * removes all event from page.
-   * @param {String[]|String} events
-   * @returns {void}
+   * 
+   * @param {String|String[]|null} eventType 
    */
-  function removeEvents(events) {
-    if (events) {
+  function removeEvents(eventType) {
+    const eventFunctions = this.eventFunctions;
+    if (!eventFunctions) return;
+    if (eventType) {
       for (let event of eventFunctions) {
-        if (Array.isArray(events) && events.indexOf(event.type)) {
-          el.removeEventListener(event.type, event.listener);
-        } else if (typeof events === 'string' && event.type === events) {
-          el.removeEventListener(event.type, event.listener);
+        if (Array.isArray(eventType) && eventType.indexOf(event.type)) {
+          this.removeEventListener(event.type, event.listener);
+        } else if (typeof eventType === 'string' && event.type === eventType) {
+          this.removeEventListener(event.type, event.listener);
         }
       }
 
@@ -90,219 +113,86 @@ function create(tag = 'div', props = {}) {
   }
 
   /**
-   * assign all event that were removed from page
-   * @returns {void}
+   * 
+   * @param {String|String[]|null} eventType
    */
-  function assignEvents() {
+  function assignRemovedEvents(eventType) {
+    const eventFunctions = this.eventFunctions;
+    if (!eventFunctions) return;
+    if (eventType) {
+      for (let event of eventFunctions) {
+        if (Array.isArray(eventType) && eventType.indexOf(event.type)) {
+          this.oldEventListener(event.type, event.listener, event.options);
+        } else if (typeof eventType === 'string' && event.type === eventType) {
+          this.oldEventListener(event.type, event.listener, event.options);
+        }
+      }
+
+      return;
+    }
     for (let event of eventFunctions) {
-      oldEventListener(event.type, event.listener, event.options);
+      this.oldEventListener(event.type, event.listener);
     }
   }
 
-  /**
-   * 
-   * @param {String} type A case-sensitive string representing the event type to listen for.
-   * @param {CallableFunction} listener The object which receives a notification 
-   * (an object that implements the Event interface) when an event of the specified type occurs. 
-   * This must be an object implementing the EventListener interface, or a JavaScript function. 
-   * See The event listener callback for details on the callback itself.
-   * @param {Object} [options] An options object that specifies characteristics about the event listener.
-   * @param {Boolean} [options.capture] A Boolean indicating that events of this type will be dispatched 
-   * to the registered listener before being dispatched to any EventTarget beneath it in the DOM tree.
-   * @param {Boolean} [options.once] A Boolean indicating that the listener should be invoked at most 
-   * once after being added. If true, the listener would be automatically removed when invoked.
-   * @param {Boolean} [options.passive] A Boolean which, if true, indicates that the function specified 
-   * by listener will never call preventDefault(). If a passive listener does call preventDefault(), 
-   * the user agent will do nothing other than generate a console warning. See Improving scrolling 
-   * performance with passive listeners to learn more.
-   * @param {Boolean} [options.mozSystemGroup] "experimental" A Boolean indicating that the listener 
-   * should be added to the system group. Available only in code running in XBL or in the chrome of the 
-   * Firefox browser.
-   * @returns {void}
-   */
   function addEventListener(type, listener, options) {
-    eventFunctions[eventFunctions.length] = {
+    if (!this.eventFunctions) this.eventFunctions = [];
+    this.eventFunctions[this.eventFunctions.length] = {
       type,
       listener,
       options
     };
-    oldEventListener(type, listener, options);
+    this.oldEventListener(type, listener, options);
   }
 
-  for (let prop in props) {
-
-    if (props[prop] === undefined) {
-      return console.error(`invalid value of "${prop}"`);
+  function remove() {
+    if (this.parentElement) {
+      this.removeEvents();
+      this.oldParentelement = this.parentElement;
+      this.parentElement.removeChild(this);
     }
-
-    if (prop == 'children' && Array.isArray(props[prop])) {
-      for (let htmlel of props[prop]) {
-        el.appendChild(htmlel);
-      }
-    } else if (prop == 'attr') {
-      for (let p in props[prop]) {
-        el.setAttribute(p, props[prop][p]);
-      }
-    } else if (props[prop].constructor.name === 'Object') {
-      for (let p in props[prop]) {
-        el[prop][p] = props[prop][p];
-      }
-    } else el[prop] = props[prop];
   }
 
   /**
-   * @function
-   * @param {HTMLElement | HTMLAllCollection | HTMLElement[]} nodes
+   * @param {HTMLElement} parentElement
    */
-  el.append = function (nodes) {
-    nodes = Array.isArray(nodes) ? nodes : [nodes];
-    for (let i = 0; i < nodes.length; ++i) {
-      el.appendChild(nodes[i]);
+  function restore(parentElement) {
+    parentElement = parentElement || this.oldParentelement || null;
+    if (parentElement && !this.parentElement) {
+      this.assignEvents();
+      parentElement.appendChild(this);
     }
   }
 
-  if (props.children) {
-    el.append(props.children);
+  /**
+   * @param {Node} ...nodes
+   */
+
+  function append(...nodes) {
+    nodes.map(node => {
+      if (node instanceof Node) {
+        this.appendChild(node);
+        if (node instanceof HTMLElement && node.id)
+          el[node.id] = node;
+      }
+    })
   }
 
-  el.bubble = function createBubble() {
-    bubble(el);
+  /**
+   * get first mathing element from DOM
+   * @param {String} selector CSS selector 
+   * @returns {HTMLElement}
+   */
+  function get(selector) {
+    return this.querySelector(selector);
   }
 
-  return el;
-}
-
-/**
- * get first mathing element from DOM
- * @param {String} selector CSS selector 
- * @returns {HTMLElement}
- */
-function get(selector) {
-  return document.querySelector(selector);
-}
-
-/**
- * get all matching element from DOM
- * @param {String} selector CSS selector
- * @returns {HTMLElement[]}
- */
-function getAll(selector) {
-  return document.querySelectorAll(selector);
-}
-
-/**
- * 
- * @param {element} el 
- */
-function bubble(el) {
-  let bubble = create('i', {
-    className: 'bubble'
-  });
-
-  el.addEventListener('click', bubbles);
-
-  function bubbles(e) {
-    let elClient = el.getBoundingClientRect();
-    bubble.classList.add('animate');
-    el.classList.add('bubbling');
-    bubble.style.height = elClient.width + 'px';
-    bubble.style.width = elClient.width + 'px';
-    bubble.style.top = (e.clientY - elClient.top - elClient.width / 2) + 'px';
-    bubble.style.left = (e.clientX - elClient.left - elClient.width / 2) + 'px';
-
-    setTimeout(function assignProps() {
-      el.removeEvents();
-      el.appendChild(bubble);
-    }, 0);
-
-
-    setTimeout(function removeBubble() {
-      bubble.classList.remove('animate');
-      el.classList.remove('bubbling');
-      el.assignEvents();
-      el.removeChild(bubble);
-    }, 580);
+  /**
+   * get first mathing element from DOM
+   * @param {String} selector CSS selector 
+   * @returns {HTMLElement}
+   */
+  function getAll(selector) {
+    return this.querySelectorAll(selector);
   }
-}
-
-/**
- * 
- * @param {HTMLInputElement} props 
- * @returns {HTMLInputElement}
- */
-function input(props = {}) {
-  if (!props.type) props.type = 'text';
-  return create('input', props);
-}
-
-/**
- * 
- * @param {HTMLSpanElement} props 
- * @returns {HTMLSpanElement} 
- */
-function span(props = {}) {
-  return create('span', props);
-}
-
-/**
- * 
- * @param {String} text 
- * @param {HTMLButtonElement} [props] 
- * @returns {HTMLButtonElement} 
- */
-function button(text = '', props = {}) {
-  if (text) {
-    props.textContent = text;
-  }
-  let button = create('button', props);
-  button.bubble();
-
-  return button;
-}
-/**
- * 
- * @param {HTMLDivElement} props 
- * @returns {HTMLDivElement} 
- */
-function div(props = {}) {
-  return create('div', props);
-}
-/**
- * 
- * @param {String} src 
- * @param {String} alt 
- * @param {HTMLImageElement} props 
- * @returns {HTMLImageElement} 
- */
-function img(src = '', alt = '', props = {}) {
-  props.src = src;
-  props.alt = alt;
-  return create('img', props);
-}
-/**
- * 
- * @param {String} href 
- * @param {Node} child 
- * @param {HTMLAnchorElement} props 
- * @returns {HTMLAnchorElement} 
- */
-function a(href = '', child = null, props = {}) {
-  props.href = href;
-  if (child) {
-    props.children = [child];
-  }
-  return create('a', props);
-}
-
-export {
-  a,
-  bubble,
-  button,
-  create,
-  div,
-  get,
-  getAll,
-  img,
-  input,
-  span
 }

@@ -98,12 +98,18 @@ export default function select(opts = {}) {
         } else {
           id = selectOption.parentElement.firstElementChild.getAttribute('data-id');
         }
+      } else if (e.which === 13) {
+        toggle();
       }
       if (id) {
         setvalue(null, id);
       }
     }
   })()
+
+  function toggle() {
+    mask.parentElement ? hide() : show();
+  }
 
   function show() {
     mask.restore(document.body);

@@ -35,7 +35,7 @@ import html from 'html-element-js';
 import * as html from '/node-modules/src/html';
 ```
 
-**If you are importing a part of library please import css**
+##### *If you are importing a part of library please import css*
 
 ```javascript
 import '/node-modules/src/css/main.css';
@@ -44,19 +44,19 @@ import '/node-modules/src/css/main.css';
 ##### To only import rangeSlider
 
 ```javascript
-import {rangeSlider} from '/node-modules/src/rangeSlider';
+import rangeSlider from '/node-modules/src/rangeSlider';
 ```
 
 ##### To only import toggler
 
 ```javascript
-import {toggler} from '/node-modules/src/toggler';
+import toggler from '/node-modules/src/toggler';
 ```
 
 ##### To only import custom select
 
 ```javascript
-import {select} from '/node-modules/src/custrom-select';
+import select from '/node-modules/src/custrom-select';
 ```
 
 #### Create a new element

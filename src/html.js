@@ -34,7 +34,7 @@
 
 /**
  * @typedef {Object} elementCustromProps
- * @property {function(string|string[]|null):void} assignEvents remove event listeners from the element
+ * @property {function(string|string[]|null):void} assignRemovedEvents remove event listeners from the element
  * @property {function(string|string[]|null):void} removeRemovedEvents assigns the removed event listeners to the element
  * @property {function():void} remove Removes the element from DOM.
  * @property {function(parentElement|null):void} restore Restores the element to the DOM.
@@ -159,7 +159,7 @@ export default function tag(tagName, options = {}) {
   function restore(parentElement) {
     parentElement = parentElement || this.oldParentelement || null;
     if (parentElement && !this.parentElement) {
-      this.assignEvents();
+      this.assignRemovedEvents();
       parentElement.appendChild(this);
     }
   }

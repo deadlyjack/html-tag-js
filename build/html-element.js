@@ -105,7 +105,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _css_main_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_main_css__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 /* harmony import */ var _rangeSlider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
-/* harmony import */ var _custom_select__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
+/* harmony import */ var _comboBox__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8);
 /* harmony import */ var _tooltip__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9);
 /* harmony import */ var _toggler__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(10);
 
@@ -118,7 +118,7 @@ var exprt = {
   rangeSlider: _rangeSlider__WEBPACK_IMPORTED_MODULE_2__["default"],
   toolTip: _tooltip__WEBPACK_IMPORTED_MODULE_4__["default"],
   toggler: _toggler__WEBPACK_IMPORTED_MODULE_5__["default"],
-  select: _custom_select__WEBPACK_IMPORTED_MODULE_3__["default"],
+  comboBox: _comboBox__WEBPACK_IMPORTED_MODULE_3__["default"],
   tag: _html__WEBPACK_IMPORTED_MODULE_1__["default"]
 };
 var xprt = exprt;
@@ -155,7 +155,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(3)(false);
 // Module
-exports.push([module.i, ".bubble {\n  position: absolute;\n  -webkit-transform-origin: center;\n          transform-origin: center;\n  border-radius: 50%;\n  background-color: rgba(0, 0, 0, .3);\n}\n\n.bubble.animate {\n  -webkit-animation: grow 600ms ease 1;\n          animation: grow 600ms ease 1;\n}\n\n.bubbling {\n  position: relative;\n  overflow: hidden;\n}\n\n.toggler-wrapper {\n  position: relative;\n  display: block;\n  height: 30px;\n  width: 60px;\n  border-radius: 15px;\n  background-color: #99f;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n\n.toggler-wrapper *:focus {\n  outline: none !important;\n}\n\n.toggler-wrapper > span {\n  position: absolute;\n  left: 0;\n  top: 0;\n  height: 30px;\n  width: 30px;\n  border-radius: 50%;\n  background-color: #f99;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n          box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n  -webkit-transform: translate3d(0, 0, 0);\n          transform: translate3d(0, 0, 0);\n  -webkit-transition: all 300ms ease;\n  transition: all 300ms ease;\n  margin: 0 !important;\n}\n\n.toggler-wrapper > input[type=checkbox]:checked + span.toggler_btn {\n  background-color: #7dda85;\n  -webkit-transform: translate3d(100%, 0, 0);\n          transform: translate3d(100%, 0, 0);\n}\n\n.rangeSlider-wrapper {\n  position: relative;\n  height: 4px;\n  background-color: #99f;\n  margin: 13px 5px;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n\n.rangeSlider-wrapper *:focus, .rangeSlider-wrapper:focus {\n  outline: none !important;\n}\n\n.rangeSlider-wrapper > span {\n  position: absolute;\n  top: -5.5px;\n  left: -7.5px;\n  display: block;\n  height: 15px;\n  width: 15px;\n  border-radius: 50%;\n  background-color: #f99;\n}\n\n.rangeSlider-wrapper > span::after {\n  font-family: Arial, Helvetica, sans-serif;\n  position: absolute;\n  top: 6px;\n  left: 5px;\n  height: 38px;\n  width: 38px;\n  border-radius: 50%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  content: attr(data-value);\n  font-size: 12.8px;\n  font-size: 0.8rem;\n  font-weight: bold;\n  color: white;\n  -webkit-transform: translate(-50%, -50%) scale(0);\n          transform: translate(-50%, -50%) scale(0);\n  opacity: 0;\n  -webkit-transition: all 300ms ease-out;\n  transition: all 300ms ease-out;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n          box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n}\n\n.rangeSlider-wrapper.active > span::after, .rangeSlider-wrapper:active > span::after {\n  background-color: inherit;\n  -webkit-transform: translate(-50%, -50%) scale(1);\n          transform: translate(-50%, -50%) scale(1);\n  opacity: 1;\n}\n\n.rangeSlider-wrapper.small {\n  height: 2px;\n  margin: 18px 5px;\n}\n\n.rangeSlider-wrapper.small > span {\n  top: -5px;\n  left: -6px;\n  height: 12px;\n  width: 12px;\n}\n\n.toolTip-wrapper {\n  position: fixed;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  pointer-events: none;\n  z-index: 999;\n}\n\n.toolTip-wrapper .toolTip {\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  background-color: #99f;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .2);\n          box-shadow: 0 0 8px rgba(0, 0, 0, .2);\n  padding: 10px;\n  border-radius: 4px;\n  -webkit-animation: spring 100ms ease 1;\n          animation: spring 100ms ease 1;\n  width: fit-content;\n  max-width: 220px;\n}\n\n.toolTip-wrapper .toolTip > .text {\n  z-index: 1;\n  display: block;\n  color: white;\n  font-family: Arial, Helvetica, sans-serif;\n  white-space: pre-line;\n}\n\n.toolTip-wrapper .toolTip > .toolTip-pointer {\n  z-index: -1;\n  position: absolute;\n  -webkit-transform-origin: center;\n          transform-origin: center;\n  height: 15px;\n  width: 15px;\n  background-color: #99f;\n}\n\n@-webkit-keyframes spring {\n  0% {\n    -webkit-transform: scale(0.8);\n            transform: scale(0.8);\n  }\n  80% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2);\n  }\n  100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n\n@keyframes spring {\n  0% {\n    -webkit-transform: scale(0.8);\n            transform: scale(0.8);\n  }\n  80% {\n    -webkit-transform: scale(1.2);\n            transform: scale(1.2);\n  }\n  100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n  }\n}\n\n@-webkit-keyframes grow {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0) translate3d(0, 0, 0);\n            transform: scale(0) translate3d(0, 0, 0);\n  }\n  20% {\n    opacity: 1;\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.2) translate3d(0, 0, 0);\n            transform: scale(1.2) translate3d(0, 0, 0);\n  }\n}\n\n@keyframes grow {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0) translate3d(0, 0, 0);\n            transform: scale(0) translate3d(0, 0, 0);\n  }\n  20% {\n    opacity: 1;\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.2) translate3d(0, 0, 0);\n            transform: scale(1.2) translate3d(0, 0, 0);\n  }\n}\n\n.__select {\n  position: relative;\n  height: 40px;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  max-height: -webkit-fit-content;\n  max-height: -moz-fit-content;\n  max-height: fit-content;\n  border-bottom: solid 2px #666;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.__select:hover {\n  background-color: #eef;\n}\n\n.__select > .__placeholder {\n  content: attr(data-text);\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 2px;\n  font-size: 0.95em;\n  text-transform: none;\n}\n\n.__select > .__placeholder::after {\n  display: -webkit-inline-box;\n  display: -ms-inline-flexbox;\n  display: inline-flex;\n  height: 100%;\n  font-size: 0.65em;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  content: '\\25BC';\n  margin-left: auto;\n  color: #666;\n}\n\nbody > .__mask {\n  position: fixed;\n  height: 100vh;\n  width: 100vw;\n  z-index: 9999;\n  top: 0;\n  left: 0;\n}\n\nbody > .__options {\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  margin: 0 !important;\n  display: block;\n  position: fixed;\n  border-radius: 4px;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 30, .6);\n          box-shadow: 0 0 8px rgba(0, 0, 30, .6);\n  top: 0;\n  left: 0;\n  background-color: white;\n  overflow: hidden;\n  z-index: 9999;\n}\n\nbody > .__options > .__option {\n  -ms-flex-negative: 0;\n      flex-shrink: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: default;\n  padding: 0 5px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  white-space: pre-wrap;\n}\n\nbody > .__options > .__option.__selected, body > .__options > .__option.__selected:hover {\n  background-color: #96f;\n  color: white;\n}\n\nbody > .__options > .__option:hover {\n  background-color: #fcf;\n}", ""]);
+exports.push([module.i, ".bubble {\n  position: absolute;\n  -webkit-transform-origin: center;\n          transform-origin: center;\n  border-radius: 50%;\n  background-color: rgba(0, 0, 0, .3);\n}\n\n.bubble.animate {\n  -webkit-animation: grow 600ms ease 1;\n          animation: grow 600ms ease 1;\n}\n\n.bubbling {\n  position: relative;\n  overflow: hidden;\n}\n\n.toggler-wrapper {\n  position: relative;\n  display: block;\n  height: 30px;\n  width: 60px;\n  border-radius: 15px;\n  background-color: #99f;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n\n.toggler-wrapper *:focus {\n  outline: none !important;\n}\n\n.toggler-wrapper > span {\n  position: absolute;\n  left: 0;\n  top: 0;\n  height: 30px;\n  width: 30px;\n  border-radius: 50%;\n  background-color: #f99;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n          box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n  -webkit-transform: translate3d(0, 0, 0);\n          transform: translate3d(0, 0, 0);\n  -webkit-transition: all 300ms ease;\n  transition: all 300ms ease;\n  margin: 0 !important;\n}\n\n.toggler-wrapper > input[type=checkbox]:checked + span.toggler_btn {\n  background-color: #7dda85;\n  -webkit-transform: translate3d(100%, 0, 0);\n          transform: translate3d(100%, 0, 0);\n}\n\n.rangeSlider-wrapper {\n  position: relative;\n  height: 4px;\n  background-color: #99f;\n  margin: 13px 5px;\n  cursor: pointer;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n\n.rangeSlider-wrapper *:focus, .rangeSlider-wrapper:focus {\n  outline: none !important;\n}\n\n.rangeSlider-wrapper > span {\n  position: absolute;\n  top: -5.5px;\n  left: -7.5px;\n  display: block;\n  height: 15px;\n  width: 15px;\n  border-radius: 50%;\n  background-color: #f99;\n}\n\n.rangeSlider-wrapper > span::after {\n  font-family: Arial, Helvetica, sans-serif;\n  position: absolute;\n  top: 6px;\n  left: 5px;\n  height: 38px;\n  width: 38px;\n  border-radius: 50%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  content: attr(data-value);\n  font-size: 12.8px;\n  font-size: 0.8rem;\n  font-weight: bold;\n  color: white;\n  -webkit-transform: translate(-50%, -50%) scale(0);\n          transform: translate(-50%, -50%) scale(0);\n  opacity: 0;\n  -webkit-transition: all 300ms ease-out;\n  transition: all 300ms ease-out;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n          box-shadow: 0 0 8px rgba(0, 0, 0, .3);\n}\n\n.rangeSlider-wrapper.active > span::after, .rangeSlider-wrapper:active > span::after {\n  background-color: inherit;\n  -webkit-transform: translate(-50%, -50%) scale(1);\n          transform: translate(-50%, -50%) scale(1);\n  opacity: 1;\n}\n\n.rangeSlider-wrapper.small {\n  height: 2px;\n  margin: 18px 5px;\n}\n\n.rangeSlider-wrapper.small > span {\n  top: -5px;\n  left: -6px;\n  height: 12px;\n  width: 12px;\n}\n\n.__toolTip {\n  position: fixed !important;\n  margin: 0 !important;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  background-color: #7474d1;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .2);\n          box-shadow: 0 0 8px rgba(0, 0, 0, .2);\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 5px;\n  border-radius: 4px;\n  width: fit-content;\n  max-width: 220px;\n  color: white;\n  font-family: Arial, Helvetica, sans-serif;\n  white-space: pre;\n  -webkit-transition: all 100ms ease;\n  transition: all 100ms ease;\n  -webkit-transform: scale(1) rotate(0deg);\n          transform: scale(1) rotate(0deg);\n  pointer-events: none;\n  z-index: 999;\n  font-size: 13.6px;\n  font-size: 0.85rem;\n  opacity: 0;\n}\n\n.__toolTip.__visible {\n  opacity: 1;\n  -webkit-transform: scale(1) rotate(0deg);\n          transform: scale(1) rotate(0deg);\n  -webkit-animation: spring 100ms ease 1;\n          animation: spring 100ms ease 1;\n}\n\n.__toolTip::before {\n  content: '';\n  z-index: -1;\n  position: absolute;\n  -webkit-transform-origin: center;\n          transform-origin: center;\n  height: 12px;\n  width: 12px;\n  background-color: inherit;\n  -webkit-transform: rotate(45deg);\n          transform: rotate(45deg);\n}\n\n.__toolTip.left::before {\n  right: -6px;\n}\n\n.__toolTip.right::before {\n  left: -6px;\n}\n\n.__toolTip.top::before {\n  bottom: -6px;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n}\n\n.__toolTip.bottom::before {\n  top: -6px;\n  margin: 0 auto;\n  left: 0;\n  right: 0;\n}\n\n@-webkit-keyframes spring {\n  0% {\n    -webkit-transform: scale(0.8) rotate(0deg);\n            transform: scale(0.8) rotate(0deg);\n  }\n  80% {\n    -webkit-transform: scale(1.2) rotate(0deg);\n            transform: scale(1.2) rotate(0deg);\n  }\n  100% {\n    -webkit-transform: scale(1) rotate(0deg);\n            transform: scale(1) rotate(0deg);\n  }\n}\n\n@keyframes spring {\n  0% {\n    -webkit-transform: scale(0.8) rotate(0deg);\n            transform: scale(0.8) rotate(0deg);\n  }\n  80% {\n    -webkit-transform: scale(1.2) rotate(0deg);\n            transform: scale(1.2) rotate(0deg);\n  }\n  100% {\n    -webkit-transform: scale(1) rotate(0deg);\n            transform: scale(1) rotate(0deg);\n  }\n}\n\n@-webkit-keyframes grow {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0) translate3d(0, 0, 0);\n            transform: scale(0) translate3d(0, 0, 0);\n  }\n  20% {\n    opacity: 1;\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.2) translate3d(0, 0, 0);\n            transform: scale(1.2) translate3d(0, 0, 0);\n  }\n}\n\n@keyframes grow {\n  0% {\n    opacity: 0;\n    -webkit-transform: scale(0) translate3d(0, 0, 0);\n            transform: scale(0) translate3d(0, 0, 0);\n  }\n  20% {\n    opacity: 1;\n  }\n  100% {\n    opacity: 0;\n    -webkit-transform: scale(1.2) translate3d(0, 0, 0);\n            transform: scale(1.2) translate3d(0, 0, 0);\n  }\n}\n\n.__select {\n  position: relative;\n  height: 40px;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  max-height: -webkit-fit-content;\n  max-height: -moz-fit-content;\n  max-height: fit-content;\n  border-bottom: solid 2px #666;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n\n.__select:hover {\n  background-color: #eef;\n}\n\n.__select > .__placeholder {\n  content: attr(data-text);\n  height: -webkit-fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  padding: 0 2px;\n  font-size: 0.95em;\n  text-transform: none;\n}\n\n.__select > .__placeholder::after {\n  display: -webkit-inline-box;\n  display: -ms-inline-flexbox;\n  display: inline-flex;\n  height: 100%;\n  font-size: 0.65em;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  content: '\\25BC';\n  margin-left: auto;\n  color: #666;\n}\n\nbody > .__mask {\n  position: fixed;\n  height: 100vh;\n  width: 100vw;\n  z-index: 9999;\n  top: 0;\n  left: 0;\n}\n\nbody > .__options {\n  width: -webkit-fit-content;\n  width: -moz-fit-content;\n  width: fit-content;\n  margin: 0 !important;\n  display: block;\n  position: fixed;\n  border-radius: 4px;\n  -webkit-box-shadow: 0 0 8px rgba(0, 0, 30, .6);\n          box-shadow: 0 0 8px rgba(0, 0, 30, .6);\n  top: 0;\n  left: 0;\n  background-color: white;\n  overflow: hidden;\n  z-index: 9999;\n}\n\nbody > .__options > .__option {\n  -ms-flex-negative: 0;\n      flex-shrink: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  cursor: default;\n  padding: 0 5px;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  white-space: pre-wrap;\n}\n\nbody > .__options > .__option.__selected, body > .__options > .__option.__selected:hover {\n  background-color: #96f;\n  color: white;\n}\n\nbody > .__options > .__option:hover {\n  background-color: #fcf;\n}", ""]);
 
 
 
@@ -791,7 +791,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 /**
- * @typedef {Object} elementCustromProps
+ * @typedef {Object} elementCustomProps
  * @property {function(string|string[]|null):void} assignRemovedEvents remove event listeners from the element
  * @property {function(string|string[]|null):void} removeRemovedEvents assigns the removed event listeners to the element
  * @property {function():void} remove Removes the element from DOM.
@@ -802,7 +802,7 @@ __webpack_require__.r(__webpack_exports__);
  * 
  * @param {tagNames|HTMLElement} tagName A string that specifies the type of element to be created. The nodeName of the created element is initialized with the value of tagName. Don't use qualified names (like "html:a") with this method. When called on an HTML document, createElement() converts tagName to lower case before creating the element. In Firefox, Opera, and Chrome, createElement(null) works like createElement("null").
  * @param {elementProperties} options HTMLElment properties and attributes
- * @returns {HTMLElement & elementCustromProps}
+ * @returns {HTMLElement & elementCustomProps}
  */
 function tag(tagName) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -825,8 +825,8 @@ function tag(tagName) {
     }
 
     if (prop === 'child') {
-      var _el = options[prop];
-      if (_el instanceof Node) _el.append(_el);
+      var child = options[prop];
+      if (el instanceof Node) el.append(child);
     } else if (prop == 'children' && Array.isArray(options[prop])) {
       var els = options[prop];
       var _iteratorNormalCompletion = true;
@@ -1016,6 +1016,7 @@ function tag(tagName) {
     }
   }
   /**
+   * 
    * @param {HTMLElement} parentElement
    */
 
@@ -1047,6 +1048,7 @@ function tag(tagName) {
         if (node instanceof HTMLElement && node.id) el[node.id] = node;
       }
     });
+    return this;
   }
   /**
    * get first mathing element from DOM
@@ -1134,7 +1136,7 @@ function rangeSlider() {
     } else {
       return 0;
     }
-  };
+  }();
 
   mainWrapper.value = params.value || min;
 
@@ -1218,13 +1220,14 @@ function rangeSlider() {
 
 
   function setvalue(value) {
-    if (value > max) {
+    value = length === 0 ? parseInt(value) : parseFloat(value);
+
+    if (value >= max) {
       value = max;
-    } else if (value < min) {
+    } else if (value <= min) {
       value = min;
     }
 
-    value = parseFloat(value);
     if (tmout) clearTimeout(tmout);
     makeActive();
     width = mainWrapper.offsetWidth;
@@ -1245,14 +1248,8 @@ function rangeSlider() {
       value -= remainder;
     }
 
-    if (mainWrapper.onchange) {
-      mainWrapper.value = value;
-      mainWrapper.onchange(value);
-    }
-
-    mainWrapper.value = value;
     var val = value + '';
-    var l = length();
+    var l = length;
     val = val.split('.');
 
     if (l > 0 && val.length > 1) {
@@ -1261,7 +1258,19 @@ function rangeSlider() {
       val = val[0];
     }
 
+    mainWrapper.setAttribute('data-value', val);
     btn.setAttribute('data-value', val);
+    val = length ? parseFloat(val) : parseInt(val);
+
+    if (mainWrapper.onchange) {
+      mainWrapper.onchange(val);
+    }
+
+    if (params.onchange) {
+      params.onchange(val);
+    }
+
+    mainWrapper.value = val;
     var x = (value - min) / diff;
     x *= width;
     btn.style.transform = "translate3d(".concat(x, "px, 0, 0)");
@@ -1281,7 +1290,7 @@ function rangeSlider() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return select; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return comboBox; });
 /* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 
 /**
@@ -1294,7 +1303,7 @@ __webpack_require__.r(__webpack_exports__);
  * @param {Number} [opts.spead]
  */
 
-function select() {
+function comboBox() {
   var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var div = Object(_html__WEBPACK_IMPORTED_MODULE_0__["default"])('div', {
     className: '__select',
@@ -1312,15 +1321,16 @@ function select() {
   });
   var scrollbarWidth = getScrollbarWidth();
   var containerHeight = 0;
-  var height = opts.height;
+  var height = opts.height || 40;
   var width = opts.width;
-  var spead = opts.spead || 1;
+  var speed = opts.spead || 1;
   var obj = {};
   /**
    * @type {Element}
    */
 
   var selectOption;
+  var moveTop = false;
 
   (function init() {
     opts.maxheight = opts.maxheight || 600;
@@ -1412,7 +1422,7 @@ function select() {
     optionsContainer.restore(document.body);
     var divClient = div.getBoundingClientRect();
 
-    var _height = optionsContainer.children.length * (height || 40);
+    var _height = optionsContainer.children.length * height;
 
     var scroll = false;
     var logicalHeight = _height > opts.maxheight ? opts.maxheight : _height;
@@ -1435,7 +1445,7 @@ function select() {
             _height = tmpHeightTop;
           }
 
-          optionsContainer.style.transform = "translate(0, ".concat(-_height + divClient.height, "px)");
+          moveTop = true;
         } else {
           _height = tmpHeightBottom > logicalHeight ? logicalHeight : tmpHeightBottom;
         }
@@ -1446,7 +1456,7 @@ function select() {
           optionsContainer.style.width = divClient.width + scrollbarWidth + 'px';
         }
 
-        optionsContainer.style.transform = "translate(0, ".concat(-_height + divClient.height, "px)");
+        moveTop = true;
       }
 
       if (_height !== logicalHeight) {
@@ -1469,17 +1479,23 @@ function select() {
     containerHeight = _height;
     var current_height = 0;
     var inc_factor = 1;
+    var opacity = 0;
 
     function animateHeight() {
-      if (current_height + inc_factor > _height) {
-        optionsContainer.style.height = _height + 'px';
+      if (current_height >= _height) {
         scroll && (optionsContainer.style.overflowY = 'scroll');
-      } else if (current_height < _height) {
-        current_height += inc_factor;
-        inc_factor += spead;
-        optionsContainer.style.height = current_height + 'px';
-        requestAnimationFrame(animateHeight);
+        return;
       }
+
+      opacity += inc_factor / _height;
+      opacity = opacity < 1 ? opacity : 1;
+      current_height += inc_factor;
+      inc_factor += speed;
+      var calcHeight = current_height < _height ? current_height : _height;
+      optionsContainer.style.height = calcHeight + 'px';
+      optionsContainer.style.opacity = opacity;
+      if (moveTop) optionsContainer.style.transform = "translate(0, ".concat(-(calcHeight - height), "px)");
+      requestAnimationFrame(animateHeight);
     }
 
     var selected = optionsContainer.querySelector('.__selected');
@@ -1491,21 +1507,29 @@ function select() {
     optionsContainer.style.removeProperty('overflow-y');
     var current_height = containerHeight;
     var inc_factor = 1;
+    var opacity = 1;
 
     function animateHeight() {
-      if (current_height - inc_factor < 0) {
-        optionsContainer.style.height = '0';
+      if (current_height <= 0) {
         mask.remove();
         optionsContainer.remove();
-      } else if (current_height > 0) {
-        current_height -= inc_factor;
-        inc_factor += spead;
-        optionsContainer.style.height = current_height + 'px';
-        requestAnimationFrame(animateHeight);
-      } else {
-        mask.remove();
-        optionsContainer.remove();
+        moveTop = false;
+        return;
       }
+
+      opacity -= inc_factor / containerHeight;
+      opacity = opacity > 0 ? opacity : 0;
+      current_height -= inc_factor;
+      inc_factor += speed;
+      var calcHeight = current_height > 0 ? current_height : 0;
+      optionsContainer.style.height = current_height + 'px';
+      optionsContainer.style.opacity = opacity;
+
+      if (moveTop) {
+        optionsContainer.style.transform = "translate(0, ".concat(-(calcHeight - height), "px)");
+      }
+
+      requestAnimationFrame(animateHeight);
     }
 
     animateHeight();
@@ -1685,138 +1709,142 @@ function select() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return toolTip; });
 /* harmony import */ var _html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 
 /**
  * 
+ * @param {HTMLElement} element 
  * @param {Object} opts 
  * @param {String} opts.title 
- * @param {element} opts.element 
  * @param {String} opts.direction 
  * @param {Boolean} opts.watchChange
  */
 
-function toolTip(opts) {
-  if (!opts.element) return console.error('element is undefined');
-  if (!opts.direction) opts.direction = 'left';
-  var title = opts.title || opts.element.getAttribute('title') || opts.element.getAttribute('data-title') || '';
+function toolTip(element) {
+  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  if (!element) return console.error('element is undefined');
+  var title = opts.title || element.getAttribute('title') || element.getAttribute('data-title') || '';
+  var directions = ['auto', 'top', 'right', 'bottom', 'left'];
   var toolTip = Object(_html__WEBPACK_IMPORTED_MODULE_0__["default"])('div', {
-    className: 'toolTip'
+    className: '__toolTip',
+    textContent: title
   });
-  var toolTipPointer = Object(_html__WEBPACK_IMPORTED_MODULE_0__["default"])('span', {
-    className: 'toolTip-pointer'
-  });
-  var wrapper = Object(_html__WEBPACK_IMPORTED_MODULE_0__["default"])('div', {
-    className: 'toolTip-wrapper',
-    attr: {
-      "data-direction": opts.direction
-    }
-  });
-  var text = Object(_html__WEBPACK_IMPORTED_MODULE_0__["default"])('span', {
-    textContent: title,
-    className: 'text'
-  });
-  /**
-   * @type {MutationObserver}
-   */
+  var direction = opts.direction || element.getAttribute('data-direction') || 'auto';
+  direction = directions.indexOf(direction) > -1 ? direction : 'auto';
 
-  var observer;
-  toolTip.appendChild(toolTipPointer);
-  toolTip.appendChild(text);
-  wrapper.appendChild(toolTip);
-  opts.element.onmouseenter = mouseEnter;
-  opts.element.onmouseleave = mouseLeave;
+  function show() {
+    if (toolTip.enabled) return;
+    toolTip.enabled = true;
+    toolTip.restore(document.body);
+    var elementClient = element.getBoundingClientRect();
+    var toolTipClient = toolTip.getBoundingClientRect();
+    setPosition(direction);
 
-  function mouseEnter() {
-    var elClient = opts.element.getBoundingClientRect();
+    function setPosition(direction) {
+      toolTip.className = '__toolTip ' + direction;
 
-    if (opts.direction) {
-      if (opts.direction === 'left') {
-        wrapper.style.left = elClient.left + 'px';
-        wrapper.style.top = elClient.top + elClient.height / 2 + 'px';
-        toolTipPointer.style.right = "0";
-        toolTipPointer.style.top = "50%";
-        toolTipPointer.style.transform = 'translate3d(50%, -50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(-100%, -50%, 0px)';
-      }
+      switch (direction) {
+        case 'left':
+          toolTip.style.top = center('v') + 'px';
+          toolTip.style.left = calc(direction) + 'px';
+          break;
 
-      if (opts.direction === 'right') {
-        wrapper.style.left = elClient.right + 'px';
-        wrapper.style.top = elClient.top + elClient.height / 2 + 'px';
-        toolTipPointer.style.left = "0";
-        toolTipPointer.style.top = "50%";
-        toolTipPointer.style.transform = 'translate3d(-50%, -50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(0%, -50%, 0px)';
-      }
+        case 'right':
+          toolTip.style.top = center('v') + 'px';
+          toolTip.style.left = calc(direction) + 'px';
+          break;
 
-      if (opts.direction === 'top') {
-        wrapper.style.left = elClient.left + elClient.width / 2 + 'px';
-        wrapper.style.top = elClient.top + 'px';
-        toolTipPointer.style.left = "50%";
-        toolTipPointer.style.bottom = "0";
-        toolTipPointer.style.transform = 'translate3d(-50%, 50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(-50%, -100%, 0px)';
-      }
+        case 'top':
+          toolTip.style.top = calc(direction) + 'px';
+          toolTip.style.left = center() + 'px';
+          break;
 
-      if (opts.direction === 'bottom') {
-        wrapper.style.left = elClient.left + elClient.width / 2 + 'px';
-        wrapper.style.top = elClient.bottom + 'px';
-        toolTipPointer.style.left = "50%";
-        toolTipPointer.style.top = "0";
-        toolTipPointer.style.transform = 'translate3d(-50%, -50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(-50%, 0%, 0px)';
+        case 'bottom':
+          toolTip.style.top = calc(direction) + 'px';
+          toolTip.style.left = center() + 'px';
+          break;
+
+        default:
+          if (check('left')) setPosition('left');else if (check('right')) setPosition('right');else if (check('top')) setPosition('top');else if (check('bottom')) setPosition('bottom');else hide();
+          break;
       }
     }
 
-    if (opts.watchChange) {
-      observer = new MutationObserver(function (changes, observer) {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+    toolTip.classList.add('__visible');
 
-        try {
-          for (var _iterator = changes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var change = _step.value;
+    function check(direction) {
+      switch (direction) {
+        case 'left':
+          if (calc('left') < 0) return false;
+          return true;
 
-            if (change.type === 'attributes') {
-              text.textContent = opts.element.getAttribute('title') || opts.element.getAttribute('data-title');
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
-        }
-      });
-      observer.observe(opts.element, {
-        attributes: true
-      });
+        case 'right':
+          if (calc('right') + toolTipClient.width > innerWidth) return false;
+          return true;
+
+        case 'top':
+          if (calc('top') < 0) return false;
+          return true;
+
+        case 'bottom':
+          if (calc('bottom') + toolTipClient.height > innerHeight) return false;
+          return true;
+      }
     }
 
-    document.body.appendChild(wrapper);
-  }
+    function calc(direction) {
+      var pointerDim = 8;
 
-  function mouseLeave() {
-    if (!toolTip.parentElement) return;
-    document.body.removeChild(wrapper);
+      switch (direction) {
+        case 'left':
+          return elementClient.left - toolTipClient.width - pointerDim;
 
-    if (opts.watchChange && observer) {
-      observer.disconnect;
+        case 'right':
+          return elementClient.right + pointerDim;
+
+        case 'top':
+          return elementClient.top - toolTipClient.height - pointerDim;
+
+        case 'bottom':
+          return elementClient.bottom + pointerDim;
+      }
+    }
+
+    function center(axis) {
+      if (axis) return elementClient.top + elementClient.height / 2 - toolTipClient.height / 2;
+      return elementClient.left + elementClient.width / 2 - toolTipClient.width / 2;
     }
   }
 
-  opts.element.removeAttribute('title');
+  function hide() {
+    toolTip.classList.remove('__visible');
+    setTimeout(function () {
+      toolTip.remove();
+      toolTip.enabled = false;
+    }, 100);
+  }
+
+  element.addEventListener('mouseover', show);
+  element.addEventListener('mouseout', hide);
 }
+
+toolTip.init = function () {
+  var allElements = document.querySelectorAll('[data-title]');
+
+  _toConsumableArray(allElements).map(function (el) {
+    return toolTip(el);
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (toolTip);
 
 /***/ }),
 /* 10 */

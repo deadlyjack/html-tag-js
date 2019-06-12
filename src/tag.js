@@ -33,7 +33,7 @@
  */
 
 /**
- * @typedef {Object} elementCustromProps
+ * @typedef {Object} elementCustomProps
  * @property {function(string|string[]|null):void} assignRemovedEvents remove event listeners from the element
  * @property {function(string|string[]|null):void} removeRemovedEvents assigns the removed event listeners to the element
  * @property {function():void} remove Removes the element from DOM.
@@ -44,7 +44,7 @@
  * 
  * @param {tagNames|HTMLElement} tagName A string that specifies the type of element to be created. The nodeName of the created element is initialized with the value of tagName. Don't use qualified names (like "html:a") with this method. When called on an HTML document, createElement() converts tagName to lower case before creating the element. In Firefox, Opera, and Chrome, createElement(null) works like createElement("null").
  * @param {elementProperties} options HTMLElment properties and attributes
- * @returns {HTMLElement & elementCustromProps}
+ * @returns {HTMLElement & elementCustomProps}
  */
 
 export default function tag(tagName, options = {}) {
@@ -69,8 +69,8 @@ export default function tag(tagName, options = {}) {
     }
 
     if (prop === 'child') {
-      let el = options[prop];
-      if (el instanceof Node) el.append(el);
+      let child = options[prop];
+      if (el instanceof Node) el.append(child);
     } else if (prop == 'children' && Array.isArray(options[prop])) {
       const els = options[prop];
       for (let htmlel of els) {
@@ -154,6 +154,7 @@ export default function tag(tagName, options = {}) {
   }
 
   /**
+   * 
    * @param {HTMLElement} parentElement
    */
   function restore(parentElement) {
@@ -175,7 +176,8 @@ export default function tag(tagName, options = {}) {
         if (node instanceof HTMLElement && node.id)
           el[node.id] = node;
       }
-    })
+    });
+    return this;
   }
 
   /**

@@ -1,4 +1,4 @@
-import tag from './html';
+import tag from './tag';
 
 /**
  * 
@@ -9,7 +9,7 @@ import tag from './html';
  * @param {Number} [opts.width]
  * @param {Number} [opts.spead]
  */
-export default function select(opts = {}) {
+export default function comboBox(opts = {}) {
 
   const div = tag('div', {
     className: '__select',
@@ -27,14 +27,15 @@ export default function select(opts = {}) {
   });
   const scrollbarWidth = getScrollbarWidth();
   let containerHeight = 0;
-  let height = opts.height;
+  let height = opts.height || 40;
   let width = opts.width;
-  let spead = opts.spead || 1;
+  let speed = opts.spead || 1;
   let obj = {};
   /**
    * @type {Element}
    */
   let selectOption;
+  let moveTop = false;
 
   (function init() {
     opts.maxheight = opts.maxheight || 600;
@@ -115,7 +116,7 @@ export default function select(opts = {}) {
     mask.restore(document.body);
     optionsContainer.restore(document.body);
     let divClient = div.getBoundingClientRect();
-    let _height = optionsContainer.children.length * (height || 40);
+    let _height = optionsContainer.children.length * height;
     let scroll = false;
     let logicalHeight = _height > opts.maxheight ? opts.maxheight : _height;
 
@@ -137,7 +138,7 @@ export default function select(opts = {}) {
           } else {
             _height = tmpHeightTop;
           }
-          optionsContainer.style.transform = `translate(0, ${ -_height + divClient.height}px)`;
+          moveTop = true;
         } else {
           _height = tmpHeightBottom > logicalHeight ? logicalHeight : tmpHeightBottom;
         }
@@ -147,7 +148,7 @@ export default function select(opts = {}) {
           scroll = true;
           optionsContainer.style.width = (divClient.width + scrollbarWidth) + 'px';
         }
-        optionsContainer.style.transform = `translate(0, ${ -_height + divClient.height}px)`;
+        moveTop = true;
       }
 
       if (_height !== logicalHeight) {
@@ -173,18 +174,24 @@ export default function select(opts = {}) {
 
     let current_height = 0;
     let inc_factor = 1;
+    let opacity = 0;
 
     function animateHeight() {
-
-      if (current_height + inc_factor > _height) {
-        optionsContainer.style.height = _height + 'px';
+      if (current_height >= _height) {
         scroll && (optionsContainer.style.overflowY = 'scroll');
-      } else if (current_height < _height) {
-        current_height += inc_factor;
-        inc_factor += spead;
-        optionsContainer.style.height = current_height + 'px';
-        requestAnimationFrame(animateHeight);
+        return;
       }
+
+      opacity += (inc_factor / _height);
+      opacity = opacity < 1 ? opacity : 1;
+      current_height += inc_factor;
+      inc_factor += speed;
+
+      const calcHeight = current_height < _height ? current_height : _height;
+      optionsContainer.style.height = calcHeight + 'px';
+      optionsContainer.style.opacity = opacity;
+      if (moveTop) optionsContainer.style.transform = `translate(0, ${-(calcHeight - height)}px)`;
+      requestAnimationFrame(animateHeight);
     }
 
     let selected = optionsContainer.querySelector('.__selected');
@@ -199,21 +206,28 @@ export default function select(opts = {}) {
     optionsContainer.style.removeProperty('overflow-y');
     let current_height = containerHeight;
     let inc_factor = 1;
+    let opacity = 1;
 
     function animateHeight() {
-      if (current_height - inc_factor < 0) {
-        optionsContainer.style.height = '0';
+      if (current_height <= 0) {
         mask.remove();
         optionsContainer.remove();
-      } else if (current_height > 0) {
-        current_height -= inc_factor;
-        inc_factor += spead;
-        optionsContainer.style.height = current_height + 'px';
-        requestAnimationFrame(animateHeight);
-      } else {
-        mask.remove();
-        optionsContainer.remove();
+        moveTop = false;
+        return;
       }
+
+      opacity -= (inc_factor / containerHeight);
+      opacity = opacity > 0 ? opacity : 0;
+      current_height -= inc_factor;
+      inc_factor += speed;
+
+      const calcHeight = current_height > 0 ? current_height : 0;
+      optionsContainer.style.height = current_height + 'px';
+      optionsContainer.style.opacity = opacity;
+      if (moveTop) {
+        optionsContainer.style.transform = `translate(0, ${-(calcHeight - height)}px)`;
+      }
+      requestAnimationFrame(animateHeight);
     }
 
     animateHeight();

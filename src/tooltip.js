@@ -1,109 +1,122 @@
-import tag from './html';
+import tag from './tag';
 
 /**
  * 
+ * @param {HTMLElement} element 
  * @param {Object} opts 
  * @param {String} opts.title 
- * @param {element} opts.element 
  * @param {String} opts.direction 
- * @param {Boolean} opts.watchChange
  */
-export default function toolTip(opts) {
-  if (!opts.element) return console.error('element is undefined');
-  if (!opts.direction) opts.direction = 'left';
-  let title = opts.title || opts.element.getAttribute('title') || opts.element.getAttribute('data-title') || '';
-  let toolTip = tag('div', {
-    className: 'toolTip'
+function toolTip(element, opts = {}) {
+  if (!element) return console.error('element is undefined');
+  let title = opts.title || element.getAttribute('title') || element.getAttribute('data-title') || '';
+  const directions = ['auto', 'top', 'right', 'bottom', 'left'];
+  const toolTip = tag('div', {
+    className: '__toolTip',
+    textContent: title
   });
-  let toolTipPointer = tag('span', {
-    className: 'toolTip-pointer'
-  });
-  let wrapper = tag('div', {
-    className: 'toolTip-wrapper',
-    attr: {
-      "data-direction": opts.direction
-    }
-  });
-  let text = tag('span', {
-    textContent: title,
-    className: 'text'
-  });
-  /**
-   * @type {MutationObserver}
-   */
-  let observer;
-
-  toolTip.appendChild(toolTipPointer);
-  toolTip.appendChild(text);
-  wrapper.appendChild(toolTip);
-
-  opts.element.onmouseenter = mouseEnter;
-  opts.element.onmouseleave = mouseLeave;
+  let direction = opts.direction || element.getAttribute('data-direction') || 'auto';
+  direction = directions.indexOf(direction) > -1 ? direction : 'auto';
 
 
-  function mouseEnter() {
+  function show() {
+    if (toolTip.enabled) return;
+    toolTip.enabled = true;
+    toolTip.restore(document.body);
 
-    let elClient = opts.element.getBoundingClientRect();
+    const elementClient = element.getBoundingClientRect();
+    const toolTipClient = toolTip.getBoundingClientRect();
 
-    if (opts.direction) {
-      if (opts.direction === 'left') {
-        wrapper.style.left = elClient.left + 'px';
-        wrapper.style.top = elClient.top + elClient.height / 2 + 'px';
-        toolTipPointer.style.right = `0`;
-        toolTipPointer.style.top = `50%`;
-        toolTipPointer.style.transform = 'translate3d(50%, -50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(-100%, -50%, 0px)';
-      }
-      if (opts.direction === 'right') {
-        wrapper.style.left = elClient.right + 'px';
-        wrapper.style.top = elClient.top + elClient.height / 2 + 'px';
-        toolTipPointer.style.left = `0`;
-        toolTipPointer.style.top = `50%`;
-        toolTipPointer.style.transform = 'translate3d(-50%, -50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(0%, -50%, 0px)';
-      }
-      if (opts.direction === 'top') {
-        wrapper.style.left = elClient.left + elClient.width / 2 + 'px';
-        wrapper.style.top = elClient.top + 'px';
-        toolTipPointer.style.left = `50%`;
-        toolTipPointer.style.bottom = `0`;
-        toolTipPointer.style.transform = 'translate3d(-50%, 50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(-50%, -100%, 0px)';
-      }
-      if (opts.direction === 'bottom') {
-        wrapper.style.left = elClient.left + elClient.width / 2 + 'px';
-        wrapper.style.top = elClient.bottom + 'px';
-        toolTipPointer.style.left = `50%`;
-        toolTipPointer.style.top = `0`;
-        toolTipPointer.style.transform = 'translate3d(-50%, -50%, 0) rotate(45deg)';
-        wrapper.style.transform = 'translate3d(-50%, 0%, 0px)';
+    setPosition(direction);
+
+    function setPosition(direction) {
+      toolTip.className = '__toolTip ' + direction;
+
+      switch (direction) {
+        case 'left':
+          toolTip.style.top = center('v') + 'px';
+          toolTip.style.left = calc(direction) + 'px';
+          break;
+        case 'right':
+          toolTip.style.top = center('v') + 'px';
+          toolTip.style.left = calc(direction) + 'px';
+          break;
+        case 'top':
+          toolTip.style.top = calc(direction) + 'px';
+          toolTip.style.left = center() + 'px';
+          break;
+        case 'bottom':
+          toolTip.style.top = calc(direction) + 'px';
+          toolTip.style.left = center() + 'px';
+          break;
+        default:
+          if (check('left')) setPosition('left');
+          else if (check('right')) setPosition('right');
+          else if (check('top')) setPosition('top');
+          else if (check('bottom')) setPosition('bottom');
+          else hide();
+          break;
       }
     }
 
-    if (opts.watchChange) {
-      observer = new MutationObserver(function (changes, observer) {
-        for (let change of changes) {
-          if (change.type === 'attributes') {
-            text.textContent = opts.element.getAttribute('title') || opts.element.getAttribute('data-title');
-          }
-        }
-      });
-      observer.observe(opts.element, {
-        attributes: true
-      });
+    toolTip.classList.add('__visible');
+
+    function check(direction) {
+      switch (direction) {
+        case 'left':
+          if (calc('left') < 0) return false;
+          return true;
+        case 'right':
+          if (calc('right') + toolTipClient.width > innerWidth) return false;
+          return true;
+        case 'top':
+          if (calc('top') < 0) return false;
+          return true;
+        case 'bottom':
+          if (calc('bottom') + toolTipClient.height > innerHeight) return false;
+          return true;
+      }
     }
 
-    document.body.appendChild(wrapper);
-  }
+    function calc(direction) {
+      const pointerDim = 8;
+      switch (direction) {
+        case 'left':
+          return elementClient.left - toolTipClient.width - pointerDim;
+        case 'right':
+          return elementClient.right + pointerDim;
+        case 'top':
+          return elementClient.top - toolTipClient.height - pointerDim;
+        case 'bottom':
+          return elementClient.bottom + pointerDim;
+      }
+    }
 
-  function mouseLeave() {
-    if (!toolTip.parentElement) return;
-    document.body.removeChild(wrapper);
-    if (opts.watchChange && observer) {
-      observer.disconnect;
+    function center(axis) {
+      if (axis)
+        return elementClient.top + elementClient.height / 2 - toolTipClient.height / 2;
+
+      return elementClient.left + elementClient.width / 2 - toolTipClient.width / 2;
     }
   }
 
-  opts.element.removeAttribute('title');
+  function hide() {
+    toolTip.classList.remove('__visible');
+    setTimeout(() => {
+      toolTip.remove();
+      toolTip.enabled = false;
+    }, 100);
+  }
+
+
+  element.addEventListener('mouseover', show);
+  element.addEventListener('mouseout', hide);
 
 }
+
+toolTip.init = function () {
+  const allElements = document.querySelectorAll('[data-title]');
+  [...allElements].map(el => toolTip(el));
+}
+
+export default toolTip;

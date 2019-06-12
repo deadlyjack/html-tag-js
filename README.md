@@ -29,10 +29,10 @@ path/to/html-element-js/build/html-element.js
 import html from 'html-element-js';
 ```
 
-###### To only import html
+###### To only import `tag` method
 
 ```javascript
-import * as html from '/node-modules/src/html';
+import tag from '/node-modules/src/html';
 ```
 
 ##### *If you are importing a part of library please import css*
@@ -56,7 +56,7 @@ import toggler from '/node-modules/src/toggler';
 ##### To only import custom select
 
 ```javascript
-import select from '/node-modules/src/custrom-select';
+import comboBox from '/node-modules/src/comboBox';
 ```
 
 #### Create a new element
@@ -86,7 +86,7 @@ const span = html.tag('span' ,{
 #### Remove all EventListeners
 
 ```javascript
-const mydiv = html.div();
+const mydiv = html.tag('div');
 mydiv.addEventListener('click', function(e){
   console.log(e);
 }); //adds a event listener
@@ -97,7 +97,7 @@ mydiv.removeEvents(); //remvoes all event listener
 #### Remove specific EventListeners
 
 ```javascript
-const mydiv = html.div();
+const mydiv = html.tag('div');
 mydiv.addEventListener('click', function(e){
   console.log(e);
 }); //adds a event listener
@@ -120,14 +120,16 @@ const slider = html.rangeSlider({
 });
 ```
 
-###### Properties
+#### Properties - rangeSlider
+
 * **min** number:*private* (minimum value of range)
 * **max** number:*private* (maximum value of range)
 * **size** string:*private* (size of slider)
 * **step** string:*private* (step value)
 * **value** number:*public*
 
-###### Methods
+#### Methods - rangeSlider
+
 * **onchange** function:*public*
 * **setvalue** function:*public*
 
@@ -143,16 +145,18 @@ const toggler = html.toggler({
 });
 ```
 
-###### Properties
+#### Properties - toggler
+
 * **size** number:*private* (size of slider)
 * **valType** string:*private* (step value, possible value 'bool' or 'on/off')
 * **value** number:*public*
 
-###### Methods
+#### Methods - toggler
+
 * **onchange** function:*public*
 * **setvalue** function:*public*
 
-### Custom select
+### ComboBox
 
 Creates a toggle button equivalent to input type checkbox or radio
 
@@ -164,14 +168,54 @@ const toggler = html.select({
 });
 ```
 
-###### options
+#### options - comboBox
+
 * **spead** number (spead of animation of opening select options)
 * **height** number (height of option)
 * **maxheight** number (max height of option container)
 * **select** Element (Select element from DOM)
 
-###### Methods
+#### Methods - comboBox
+
 * **addOption** function:*public*
 * **removeOption** function:*public*
 * **setvalue** funtion:*public*
 * **value** function:*public*
+
+### ToolTip
+
+Creates a toggle button equivalent to input type checkbox or radio
+
+* **JavaScript** for single element
+
+```javascript
+const domElement = document.querySelector('some-element');
+
+html.toolTip(domElement, {
+  direction: 'left',
+  title: 'this is some dummy title'
+});
+```
+
+* **HTML** without direction attribute
+
+```HTML
+<a href="https://example.com" data-title="click this link">link</a>
+```
+
+* **HTML** with direction attribute
+
+```HTML
+<a href="https://example.com" data-title="click this link" data-direction="left">link</a>
+```
+
+* Initialize all element which has `data-title` attribute
+
+```javascript
+toolTip.init();
+```
+
+#### options - toolTip
+
+* **direction** string (direction of toolTip i.e. 'left', 'right', 'top' and 'bottom')
+* **title** string (text in toolTip)

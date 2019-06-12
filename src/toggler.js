@@ -1,4 +1,4 @@
-import tag from './html'
+import tag from './tag'
 
 /**
  * @callback onchange

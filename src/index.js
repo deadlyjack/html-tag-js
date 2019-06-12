@@ -1,9 +1,9 @@
 import './css/main.css';
 
-import tag from './html';
+import tag from './tag';
 
 import rangeSlider from './rangeSlider';
-import select from './custom-select';
+import comboBox from './comboBox';
 import toolTip from './tooltip';
 import toggler from './toggler';
 
@@ -11,7 +11,7 @@ let exprt = {
     rangeSlider,
     toolTip,
     toggler,
-    select,
+    comboBox,
     tag
 }
 

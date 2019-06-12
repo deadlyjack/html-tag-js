@@ -133,78 +133,107 @@
   width: 12px;
 }
 
-.toolTip-wrapper {
-  position: fixed;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  pointer-events: none;
-  z-index: 999;
-}
-
-.toolTip-wrapper .toolTip {
+.__toolTip {
+  position: fixed !important;
+  margin: 0 !important;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  background-color: #99f;
+  background-color: #7474d1;
   -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
           box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 5px;
   border-radius: 4px;
-  -webkit-animation: spring 100ms ease 1;
-          animation: spring 100ms ease 1;
   width: fit-content;
   max-width: 220px;
-}
-
-.toolTip-wrapper .toolTip > .text {
-  z-index: 1;
-  display: block;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
-  white-space: pre-line;
+  white-space: pre;
+  -webkit-transition: all 100ms ease;
+  transition: all 100ms ease;
+  -webkit-transform: scale(1) rotate(0deg);
+          transform: scale(1) rotate(0deg);
+  pointer-events: none;
+  z-index: 999;
+  font-size: 0.85rem;
+  opacity: 0;
 }
 
-.toolTip-wrapper .toolTip > .toolTip-pointer {
+.__toolTip.__visible {
+  opacity: 1;
+  -webkit-transform: scale(1) rotate(0deg);
+          transform: scale(1) rotate(0deg);
+  -webkit-animation: spring 100ms ease 1;
+          animation: spring 100ms ease 1;
+}
+
+.__toolTip::before {
+  content: '';
   z-index: -1;
   position: absolute;
   -webkit-transform-origin: center;
           transform-origin: center;
-  height: 15px;
-  width: 15px;
-  background-color: #99f;
+  height: 12px;
+  width: 12px;
+  background-color: inherit;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+.__toolTip.left::before {
+  right: -6px;
+}
+
+.__toolTip.right::before {
+  left: -6px;
+}
+
+.__toolTip.top::before {
+  bottom: -6px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}
+
+.__toolTip.bottom::before {
+  top: -6px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
 }
 
 @-webkit-keyframes spring {
   0% {
-    -webkit-transform: scale(0.8);
-            transform: scale(0.8);
+    -webkit-transform: scale(0.8) rotate(0deg);
+            transform: scale(0.8) rotate(0deg);
   }
   80% {
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
+    -webkit-transform: scale(1.2) rotate(0deg);
+            transform: scale(1.2) rotate(0deg);
   }
   100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    -webkit-transform: scale(1) rotate(0deg);
+            transform: scale(1) rotate(0deg);
   }
 }
 
 @keyframes spring {
   0% {
-    -webkit-transform: scale(0.8);
-            transform: scale(0.8);
+    -webkit-transform: scale(0.8) rotate(0deg);
+            transform: scale(0.8) rotate(0deg);
   }
   80% {
-    -webkit-transform: scale(1.2);
-            transform: scale(1.2);
+    -webkit-transform: scale(1.2) rotate(0deg);
+            transform: scale(1.2) rotate(0deg);
   }
   100% {
-    -webkit-transform: scale(1);
-            transform: scale(1);
+    -webkit-transform: scale(1) rotate(0deg);
+            transform: scale(1) rotate(0deg);
   }
 }
 

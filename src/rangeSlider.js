@@ -1,4 +1,4 @@
-import tag from './html';
+import tag from './tag';
 
 /**
  * @callback onchange
@@ -39,13 +39,13 @@ export default function rangeSlider(params = {}) {
     className: 'rangeSlider-button'
   });
 
-  let min = params.min || 0;
-  let max = params.max || 100;
-  let step = params.step || 1;
-  let diff = max - min;
+  const min = params.min || 0;
+  const max = params.max || 100;
+  const step = params.step || 1;
+  const diff = max - min;
   let width = 0;
   let tmout = null;
-  let length = (function calcLength() {
+  const length = (function calcLength() {
     let l = step + '';
     let lar = l.split('.');
     if (lar.length > 1) {
@@ -54,7 +54,7 @@ export default function rangeSlider(params = {}) {
     } else {
       return 0;
     }
-  });
+  })();
 
   mainWrapper.value = params.value || min;
 
@@ -138,14 +138,13 @@ export default function rangeSlider(params = {}) {
    * @param {Number} value 
    */
   function setvalue(value) {
-
-    if (value > max) {
+    value = length === 0 ? parseInt(value) : parseFloat(value);
+    if (value >= max) {
       value = max;
-    } else if (value < min) {
+    } else if (value <= min) {
       value = min;
     }
 
-    value = parseFloat(value);
     if (tmout) clearTimeout(tmout);
     makeActive();
     width = mainWrapper.offsetWidth;
@@ -166,20 +165,26 @@ export default function rangeSlider(params = {}) {
       value -= remainder;
     }
 
-    if (mainWrapper.onchange) {
-      mainWrapper.value = value;
-      mainWrapper.onchange(value);
-    }
-    mainWrapper.value = value;
     let val = value + '';
-    let l = length();
+    let l = length;
     val = val.split('.');
     if (l > 0 && val.length > 1) {
       val = val[0] + '.' + val[1].substr(0, l);
     } else {
       val = val[0];
     }
+
+    mainWrapper.setAttribute('data-value', val);
     btn.setAttribute('data-value', val);
+    val = length ? parseFloat(val) : parseInt(val);
+
+    if (mainWrapper.onchange) {
+      mainWrapper.onchange(val);
+    }
+    if (params.onchange) {
+      params.onchange(val);
+    }
+    mainWrapper.value = val;
 
     let x = (value - min) / diff;
     x *= width;

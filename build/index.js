@@ -90,13 +90,14 @@ toggler = html.toggler({
 body.appendChild(toggler);
 
 
-let select = html.select({
+let select = html.comboBox({
   select: document.querySelector('select'),
   height: 30,
   spead: 4
 });
 
 if (select.customSelect) {
+  // let options = ['random word', 'moon', 'sun'];
   let options = ['random word', 'moon', 'sun', 'planet', 'so many options', 'more options', 'just one more option', 'what is option', 'choose', 'all of them', 'none of them', 'option A', 'option B', 'option C'];
 
   for (let i = 0; i < options.length; ++i) {
@@ -122,3 +123,6 @@ removeBtn.onclick = () => {
 assignBtn.onclick = () => {
   testBtn.assignRemovedEvents();
 }
+
+
+html.toolTip.init();

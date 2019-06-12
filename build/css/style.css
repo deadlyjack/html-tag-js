@@ -14,32 +14,15 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-}
-
-html > div,
-html > span,
-body > div,
-body > span {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  padding-bottom: 300px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-html > div:not(:first-child),
-html > span:not(:first-child),
-body > div:not(:first-child),
-body > span:not(:first-child) {
-  margin-top: 20px;
 }
 
 .demo {
   width: 100%;
+  max-width: 600px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -49,18 +32,18 @@ body > span:not(:first-child) {
           flex-direction: column;
 }
 
-.demo.row {
-  padding: 10px 0;
-  max-width: 80%;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  margin: 0 auto;
+.demo .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  margin-left: -15px;
 }
 
-.demo.row > * {
-  margin-right: auto;
+.demo .row > * {
+  margin-left: 15px;
 }
 
 .demo h2,
@@ -81,8 +64,6 @@ body > span:not(:first-child) {
 }
 
 .demo > * {
-  text-align: left;
-  width: 80%;
   margin-top: 15px;
 }
 
@@ -113,21 +94,21 @@ input {
 
 button {
   height: 30px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   min-width: 60px;
-  max-width: -webkit-max-content;
-  max-width: -moz-max-content;
-  max-width: max-content;
   padding: 0 10px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border: none;
   border-radius: 4px;
   mix-blend-mode: difference;
-  text-transform: uppercase;
   -webkit-transition: all 100ms ease;
   transition: all 100ms ease;
   -webkit-box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.6);
           box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.6);
+  white-space: pre;
 }
 
 button:active {

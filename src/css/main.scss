@@ -121,55 +121,79 @@
   }
 }
 
-.toolTip-wrapper {
-  position: fixed;
+.__toolTip {
+  position: fixed !important;
+  margin: 0 !important;
   width: fit-content;
+  height: fit-content;
+  background-color: rgb(116, 116, 209);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  padding: 5px;
+  border-radius: 4px;
+  width: fit-content;
+  max-width: 220px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  white-space: pre;
+  transition: all 100ms ease;
+  transform: scale(1) rotate(0deg);
   pointer-events: none;
   z-index: 999;
+  font-size: 0.85rem;
+  opacity: 0;
 
-  .toolTip {
-    width: fit-content;
-    height: fit-content;
-    background-color: #99f;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    border-radius: 4px;
+  &.__visible {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
     animation: spring 100ms ease 1;
-    width: fit-content;
-    max-width: 220px;
+  }
 
-    > {
-      .text {
-        z-index: 1;
-        display: block;
-        color: white;
-        font-family: Arial, Helvetica, sans-serif;
-        white-space: pre-line;
-      }
+  &::before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    transform-origin: center;
+    height: 12px;
+    width: 12px;
+    background-color: inherit;
+    transform: rotate(45deg);
+  }
 
-      .toolTip-pointer {
-        z-index: -1;
-        position: absolute;
-        transform-origin: center;
-        height: 15px;
-        width: 15px;
-        background-color: #99f;
-      }
-    }
+  &.left::before {
+    right: -6px;
+  }
+
+  &.right::before {
+    left: -6px;
+  }
+
+  &.top::before {
+    bottom: -6px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+  }
+
+  &.bottom::before {
+    top: -6px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
   }
 }
 
 @keyframes spring {
   0% {
-    transform: scale(0.8);
+    transform: scale(0.8) rotate(0deg);
   }
 
   80% {
-    transform: scale(1.2);
+    transform: scale(1.2) rotate(0deg);
   }
 
   100% {
-    transform: scale(1);
+    transform: scale(1) rotate(0deg);
   }
 }
 

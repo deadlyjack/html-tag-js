@@ -21,11 +21,14 @@ body {
 
   .row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     margin-left: -15px;
+    margin-top: -7px;
 
     >* {
       margin-left: 15px;
+      margin-top: 15px;
     }
   }
 
@@ -70,6 +73,7 @@ input {
 }
 
 button {
+  flex-shrink: 0;
   height: 30px;
   width: fit-content;
   min-width: 60px;

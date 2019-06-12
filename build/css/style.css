@@ -36,14 +36,18 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
   margin-left: -15px;
+  margin-top: -7px;
 }
 
 .demo .row > * {
   margin-left: 15px;
+  margin-top: 15px;
 }
 
 .demo h2,
@@ -93,6 +97,8 @@ input {
 }
 
 button {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
   height: 30px;
   width: -webkit-fit-content;
   width: -moz-fit-content;

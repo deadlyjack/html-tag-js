@@ -160,6 +160,24 @@
     transform: rotate(45deg);
   }
 
+  &.left,
+  &.right {
+    &::before {
+      margin: auto 0;
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+  &.top,
+  &.bottom {
+    &::before {
+      margin: 0 auto;
+      left: 0;
+      right: 0;
+    }
+  }
+
   &.left::before {
     right: -6px;
   }
@@ -170,16 +188,10 @@
 
   &.top::before {
     bottom: -6px;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
   }
 
   &.bottom::before {
     top: -6px;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
   }
 }
 

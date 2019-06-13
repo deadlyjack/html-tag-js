@@ -185,6 +185,18 @@
           transform: rotate(45deg);
 }
 
+.__toolTip.left::before, .__toolTip.right::before {
+  margin: auto 0;
+  top: 0;
+  bottom: 0;
+}
+
+.__toolTip.top::before, .__toolTip.bottom::before {
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}
+
 .__toolTip.left::before {
   right: -6px;
 }
@@ -195,16 +207,10 @@
 
 .__toolTip.top::before {
   bottom: -6px;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
 }
 
 .__toolTip.bottom::before {
   top: -6px;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
 }
 
 @-webkit-keyframes spring {

@@ -93,7 +93,7 @@ function toolTip(element, opts = {}) {
     }
 
     function center(axis) {
-      if (axis)
+      if (axis === 'v')
         return elementClient.top + elementClient.height / 2 - toolTipClient.height / 2;
 
       return elementClient.left + elementClient.width / 2 - toolTipClient.width / 2;

@@ -9,15 +9,40 @@ import tag from './tag';
  */
 function toolTip(element, opts = {}) {
   if (!element) return console.error('element is undefined');
-  let title = opts.title || element.getAttribute('title') || element.getAttribute('data-title') || '';
   const directions = ['auto', 'top', 'right', 'bottom', 'left'];
   const toolTip = tag('div', {
-    className: '__toolTip',
-    textContent: title
+    className: '__toolTip'
+  });
+  const observer = new MutationObserver(mutations=>{
+    mutations.map(mutation=>{
+      if(mutation.type === 'attributes') {
+        let title = '';
+        if(element.hasAttribute('title')){
+          title = element.getAttribute('title');
+          element.removeAttribute('title');
+        }
+        if(title){
+          element.setAttribute('data-title', title);
+        }
+
+        toolTip.textContent = element.getAttribute('data-title');
+      }
+    })
   });
   let direction = opts.direction || element.getAttribute('data-direction') || 'auto';
-  direction = directions.indexOf(direction) > -1 ? direction : 'auto';
 
+  init();
+
+  function init(){
+    observer.observe(element, {
+      attributes: true
+    });
+    toolTip.textContent = initTextContent();
+    direction = directions.indexOf(direction) > -1 ? direction : 'auto';
+
+    element.addEventListener('mouseover', show);
+    element.addEventListener('mouseout', hide);
+  }
 
   function show() {
     if (toolTip.enabled) return;
@@ -50,10 +75,10 @@ function toolTip(element, opts = {}) {
           toolTip.style.left = center() + 'px';
           break;
         default:
-          if (check('left')) setPosition('left');
-          else if (check('right')) setPosition('right');
+          if (check('bottom')) setPosition('bottom');
           else if (check('top')) setPosition('top');
-          else if (check('bottom')) setPosition('bottom');
+          else if (check('right')) setPosition('right');
+          else if (check('left')) setPosition('bottom');
           else hide();
           break;
       }
@@ -108,14 +133,23 @@ function toolTip(element, opts = {}) {
     }, 100);
   }
 
+  function initTextContent(){
+    let title = '';
+    if(opts.title) title = opts.title;
+    if(element.hasAttribute('title')){
+      title = element.getAttribute('title');
+      element.removeAttribute('title');
+    }
 
-  element.addEventListener('mouseover', show);
-  element.addEventListener('mouseout', hide);
+    if(title) element.setAttribute('data-title', title);
+
+    return element.getAttribute('data-title');
+  }
 
 }
 
 toolTip.init = function () {
-  const allElements = document.querySelectorAll('[data-title]');
+  const allElements = document.querySelectorAll('[data-title], [title]');
   [...allElements].map(el => toolTip(el));
 }
 

@@ -19,20 +19,15 @@ input1.oninput = function () {
 body.appendChild(slider1);
 body.appendChild(input1);
 
-let slider2 = html.rangeSlider({
-  min: 0,
-  max: 100,
-  step: 0.001,
-  value: 46,
-  size: 'small'
-});
-
 let input = html.tag('input', {
   type: 'number',
   placeholder: 'change value'
 });
 let buttonInc = html.tag('button', {
   textContent: 'inc',
+  attr:{
+    title: 'value: 46'
+  },
   style: {
     marginLeft: '5px',
   }
@@ -41,6 +36,20 @@ let buttonDec = html.tag('button', {
   textContent: 'dec',
   style: {
     marginLeft: '5px',
+  },
+  attr:{
+    title: 'value: 46'
+  }
+});
+let slider2 = html.rangeSlider({
+  min: 0,
+  max: 100,
+  step: 0.001,
+  value: 46,
+  size: 'small',
+  onchange: function(val){
+    buttonDec.setAttribute('data-title', 'value: '+val);
+    buttonInc.setAttribute('data-title', 'value: '+val);
   }
 });
 buttonInc.onclick = function () {
@@ -124,5 +133,6 @@ assignBtn.onclick = () => {
   testBtn.assignRemovedEvents();
 }
 
-
 html.toolTip.init();
+
+html.bubbleOnTap.activateAll();

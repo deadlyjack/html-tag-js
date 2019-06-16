@@ -1,34 +1,60 @@
+import tag from './tag';
+import { timeout } from 'q';
+
 /**
  * 
- * @param {element} el 
+ * @param {Element} el
  */
-function bubble(el) {
-    let bubble = create('i', {
-        className: 'bubble'
+function bubbleOnTap(el) {
+    const bubble = tag('span', {
+        className: 'bubble animate'
+    });
+    const wrapper = tag('div', {
+        className: 'bubble-wrapper',
+        child: bubble
     });
 
     el.addEventListener('click', bubbles);
 
+    /**
+     * 
+     * @param {MouseEvent} e 
+     */
     function bubbles(e) {
-        let elClient = el.getBoundingClientRect();
-        bubble.classList.add('animate');
-        el.classList.add('bubbling');
-        bubble.style.height = elClient.width + 'px';
-        bubble.style.width = elClient.width + 'px';
-        bubble.style.top = (e.clientY - elClient.top - elClient.width / 2) + 'px';
-        bubble.style.left = (e.clientX - elClient.left - elClient.width / 2) + 'px';
+        const elClient = el.getBoundingClientRect();
+        const dim = elClient.width > elClient.height ? elClient.width : elClient.width;
+        wrapper.style.width = elClient.width + 'px';
+        wrapper.style.height = elClient.height + 'px';
+        wrapper.style.top = elClient.y + 'px';
+        wrapper.style.left = elClient.x + 'px';
 
-        setTimeout(function assignProps() {
-            el.removeEvents();
-            el.appendChild(bubble);
-        }, 0);
+        bubble.style.top = (e.clientY - elClient.top) + 'px';
+        bubble.style.left = (e.clientX - elClient.left) + 'px';
+        bubble.style.height = dim + 'px';
+        bubble.style.width = dim + 'px';
+        bubble.style.marginTop = bubble.style.marginLeft = -dim/2 + 'px';
+
+        if(bubble.timeout){
+            bubble.remove();
+            bubble.restore();
+            clearTimeout(bubble.timeout);
+        }else{
+            wrapper.restore(document.body);
+        }
 
 
-        setTimeout(function removeBubble() {
-            bubble.classList.remove('animate');
-            el.classList.remove('bubbling');
-            el.assignEvents();
-            el.removeChild(bubble);
-        }, 580);
+        bubble.timeout = setTimeout(()=>{
+            wrapper.remove();
+            bubble.timeout = null;
+        }, 600);
     }
 }
+
+bubbleOnTap.activateAll = function(){
+    const allEl = document.querySelectorAll('[data-bubble], button');
+    [...allEl].map(el=>{
+        bubbleOnTap(el);
+    });
+}
+
+export default bubbleOnTap;

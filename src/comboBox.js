@@ -1,6 +1,12 @@
 import tag from './tag';
 
 /**
+ * TODO: 
+ * Add feature to handel options group
+ * Add frature to select multiple options
+ */
+
+/**
  * 
  * @param {Object} [opts]
  * @param {HTMLSelectElement} [opts.select] 

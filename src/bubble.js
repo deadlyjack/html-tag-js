@@ -1,5 +1,7 @@
 import tag from './tag';
-import { timeout } from 'q';
+import {
+    timeout
+} from 'q';
 
 /**
  * 
@@ -14,7 +16,7 @@ function bubbleOnTap(el) {
         child: bubble
     });
 
-    el.addEventListener('click', bubbles);
+    el.addEventListener('mousedown', bubbles);
 
     /**
      * 
@@ -32,27 +34,27 @@ function bubbleOnTap(el) {
         bubble.style.left = (e.clientX - elClient.left) + 'px';
         bubble.style.height = dim + 'px';
         bubble.style.width = dim + 'px';
-        bubble.style.marginTop = bubble.style.marginLeft = -dim/2 + 'px';
+        bubble.style.marginTop = bubble.style.marginLeft = -dim / 2 + 'px';
 
-        if(bubble.timeout){
+        if (bubble.timeout) {
             bubble.remove();
             bubble.restore();
             clearTimeout(bubble.timeout);
-        }else{
+        } else {
             wrapper.restore(document.body);
         }
 
 
-        bubble.timeout = setTimeout(()=>{
+        bubble.timeout = setTimeout(() => {
             wrapper.remove();
             bubble.timeout = null;
         }, 600);
     }
 }
 
-bubbleOnTap.activateAll = function(){
+bubbleOnTap.activateAll = function () {
     const allEl = document.querySelectorAll('[data-bubble], button');
-    [...allEl].map(el=>{
+    [...allEl].map(el => {
         bubbleOnTap(el);
     });
 }

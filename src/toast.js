@@ -63,14 +63,21 @@ function toast(str, options){
             buttonsContainer
         ]
     });
+    const queue = [];
     const mode = options.mode || 'autohide';
     const position = options.position || 'bottom-center';
     const type = options.type || 'default';
 
     function show(){
+        const toast = document.querySelector('#__toast');
+        if(toast){
+            //TODO: Add toast to queue
+        }else{
+            //TODO: Show toast toast
+        }
 
+        //TODO: Or add every to toast to queue and then empty the queue
     }
-
     function hide(){
 
     }

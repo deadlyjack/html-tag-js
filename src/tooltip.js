@@ -5,6 +5,7 @@ import tag from './tag';
  * @param {HTMLElement} element 
  * @param {Object} opts 
  * @param {String} opts.title 
+ * @param {String} opts.defaultDirection 
  * @param {String} opts.direction 
  */
 function toolTip(element, opts = {}) {
@@ -13,27 +14,27 @@ function toolTip(element, opts = {}) {
   const toolTip = tag('div', {
     className: '__toolTip'
   });
-  const observer = new MutationObserver(mutations=>{
-    mutations.map(mutation=>{
-      if(mutation.type === 'attributes') {
+  const observer = new MutationObserver(mutations => {
+    mutations.map(mutation => {
+      if (mutation.type === 'attributes') {
         let title = '';
-        if(element.hasAttribute('title')){
+        if (element.hasAttribute('title')) {
           title = element.getAttribute('title');
           element.removeAttribute('title');
         }
-        if(title){
+        if (title) {
           element.setAttribute('data-title', title);
         }
 
         toolTip.textContent = element.getAttribute('data-title');
       }
-    })
+    });
   });
   let direction = opts.direction || element.getAttribute('data-direction') || 'auto';
 
   init();
 
-  function init(){
+  function init() {
     observer.observe(element, {
       attributes: true
     });
@@ -75,11 +76,24 @@ function toolTip(element, opts = {}) {
           toolTip.style.left = center() + 'px';
           break;
         default:
-          if (check('bottom')) setPosition('bottom');
-          else if (check('top')) setPosition('top');
-          else if (check('right')) setPosition('right');
-          else if (check('left')) setPosition('bottom');
-          else hide();
+          const directions = ['top', 'left', 'right', 'bottom'];
+          let defaultDirection = opts.defaultDirection || element.getAttribute('data-default-direction');
+
+          if (defaultDirection) {
+            const index = directions.indexOf(defaultDirection);
+            if (index > -1) {
+              directions.splice(index, 1);
+              directions.unshift(defaultDirection);
+            }
+          }
+
+          for (let direction of directions) {
+            if (check(direction)) {
+              setPosition(direction);
+              break;
+            }
+            if (directions.indexOf(direction) === directions.length - 1) hide();
+          }
           break;
       }
     }
@@ -133,15 +147,15 @@ function toolTip(element, opts = {}) {
     }, 100);
   }
 
-  function initTextContent(){
+  function initTextContent() {
     let title = '';
-    if(opts.title) title = opts.title;
-    if(element.hasAttribute('title')){
+    if (opts.title) title = opts.title;
+    if (element.hasAttribute('title')) {
       title = element.getAttribute('title');
       element.removeAttribute('title');
     }
 
-    if(title) element.setAttribute('data-title', title);
+    if (title) element.setAttribute('data-title', title);
 
     return element.getAttribute('data-title');
   }
@@ -151,6 +165,6 @@ function toolTip(element, opts = {}) {
 toolTip.init = function () {
   const allElements = document.querySelectorAll('[data-title], [title]');
   [...allElements].map(el => toolTip(el));
-}
+};
 
 export default toolTip;

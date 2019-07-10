@@ -44,7 +44,6 @@ function bubbleOnTap(el) {
             wrapper.restore(document.body);
         }
 
-
         bubble.timeout = setTimeout(() => {
             wrapper.remove();
             bubble.timeout = null;
@@ -57,6 +56,6 @@ bubbleOnTap.activateAll = function () {
     [...allEl].map(el => {
         bubbleOnTap(el);
     });
-}
+};
 
 export default bubbleOnTap;

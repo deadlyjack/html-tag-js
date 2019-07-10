@@ -1733,6 +1733,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * @param {HTMLElement} element 
  * @param {Object} opts 
  * @param {String} opts.title 
+ * @param {String} opts.defaultDirection 
  * @param {String} opts.direction 
  */
 
@@ -1807,7 +1808,30 @@ function toolTip(element) {
           break;
 
         default:
-          if (check('bottom')) setPosition('bottom');else if (check('top')) setPosition('top');else if (check('right')) setPosition('right');else if (check('left')) setPosition('bottom');else hide();
+          var _directions = ['top', 'left', 'right', 'bottom'];
+          var defaultDirection = opts.defaultDirection || element.getAttribute('data-default-direction');
+
+          if (defaultDirection) {
+            var index = _directions.indexOf(defaultDirection);
+
+            if (index > -1) {
+              _directions.splice(index, 1);
+
+              _directions.unshift(defaultDirection);
+            }
+          }
+
+          for (var _i = 0, _directions2 = _directions; _i < _directions2.length; _i++) {
+            var _direction = _directions2[_i];
+
+            if (check(_direction)) {
+              setPosition(_direction);
+              break;
+            }
+
+            if (_directions.indexOf(_direction) === _directions.length - 1) hide();
+          }
+
           break;
       }
     }

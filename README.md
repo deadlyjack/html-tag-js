@@ -196,6 +196,17 @@ html.toolTip(domElement, {
   title: 'this is some dummy title'
 });
 ```
+* **JavaScript** direction *auto*
+
+```javascript
+const domElement = document.querySelector('some-element');
+
+html.toolTip(domElement, {
+  direction: 'auto',
+  defaultDirection: 'left',
+  title: 'this is some dummy title'
+});
+```
 
 * **HTML** without direction attribute
 

@@ -43,6 +43,9 @@ function toolTip(element, opts = {}) {
 
     element.addEventListener('mouseover', show);
     element.addEventListener('mouseout', hide);
+    element.addEventListener('blur', hide);
+
+    window.addEventListener('scroll', hide);
   }
 
   function show() {

@@ -121,10 +121,10 @@ function toolTip(element, opts = {}) {
           if (calc('right') + toolTipClient.width > innerWidth) return false;
           return true;
         case 'top':
-          if (calc('top') < 0) return false;
+          if (calc('top') < 0 || check('left') || check('right')) return false;
           return true;
         case 'bottom':
-          if (calc('bottom') + toolTipClient.height > innerHeight) return false;
+          if (calc('bottom') + toolTipClient.height > innerHeight || check('left') || check('right')) return false;
           return true;
       }
     }

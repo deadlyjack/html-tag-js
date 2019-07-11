@@ -1858,11 +1858,11 @@ function toolTip(element) {
           return true;
 
         case 'top':
-          if (calc('top') < 0) return false;
+          if (calc('top') < 0 || check('left') || check('right')) return false;
           return true;
 
         case 'bottom':
-          if (calc('bottom') + toolTipClient.height > innerHeight) return false;
+          if (calc('bottom') + toolTipClient.height > innerHeight || check('left') || check('right')) return false;
           return true;
       }
     }
@@ -1892,6 +1892,7 @@ function toolTip(element) {
   }
 
   function hide() {
+    if (!toolTip.enabled) return;
     toolTip.classList.remove('__visible');
     setTimeout(function () {
       toolTip.remove();

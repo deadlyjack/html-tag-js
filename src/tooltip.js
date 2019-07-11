@@ -7,6 +7,7 @@ import tag from './tag';
  * @param {String} opts.title 
  * @param {String} opts.defaultDirection 
  * @param {String} opts.direction 
+ * @param {boolean} opts.onscrollmove 
  */
 function toolTip(element, opts = {}) {
   if (!element) return console.error('element is undefined');
@@ -40,18 +41,26 @@ function toolTip(element, opts = {}) {
     });
     toolTip.textContent = initTextContent();
     direction = directions.indexOf(direction) > -1 ? direction : 'auto';
+    opts.onscrollmove = opts.onscrollmove || element.getAttribute('data-on-scroll-move') === 'on' || false;
 
     element.addEventListener('mouseover', show);
     element.addEventListener('mouseout', hide);
-    element.addEventListener('blur', hide);
 
-    window.addEventListener('scroll', hide);
+    window.addEventListener('scroll', changePosition);
   }
 
-  function show() {
-    if (toolTip.enabled) return;
+  function changePosition() {
+    if (opts.onscrollmove)
+      show({
+        preventRestore: true
+      });
+    else hide();
+  }
+
+  function show(e) {
+    if (toolTip.enabled && !e.preventRestore) return;
     toolTip.enabled = true;
-    toolTip.restore(document.body);
+    if (!e.preventRestore) toolTip.restore(document.body);
 
     const elementClient = element.getBoundingClientRect();
     const toolTipClient = toolTip.getBoundingClientRect();
@@ -143,6 +152,7 @@ function toolTip(element, opts = {}) {
   }
 
   function hide() {
+    if (!toolTip.enabled) return;
     toolTip.classList.remove('__visible');
     setTimeout(() => {
       toolTip.remove();

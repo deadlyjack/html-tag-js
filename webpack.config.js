@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   context: __dirname,
-  mode: "production",
+  mode: "none",
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),

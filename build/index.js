@@ -14,7 +14,7 @@ input1.oninput = function () {
   if (input1.value) {
     slider1.setvalue(input1.value);
   }
-}
+};
 
 body.appendChild(slider1);
 body.appendChild(input1);
@@ -25,7 +25,7 @@ let input = html.tag('input', {
 });
 let buttonInc = html.tag('button', {
   textContent: 'inc',
-  attr:{
+  attr: {
     title: 'value: 46'
   },
   style: {
@@ -37,7 +37,7 @@ let buttonDec = html.tag('button', {
   style: {
     marginLeft: '5px',
   },
-  attr:{
+  attr: {
     title: 'value: 46'
   }
 });
@@ -47,22 +47,22 @@ let slider2 = html.rangeSlider({
   step: 0.001,
   value: 46,
   size: 'small',
-  onchange: function(val){
-    buttonDec.setAttribute('data-title', 'value: '+val);
-    buttonInc.setAttribute('data-title', 'value: '+val);
+  onchange: function (val) {
+    buttonDec.setAttribute('data-title', 'value: ' + val);
+    buttonInc.setAttribute('data-title', 'value: ' + val);
   }
 });
 buttonInc.onclick = function () {
   slider2.setvalue(slider2.value + 1);
-}
+};
 buttonDec.onclick = function () {
   slider2.setvalue(slider2.value - 1);
-}
+};
 input.oninput = function () {
   if (input.value) {
     slider2.setvalue(input.value);
   }
-}
+};
 
 body.appendChild(slider2);
 body.appendChild(input);
@@ -79,7 +79,7 @@ let toggler = html.toggler({
 
 toggler.onchange = function (value) {
   console.log(this.value);
-}
+};
 body.appendChild(toggler);
 
 toggler = html.toggler({
@@ -116,7 +116,7 @@ if (select.customSelect) {
 
 select.onchange = function (val) {
   console.log(val);
-}
+};
 
 const testBtn = html.tag(document.querySelector('#test-button'));
 const removeBtn = document.querySelector('#remove-button');
@@ -128,10 +128,10 @@ testBtn.addEventListener('click', () => console.log('%cHello World', 'font-size:
 
 removeBtn.onclick = () => {
   testBtn.removeEvents();
-}
+};
 assignBtn.onclick = () => {
   testBtn.assignRemovedEvents();
-}
+};
 
 html.toolTip.init();
 

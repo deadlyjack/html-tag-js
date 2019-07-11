@@ -1775,7 +1775,6 @@ function toolTip(element) {
     opts.onscrollmove = opts.onscrollmove || element.getAttribute('data-on-scroll-move') === 'on' || false;
     element.addEventListener('mouseover', show);
     element.addEventListener('mouseout', hide);
-    window.addEventListener('scroll', changePosition);
   }
 
   function changePosition() {
@@ -1788,6 +1787,7 @@ function toolTip(element) {
     if (toolTip.enabled && !e.preventRestore) return;
     toolTip.enabled = true;
     if (!e.preventRestore) toolTip.restore(document.body);
+    window.addEventListener('scroll', changePosition);
     var elementClient = element.getBoundingClientRect();
     var toolTipClient = toolTip.getBoundingClientRect();
     setPosition(direction);
@@ -1893,6 +1893,7 @@ function toolTip(element) {
 
   function hide() {
     if (!toolTip.enabled) return;
+    window.removeEventListener('scroll', changePosition);
     toolTip.classList.remove('__visible');
     setTimeout(function () {
       toolTip.remove();

@@ -45,8 +45,6 @@ function toolTip(element, opts = {}) {
 
     element.addEventListener('mouseover', show);
     element.addEventListener('mouseout', hide);
-
-    window.addEventListener('scroll', changePosition);
   }
 
   function changePosition() {
@@ -61,6 +59,8 @@ function toolTip(element, opts = {}) {
     if (toolTip.enabled && !e.preventRestore) return;
     toolTip.enabled = true;
     if (!e.preventRestore) toolTip.restore(document.body);
+
+    window.addEventListener('scroll', changePosition);
 
     const elementClient = element.getBoundingClientRect();
     const toolTipClient = toolTip.getBoundingClientRect();
@@ -153,6 +153,7 @@ function toolTip(element, opts = {}) {
 
   function hide() {
     if (!toolTip.enabled) return;
+    window.removeEventListener('scroll', changePosition);
     toolTip.classList.remove('__visible');
     setTimeout(() => {
       toolTip.remove();

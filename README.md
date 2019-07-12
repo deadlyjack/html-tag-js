@@ -204,7 +204,8 @@ const domElement = document.querySelector('some-element');
 html.toolTip(domElement, {
   direction: 'auto',
   defaultDirection: 'left',
-  title: 'this is some dummy title'
+  title: 'this is some dummy title',
+  showToolTipOn: ['focus']
 });
 ```
 

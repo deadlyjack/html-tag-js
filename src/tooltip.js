@@ -8,6 +8,7 @@ import tag from './tag';
  * @param {String} opts.defaultDirection 
  * @param {String} opts.direction 
  * @param {boolean} opts.onscrollmove 
+ * @param {Array} opts.showToolTipOn 
  */
 function toolTip(element, opts = {}) {
   if (!element) return console.error('element is undefined');
@@ -42,9 +43,16 @@ function toolTip(element, opts = {}) {
     toolTip.textContent = initTextContent();
     direction = directions.indexOf(direction) > -1 ? direction : 'auto';
     opts.onscrollmove = opts.onscrollmove || element.getAttribute('data-on-scroll-move') === 'on' || false;
+    opts.showToolTipOn = Array.isArray(opts.showToolTipOn) ? opts.showToolTipOn : typeof opts.showToolTipOn === 'string' ? [opts.showToolTipOn] : [];
 
     element.addEventListener('mouseover', show);
     element.addEventListener('mouseout', hide);
+    element.addEventListener('blur', hide);
+
+    for (let event of opts.showToolTipOn) {
+      if (typeof event === 'string')
+        element.addEventListener(event, show);
+    }
   }
 
   function changePosition() {

@@ -1876,19 +1876,19 @@ function toolTip(element) {
     function check(direction) {
       switch (direction) {
         case 'left':
-          if (calc('left') < 0) return false;
+          if (calc('left') < 0 || !checkFromMiddle('top') || !checkFromMiddle('bottom')) return false;
           return true;
 
         case 'right':
-          if (calc('right') + toolTipClient.width > innerWidth) return false;
+          if (calc('right') + toolTipClient.width > innerWidth || !checkFromMiddle('top') || !checkFromMiddle('bottom')) return false;
           return true;
 
         case 'top':
-          if (calc('top') < 0 || !check('left') || !check('right')) return false;
+          if (calc('top') < 0 || !checkFromMiddle('left') || !checkFromMiddle('right')) return false;
           return true;
 
         case 'bottom':
-          if (calc('bottom') + toolTipClient.height > innerHeight || !check('left') || !check('right')) return false;
+          if (calc('bottom') + toolTipClient.height > innerHeight || !checkFromMiddle('left') || !checkFromMiddle('right')) return false;
           return true;
       }
     }
@@ -1908,6 +1908,42 @@ function toolTip(element) {
 
         case 'bottom':
           return elementClient.bottom + pointerDim;
+      }
+    }
+
+    function calcFromMiddle(direction) {
+      switch (direction) {
+        case 'left':
+          return elementClient.left + elementClient.width / 2 - toolTipClient.width / 2;
+
+        case 'right':
+          return elementClient.right - elementClient.width / 2 + toolTipClient.width / 2;
+
+        case 'top':
+          return elementClient.top + elementClient.height / 2 - toolTipClient.height / 2;
+
+        case 'bottom':
+          return elementClient.bottom - elementClient.height / 2 + toolTipClient.height / 2;
+      }
+    }
+
+    function checkFromMiddle(direction) {
+      switch (direction) {
+        case 'left':
+          if (calcFromMiddle(direction) < 0) return false;
+          return true;
+
+        case 'right':
+          if (calcFromMiddle(direction) > window.innerWidth) return false;
+          return true;
+
+        case 'top':
+          if (calcFromMiddle(direction) < 0) return false;
+          return true;
+
+        case 'bottom':
+          if (calcFromMiddle(direction) > window.innerHeight) return false;
+          return true;
       }
     }
 

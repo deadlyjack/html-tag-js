@@ -32,7 +32,7 @@ function toolTip(element, opts = {}) {
       }
     });
   });
-  let direction = opts.direction || element.getAttribute('data-direction') || 'auto';
+  let direction = opts.direction || element.getAttribute('data-direction');
 
   init();
 
@@ -129,10 +129,10 @@ function toolTip(element, opts = {}) {
           if (calc('right') + toolTipClient.width > innerWidth) return false;
           return true;
         case 'top':
-          if (calc('top') < 0 || check('left') || check('right')) return false;
+          if (calc('top') < 0 || !check('left') || !check('right')) return false;
           return true;
         case 'bottom':
-          if (calc('bottom') + toolTipClient.height > innerHeight || check('left') || check('right')) return false;
+          if (calc('bottom') + toolTipClient.height > innerHeight || !check('left') || !check('right')) return false;
           return true;
       }
     }

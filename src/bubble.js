@@ -25,6 +25,7 @@ function bubbleOnTap(el) {
     function bubbles(e) {
         const elClient = el.getBoundingClientRect();
         const dim = elClient.width > elClient.height ? elClient.width : elClient.width;
+        let animationFrame = null;
         wrapper.style.width = elClient.width + 'px';
         wrapper.style.height = elClient.height + 'px';
         wrapper.style.top = elClient.y + 'px';
@@ -36,18 +37,33 @@ function bubbleOnTap(el) {
         bubble.style.width = dim + 'px';
         bubble.style.marginTop = bubble.style.marginLeft = -dim / 2 + 'px';
 
+        if (e.preventTimeout) return;
+
         if (bubble.timeout) {
             bubble.remove();
             bubble.restore();
             clearTimeout(bubble.timeout);
+            if (animationFrame) cancelAnimationFrame(animationFrame);
         } else {
             wrapper.restore(document.body);
         }
 
+        checkElement();
         bubble.timeout = setTimeout(() => {
             wrapper.remove();
             bubble.timeout = null;
+            if (animationFrame) cancelAnimationFrame(animationFrame);
         }, 600);
+
+        function checkElement() {
+            if (!el.parentElement) {
+                bubble.remove();
+            } else {
+                e.preventTimeout = true;
+                bubbles(e);
+            }
+            animationFrame = requestAnimationFrame(checkElement);
+        }
     }
 }
 

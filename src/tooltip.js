@@ -45,14 +45,42 @@ function toolTip(element, opts = {}) {
     opts.onscrollmove = opts.onscrollmove || element.getAttribute('data-on-scroll-move') === 'on' || false;
     opts.showToolTipOn = Array.isArray(opts.showToolTipOn) ? opts.showToolTipOn : typeof opts.showToolTipOn === 'string' ? [opts.showToolTipOn] : [];
 
-    element.addEventListener('mouseover', show);
-    element.addEventListener('mouseout', hide);
+    if (!hasTouch()) {
+      element.addEventListener('mouseover', show);
+      element.addEventListener('mouseout', hide);
+    } else {
+      window.onmousemove = function () {
+        element.addEventListener('mouseover', show);
+        element.addEventListener('mouseout', hide);
+        window.onmousemove = null;
+      };
+    }
+
+    element.addEventListener('touchstart', function () {
+      element.removeEventListener('mouseover', show);
+      element.removeEventListener('mouseout', hide);
+      window.onmousemove = function () {
+        element.addEventListener('mouseover', show);
+        element.addEventListener('mouseout', hide);
+        window.onmousemove = null;
+      };
+    });
+
+    // element.addEventListener('mouseover', show);
+    // element.addEventListener('mouseout', hide);
+
     element.addEventListener('blur', hide);
 
     for (let event of opts.showToolTipOn) {
       if (typeof event === 'string')
         element.addEventListener(event, show);
     }
+  }
+
+  function hasTouch() {
+    return 'ontouchstart' in document.documentElement ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0;
   }
 
   function changePosition() {

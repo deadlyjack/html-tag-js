@@ -1775,8 +1775,30 @@ function toolTip(element) {
     direction = directions.indexOf(direction) > -1 ? direction : 'auto';
     opts.onscrollmove = opts.onscrollmove || element.getAttribute('data-on-scroll-move') === 'on' || false;
     opts.showToolTipOn = Array.isArray(opts.showToolTipOn) ? opts.showToolTipOn : typeof opts.showToolTipOn === 'string' ? [opts.showToolTipOn] : [];
-    element.addEventListener('mouseover', show);
-    element.addEventListener('mouseout', hide);
+
+    if (!hasTouch()) {
+      element.addEventListener('mouseover', show);
+      element.addEventListener('mouseout', hide);
+    } else {
+      window.onmousemove = function () {
+        element.addEventListener('mouseover', show);
+        element.addEventListener('mouseout', hide);
+        window.onmousemove = null;
+      };
+    }
+
+    element.addEventListener('touchstart', function () {
+      element.removeEventListener('mouseover', show);
+      element.removeEventListener('mouseout', hide);
+
+      window.onmousemove = function () {
+        element.addEventListener('mouseover', show);
+        element.addEventListener('mouseout', hide);
+        window.onmousemove = null;
+      };
+    }); // element.addEventListener('mouseover', show);
+    // element.addEventListener('mouseout', hide);
+
     element.addEventListener('blur', hide);
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
@@ -1801,6 +1823,10 @@ function toolTip(element) {
         }
       }
     }
+  }
+
+  function hasTouch() {
+    return 'ontouchstart' in document.documentElement || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
   }
 
   function changePosition() {
@@ -2118,6 +2144,7 @@ function bubbleOnTap(el) {
   function bubbles(e) {
     var elClient = el.getBoundingClientRect();
     var dim = elClient.width > elClient.height ? elClient.width : elClient.width;
+    var animationFrame = null;
     wrapper.style.width = elClient.width + 'px';
     wrapper.style.height = elClient.height + 'px';
     wrapper.style.top = elClient.y + 'px';
@@ -2127,19 +2154,34 @@ function bubbleOnTap(el) {
     bubble.style.height = dim + 'px';
     bubble.style.width = dim + 'px';
     bubble.style.marginTop = bubble.style.marginLeft = -dim / 2 + 'px';
+    if (e.preventTimeout) return;
 
     if (bubble.timeout) {
       bubble.remove();
       bubble.restore();
       clearTimeout(bubble.timeout);
+      if (animationFrame) cancelAnimationFrame(animationFrame);
     } else {
       wrapper.restore(document.body);
     }
 
+    checkElement();
     bubble.timeout = setTimeout(function () {
       wrapper.remove();
       bubble.timeout = null;
+      if (animationFrame) cancelAnimationFrame(animationFrame);
     }, 600);
+
+    function checkElement() {
+      if (!el.parentElement) {
+        bubble.remove();
+      } else {
+        e.preventTimeout = true;
+        bubbles(e);
+      }
+
+      animationFrame = requestAnimationFrame(checkElement);
+    }
   }
 }
 

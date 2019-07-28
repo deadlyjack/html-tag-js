@@ -1,5 +1,7 @@
 import tag from './tag'
 
+import './css/toggler.scss';
+
 /**
  * @callback onchange
  * @param {Boolean} value 
@@ -23,7 +25,7 @@ import tag from './tag'
  * @returns {toggler & HTMLElement}
  */
 
-export default function toggler(params = {}) {
+function toggler(params = {}) {
 
   let checkbox = tag('input', {
     type: 'checkbox',
@@ -81,6 +83,7 @@ export default function toggler(params = {}) {
     checkbox.checked = value;
   }
 
-
   return mainWrapper;
 }
+
+export default toggler;

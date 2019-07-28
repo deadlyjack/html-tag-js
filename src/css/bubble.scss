@@ -1,0 +1,39 @@
+.bubble-wrapper {
+    position: fixed;
+    overflow: hidden;
+    transform: rotate(0);
+    pointer-events: none;
+
+    .bubble {
+        position: absolute;
+        transform-origin: center;
+        border-radius: 50%;
+        background-color: rgba($color: #000000, $alpha: 0.3);
+
+        &.animate {
+            opacity: 0;
+            animation: grow 600ms ease 1;
+        }
+    }
+
+    .bubbling {
+        position: relative;
+        overflow: hidden;
+    }
+}
+
+@keyframes grow {
+    0% {
+        opacity: 0;
+        transform: scale(0) translate3d(0, 0, 0);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.2) translate3d(0, 0, 0);
+    }
+}

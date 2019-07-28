@@ -114,7 +114,6 @@ button {
   transition: all 100ms ease;
   -webkit-box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.6);
           box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.6);
-  white-space: pre;
 }
 
 button:active {

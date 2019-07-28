@@ -1,5 +1,7 @@
 import tag from './tag';
 
+import './css/combobox.scss';
+
 /**
  * TODO: 
  * Add feature to handel options group
@@ -395,6 +397,13 @@ export default function comboBox(opts = {}) {
       return false;
     }
     return true;
+  }
+
+  obj.getOption = function (value) {
+    const options = [...optionsContainer.children];
+    for (let option of options) {
+      if (option.getAttribute('data-value') === value || option.textContent === value) return option;
+    }
   }
 
   obj.customSelect = optionsContainer;

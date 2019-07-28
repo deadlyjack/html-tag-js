@@ -47,7 +47,7 @@
  * @returns {HTMLElement & elementCustomProps}
  */
 
-export default function tag(tagName, options = {}) {
+function tag(tagName, options = {}) {
   const instanceofHtmlElement = tagName instanceof HTMLElement;
   if (!instanceofHtmlElement && typeof tagName !== 'string') throw new Error(`{tag} is invalid value of tag`);
   const el = instanceofHtmlElement ? tagName : document.createElement(tagName);
@@ -198,3 +198,20 @@ export default function tag(tagName, options = {}) {
     return this.querySelectorAll(selector);
   }
 }
+
+tag.get = function (selector) {
+  return tag(document.querySelector(selector));
+}
+
+tag.getAll = function (selector) {
+  const all = document.querySelectorAll(selector);
+  const allAr = [...all];
+
+  all.map(el => {
+    tag(el);
+  });
+
+  return all;
+}
+
+export default tag;

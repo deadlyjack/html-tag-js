@@ -1,5 +1,7 @@
 import tag from './tag';
 
+import './css/rangeSlider.scss';
+
 /**
  * @callback onchange
  * @param {Number} value 

@@ -1,5 +1,7 @@
 import tag from './tag';
 
+import './css/tooltip.scss';
+
 /**
  * 
  * @param {HTMLElement} element 

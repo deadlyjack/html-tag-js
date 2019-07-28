@@ -1,7 +1,6 @@
 import tag from './tag';
-import {
-    timeout
-} from 'q';
+
+import './css/bubble.scss';
 
 /**
  * 

@@ -1,14 +1,20 @@
-const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
   context: __dirname,
   mode: "production",
-  entry: './src/index.js',
+  entry: {
+    tag: "./src/tag.js",
+    comboBox: './src/comboBox.js',
+    html: './src/index.js',
+    togger: './src/toggler.js',
+    bubble: './src/bubble.js',
+    rangeSlider: './src/rangeSlider.js',
+    tooltip: './src/tooltip.js'
+  },
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'html-element.js',
-    library: 'html',
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
     libraryExport: 'default',
     libraryTarget: 'umd'
   },
@@ -24,27 +30,14 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1
-            }
-          },
-          'postcss-loader'
+          "style-loader",
+          "css-loader",
+          "sass-loader",
+          "postcss-loader"
         ]
-      },
-      {
-        test: /\.(ttf|eot|woff|woff2|svg)$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "fonts/[name].[ext]",
-          },
-        },
-      },
+      }
     ]
   }
 };

@@ -32,31 +32,25 @@ import html from 'html-element-js';
 ###### To only import `tag` method
 
 ```javascript
-import tag from '/node-modules/src/html';
-```
-
-##### *If you are importing a part of library please import css*
-
-```javascript
-import '/node-modules/src/css/main.css';
+import tag from '/node-modules/dist/tag';
 ```
 
 ##### To only import rangeSlider
 
 ```javascript
-import rangeSlider from '/node-modules/src/rangeSlider';
+import rangeSlider from '/node-modules/dist/rangeSlider';
 ```
 
 ##### To only import toggler
 
 ```javascript
-import toggler from '/node-modules/src/toggler';
+import toggler from '/node-modules/dist/toggler';
 ```
 
 ##### To only import custom select
 
 ```javascript
-import comboBox from '/node-modules/src/comboBox';
+import comboBox from '/node-modules/dist/comboBox';
 ```
 
 #### Create a new element

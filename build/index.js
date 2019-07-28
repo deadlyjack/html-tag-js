@@ -1,12 +1,12 @@
-let body = tag(document.querySelector('#slider'));
-let slider1 = rangeSlider({
+let body = html.tag(document.querySelector('#slider'));
+let slider1 = html.rangeSlider({
   min: 0,
   max: 100,
   step: 10,
   value: 46
 });
 
-let input1 = tag('input', {
+let input1 = html.tag('input', {
   type: 'number',
   placeholder: 'change value'
 });
@@ -19,11 +19,11 @@ input1.oninput = function () {
 body.appendChild(slider1);
 body.appendChild(input1);
 
-let input = tag('input', {
+let input = html.tag('input', {
   type: 'number',
   placeholder: 'change value'
 });
-let buttonInc = tag('button', {
+let buttonInc = html.tag('button', {
   textContent: 'inc',
   attr: {
     title: 'value: 46'
@@ -32,7 +32,7 @@ let buttonInc = tag('button', {
     marginLeft: '5px',
   }
 });
-let buttonDec = tag('button', {
+let buttonDec = html.tag('button', {
   textContent: 'dec',
   style: {
     marginLeft: '5px',
@@ -41,7 +41,7 @@ let buttonDec = tag('button', {
     title: 'value: 46'
   }
 });
-let slider2 = rangeSlider({
+let slider2 = html.rangeSlider({
   min: 0,
   max: 100,
   step: 0.001,
@@ -69,8 +69,8 @@ body.appendChild(input);
 body.appendChild(buttonInc);
 body.appendChild(buttonDec);
 
-body = tag(document.querySelector('#toggler'));
-let togglerobj = toggler({
+body = html.tag(document.querySelector('#toggler'));
+let togglerobj = html.toggler({
   size: 40,
   valType: 'on/off',
   value: true
@@ -82,7 +82,7 @@ togglerobj.onchange = function (value) {
 };
 body.appendChild(togglerobj);
 
-togglerobj = toggler({
+togglerobj = html.toggler({
   size: 30,
   valType: 'on/off',
   value: true
@@ -90,7 +90,7 @@ togglerobj = toggler({
 
 body.appendChild(togglerobj);
 
-togglerobj = toggler({
+togglerobj = html.toggler({
   size: 20,
   valType: 'on/off',
   value: true
@@ -99,7 +99,7 @@ togglerobj = toggler({
 body.appendChild(togglerobj);
 
 
-let select = comboBox({
+let select = html.comboBox({
   select: document.querySelector('select'),
   height: 30,
   spead: 4
@@ -118,7 +118,7 @@ select.onchange = function (val) {
   console.log(val);
 };
 
-const testBtn = tag(document.querySelector('#test-button'));
+const testBtn = html.tag(document.querySelector('#test-button'));
 const removeBtn = document.querySelector('#remove-button');
 const assignBtn = document.querySelector('#assign-button');
 
@@ -133,6 +133,6 @@ assignBtn.onclick = () => {
   testBtn.assignRemovedEvents();
 };
 
-toolTip.init();
+html.toolTip.init();
 
-bubble.activateAll();
+html.bubble.activateAll();

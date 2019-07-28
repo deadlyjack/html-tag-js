@@ -82,16 +82,19 @@ export default function comboBox(opts = {}) {
     obj.onchange = function () {};
     placeholder.onclick = show;
 
-    div.addEventListener('focus', onfocus);
+    div.addEventListener('focus', onfocus, {
+      passive: false
+    });
 
     function onfocus() {
-      this.onkeyup = onkeypress;
+      this.onkeydown = onkeydown;
     }
     /**
      * 
      * @param {KeyboardEvent} e 
      */
-    function onkeypress(e) {
+    function onkeydown(e) {
+      e.preventDefault();
       let id;
       if (e.which === 38) {
         let option = selectOption.previousElementSibling

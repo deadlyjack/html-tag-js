@@ -3,7 +3,7 @@
 **NOTE:** Please do not install this library for prduction because this library is very unstable.
 
 A simple library for creating and manipulating DOM using JavaScript DOM api.
-See [demo](https://deadlyjack.github.io/html-element-js/build/)
+See [demo](https://deadlyjack.github.io/html-element-js/demo/)
 
 ## Documentation
 

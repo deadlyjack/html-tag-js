@@ -2,9 +2,15 @@
     position: relative;
     height: 4px;
     background-color: #99f;
-    margin: 13px 5px;
+    margin: 20px 5px;
     cursor: pointer;
     user-select: none;
+
+    &.hide-text {
+        >span::after {
+            font-size: 0;
+        }
+    }
 
     *:focus,
     &:focus {
@@ -57,13 +63,25 @@
 
     &.small {
         height: 2px;
-        margin: 18px 5px;
+        margin: 20px 5px;
 
         >span {
             top: -5px;
             left: -6px;
             height: 12px;
             width: 12px;
+        }
+    }
+
+    &.big {
+        height: 6px;
+        margin: 20px 5px;
+
+        >span {
+            top: -6px;
+            left: -6px;
+            height: 18px;
+            width: 18px;
         }
     }
 }

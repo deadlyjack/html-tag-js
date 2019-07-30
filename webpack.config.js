@@ -7,7 +7,7 @@ module.exports = {
     tag: "./src/tag.js",
     comboBox: './src/comboBox.js',
     html: './src/index.js',
-    togger: './src/toggler.js',
+    togger: './src/toggleSwitch.js',
     bubble: './src/bubble.js',
     rangeSlider: './src/rangeSlider.js',
     tooltip: './src/tooltip.js'

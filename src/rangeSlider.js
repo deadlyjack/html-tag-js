@@ -69,6 +69,10 @@ export default function rangeSlider(params = {}) {
     }, 0);
   }
 
+  if ((max + '').length > 3) {
+    mainWrapper.classList.add('hide-text');
+  }
+
   mainWrapper.addEventListener('mousedown', onmousedown);
   mainWrapper.addEventListener('focus', makeActive);
   mainWrapper.addEventListener('touchstart', onmousedown);
@@ -122,8 +126,6 @@ export default function rangeSlider(params = {}) {
     document.ontouchend = null;
   }
 
-
-
   /**
    * 
    * @param {Number} x 
@@ -167,14 +169,7 @@ export default function rangeSlider(params = {}) {
       value -= remainder;
     }
 
-    let val = value + '';
-    let l = length;
-    val = val.split('.');
-    if (l > 0 && val.length > 1) {
-      val = val[0] + '.' + val[1].substr(0, l);
-    } else {
-      val = val[0];
-    }
+    let val = parseFloat(value.toFixed(2));
 
     mainWrapper.setAttribute('data-value', val);
     btn.setAttribute('data-value', val);

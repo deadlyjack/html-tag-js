@@ -69,6 +69,57 @@ body.appendChild(input);
 body.appendChild(buttonInc);
 body.appendChild(buttonDec);
 
+input = html.tag('input', {
+  type: 'number',
+  placeholder: 'change value'
+});
+buttonInc = html.tag('button', {
+  textContent: 'inc',
+  attr: {
+    title: 'value: 46'
+  },
+  style: {
+    marginLeft: '5px',
+  }
+});
+buttonDec = html.tag('button', {
+  textContent: 'dec',
+  style: {
+    marginLeft: '5px',
+  },
+  attr: {
+    title: 'value: 46'
+  }
+});
+
+slider2 = html.rangeSlider({
+  min: 0,
+  max: 100000,
+  step: 0.001,
+  value: 46,
+  size: 'big',
+  onchange: function (val) {
+    buttonDec.setAttribute('data-title', 'value: ' + val);
+    buttonInc.setAttribute('data-title', 'value: ' + val);
+  }
+});
+buttonInc.onclick = function () {
+  slider2.setvalue(slider2.value + 1);
+};
+buttonDec.onclick = function () {
+  slider2.setvalue(slider2.value - 1);
+};
+input.oninput = function () {
+  if (input.value) {
+    slider2.setvalue(input.value);
+  }
+};
+
+body.appendChild(slider2);
+body.appendChild(input);
+body.appendChild(buttonInc);
+body.appendChild(buttonDec);
+
 body = html.tag(document.querySelector('#toggler'));
 let togglerobj = html.toggler({
   size: 40,

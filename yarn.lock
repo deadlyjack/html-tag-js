@@ -2310,6 +2310,11 @@ hosted-git-info@^2.1.4:
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
   integrity sha512-7T/BxH19zbcCTa8XkMlbK5lTo1WtgkFi3GvdWEyNuc4Vex7/9Dqbnpsf4JMydcfj9HCg4zUWFTL3Za6lapg5/w==
 
+html-element-js@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/html-element-js/-/html-element-js-0.2.0.tgz#5ff053079f865fe9fc8430ffc88815b6879d0018"
+  integrity sha512-NWA+SW57YBwKXhWS7Yu5K+utgB9YJs7HDUMJyqC/sapCIDIz/0AxBmYUf5IPnd/XXPNo7pruE5OrZp80QX4r7g==
+
 http-signature@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/http-signature/-/http-signature-1.2.0.tgz#9aecd925114772f3d95b65a60abb8f7c18fbace1"

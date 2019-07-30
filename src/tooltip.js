@@ -248,7 +248,7 @@ function toolTip(element, opts = {}) {
 
 }
 
-toolTip.init = function () {
+toolTip.activateAll = function () {
   const allElements = document.querySelectorAll('[data-title], [title]');
   [...allElements].map(el => toolTip(el));
 };

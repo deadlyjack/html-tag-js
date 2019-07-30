@@ -3,36 +3,6 @@
  */
 
 /**
- * @typedef {Object} elementProperties
- * @property {string} accessKey
- * @property {string} autocapitalize
- * @property {string} className Returns the value of element's class content attribute. Can be set to change it.
- * @property {string} contentEditable where a value of "true" means the element is editable and a value of "false" means it isn't.
- * @property {Node} child child of this element.
- * @property {Node[]} children children of the this element.
- * @property {function():void} click
- * @property {string} dir text content direction
- * @property {boolean} draggable
- * @property {boolean} hidden
- * @property {string} id Returns the value of element's id content attribute. Can be set to change it.
- * @property {string} innerText
- * @property {string} lang
- * @property {boolean} noModule Is a Boolean indicating whether an import script can be executed in user agents that support module scripts.
- * @property {string} nodeValue
- * @property {function(Event):void} onfullscreenchange
- * @property {function(Event):void} onfullscreenerror
- * @property {string} outerHTML
- * @property {number} scrollLeft
- * @property {number} scrollTop
- * @property {boolean} spellcheck
- * @property {boolean} translate
- * @property {string} slot Returns the value of element's slot content attribute. Can be set to chnage it.
- * @property {CSSStyleDeclation} style An object representing the declarations of an element's style attributes.
- * @property {number} tabIndex Position of the element in the tabbing order.
- * @property {string} textContent
- */
-
-/**
  * @typedef {Object} elementCustomProps
  * @property {function(string|string[]|null):void} assignRemovedEvents remove event listeners from the element
  * @property {function(string|string[]|null):void} removeRemovedEvents assigns the removed event listeners to the element

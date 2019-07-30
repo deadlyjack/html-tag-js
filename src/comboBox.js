@@ -15,7 +15,7 @@ import './css/combobox.scss';
  * @param {Number} [opts.height]
  * @param {Number} [opts.maxheight]
  * @param {Number} [opts.width]
- * @param {Number} [opts.spead]
+ * @param {Number} [opts.speed]
  */
 export default function comboBox(opts = {}) {
 
@@ -37,7 +37,7 @@ export default function comboBox(opts = {}) {
   let containerHeight = 0;
   let height = opts.height || 40;
   let width = opts.width;
-  let speed = opts.spead || 1;
+  let speed = opts.speed || 1;
   let obj = {};
   /**
    * @type {Element}
@@ -332,7 +332,7 @@ export default function comboBox(opts = {}) {
       option = optionsContainer.querySelector(`[data-value='${value}']`);
     }
 
-    if (!option) return;
+    if (!option) return false;
 
     value = option.getAttribute('data-value');
 
@@ -351,6 +351,8 @@ export default function comboBox(opts = {}) {
     if (!isInView(option)) {
       scrollIntoView(option);
     }
+
+    return true;
   }
 
   function getScrollbarWidth() {

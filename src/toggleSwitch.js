@@ -2,30 +2,7 @@ import tag from './tag'
 
 import './css/toggler.scss';
 
-/**
- * @callback onchange
- * @param {Boolean} value 
- */
-
-/**
- * 
- * @typedef toggler
- * @property {onchange} onchange 
- * @property {function():Boolean} value 
- * @property {function(Boolean):void} setvalue 
- */
-
-/**
- * 
- * @param {Object} params 
- * @param {Boolean} [params.value] 
- * @param {onchange} [params.onchange] 
- * @param {Number} [params.size]
- * @param {string} [params.valType='bool'] possible value 'bool' or ''on/off'
- * @returns {toggler & HTMLElement}
- */
-
-function toggler(params = {}) {
+function toggleSwitch(params = {}) {
 
   let checkbox = tag('input', {
     type: 'checkbox',
@@ -86,4 +63,4 @@ function toggler(params = {}) {
   return mainWrapper;
 }
 
-export default toggler;
+export default toggleSwitch;

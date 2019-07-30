@@ -6,7 +6,7 @@ import './css/bubble.scss';
  * 
  * @param {Element} el
  */
-function bubbleOnTap(el) {
+function bubble(el) {
     const bubble = tag('span', {
         className: 'bubble animate'
     });
@@ -66,11 +66,11 @@ function bubbleOnTap(el) {
     }
 }
 
-bubbleOnTap.activateAll = function () {
+bubble.activateAll = function () {
     const allEl = document.querySelectorAll('[data-bubble], button');
     [...allEl].map(el => {
-        bubbleOnTap(el);
+        bubble(el);
     });
 };
 
-export default bubbleOnTap;
+export default bubble;

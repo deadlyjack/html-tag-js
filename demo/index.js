@@ -92,7 +92,7 @@ buttonDec = html.tag('button', {
   }
 });
 
-slider2 = html.rangeSlider({
+const slider3 = html.rangeSlider({
   min: 0,
   max: 100000,
   step: 0.001,
@@ -104,24 +104,24 @@ slider2 = html.rangeSlider({
   }
 });
 buttonInc.onclick = function () {
-  slider2.setvalue(slider2.value + 1);
+  slider3.setvalue(slider3.value + 1);
 };
 buttonDec.onclick = function () {
-  slider2.setvalue(slider2.value - 1);
+  slider3.setvalue(slider3.value - 1);
 };
 input.oninput = function () {
   if (input.value) {
-    slider2.setvalue(input.value);
+    slider3.setvalue(input.value);
   }
 };
 
-body.appendChild(slider2);
+body.appendChild(slider3);
 body.appendChild(input);
 body.appendChild(buttonInc);
 body.appendChild(buttonDec);
 
 body = html.tag(document.querySelector('#toggler'));
-let togglerobj = html.toggler({
+let togglerobj = html.toggleSwitch({
   size: 40,
   valType: 'on/off',
   value: true
@@ -133,7 +133,7 @@ togglerobj.onchange = function (value) {
 };
 body.appendChild(togglerobj);
 
-togglerobj = html.toggler({
+togglerobj = html.toggleSwitch({
   size: 30,
   valType: 'on/off',
   value: true
@@ -141,7 +141,7 @@ togglerobj = html.toggler({
 
 body.appendChild(togglerobj);
 
-togglerobj = html.toggler({
+togglerobj = html.toggleSwitch({
   size: 20,
   valType: 'on/off',
   value: true
@@ -153,7 +153,7 @@ body.appendChild(togglerobj);
 let select = html.comboBox({
   select: document.querySelector('select'),
   height: 30,
-  spead: 4
+  speed: 4
 });
 
 if (select.customSelect) {
@@ -184,6 +184,6 @@ assignBtn.onclick = () => {
   testBtn.assignRemovedEvents();
 };
 
-html.toolTip.init();
+html.toolTip.activateAll();
 
 html.bubble.activateAll();

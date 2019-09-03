@@ -16,7 +16,7 @@ npm install --save html-element-js
 or directly import into browser
 
 ```text
-path/to/html-element-js/build/html-element.js
+path/to/html-element-js/dist/html-element.js
 ```
 
 ### Usage

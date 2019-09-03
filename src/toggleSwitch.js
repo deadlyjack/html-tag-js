@@ -1,4 +1,4 @@
-import tag from './tag'
+import tag from './tag';
 
 import './css/toggler.scss';
 
@@ -58,7 +58,7 @@ function toggleSwitch(params = {}) {
     value = !!value;
 
     checkbox.checked = value;
-  }
+  };
 
   return mainWrapper;
 }

@@ -1953,11 +1953,6 @@ homedir-polyfill@^1.0.1:
   dependencies:
     parse-passwd "^1.0.0"
 
-html-element-js@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/html-element-js/-/html-element-js-0.2.0.tgz#5ff053079f865fe9fc8430ffc88815b6879d0018"
-  integrity sha512-NWA+SW57YBwKXhWS7Yu5K+utgB9YJs7HDUMJyqC/sapCIDIz/0AxBmYUf5IPnd/XXPNo7pruE5OrZp80QX4r7g==
-
 https-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"

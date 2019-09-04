@@ -5,7 +5,7 @@
  * @returns {HTMLElement & elementCustomProps}
  */
 
-function tag(tagName, options = {}) {
+export default function tag(tagName, options = {}) {
   const iofHTML = tagName instanceof HTMLElement;
 
   if (!iofHTML && typeof tagName !== 'string')
@@ -139,5 +139,3 @@ tag.getAll = function (selector) {
 
   return allAr;
 };
-
-export default tag;

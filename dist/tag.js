@@ -100,6 +100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return tag; });
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -309,13 +310,11 @@ tag.getAll = function (selector) {
 
   var allAr = _toConsumableArray(all);
 
-  all.map(function (el) {
+  allAr.map(function (el) {
     tag(el);
   });
-  return all;
+  return allAr;
 };
-
-/* harmony default export */ __webpack_exports__["default"] = (tag);
 
 /***/ })
 /******/ ])["default"];

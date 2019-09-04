@@ -4,12 +4,11 @@
   "description": "A simple library for create and manipulating DOM using JavaScript DOM api.",
   "main": "dist/html.js",
   "scripts": {
-    "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deadlyjack/html-element-js.git"
+    "url": "git+https://github.com/deadlyjack/tag.git.git"
   },
   "keywords": [
     "html",
@@ -21,19 +20,13 @@
   "author": "delleven jack",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/deadlyjack/html-element-js/issues"
+    "url": "https://github.com/deadlyjack/tag.git/issues"
   },
-  "homepage": "https://github.com/deadlyjack/html-element-js#readme",
+  "homepage": "https://github.com/deadlyjack/tag.git#readme",
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
-    "autoprefixer": "^9.6.1",
     "babel-loader": "^8.0.5",
-    "css-loader": "^3.0.0",
-    "node-sass": "^4.12.0",
-    "postcss-loader": "^3.0.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.0"
   },

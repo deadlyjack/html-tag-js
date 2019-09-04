@@ -1,16 +1,4 @@
 /**
- * @typedef {('a'| 'abbr'| 'address'| 'applet'| 'area'| 'article'| 'aside'| 'audio'| 'b'| 'base'| 'basefont'| 'bdi'| 'bdo'| 'blockquote'| 'body'| 'br'| 'button'| 'canvas'| 'caption'| 'cite'| 'code'| 'col'| 'colgroup'| 'data'| 'datalist'| 'dd'| 'del'| 'details'| 'dfn'| 'dialog'| 'dir'| 'div'| 'dl'| 'dt'| 'em'| 'embed'| 'fieldset'| 'figcaption'| 'figure'| 'font'| 'footer'| 'form'| 'frame'| 'frameset'| 'h1'| 'h2'| 'h3'| 'h4'| 'h5'| 'h6'| 'head'| 'header'| 'hgroup'| 'hr'| 'html'| 'i'| 'iframe'| 'img'| 'input'| 'ins'| 'kbd'| 'label'| 'legend'| 'li'| 'link'| 'main'| 'map'| 'mark'| 'marquee'| 'menu'| 'meta'| 'meter'| 'nav'| 'noscript'| 'object'| 'ol'| 'optgroup'| 'option'| 'output'| 'p'| 'param'| 'picture'| 'pre'| 'progress'| 'q'| 'rp'| 'rt'| 'ruby'| 's'| 'samp'| 'script'| 'section'| 'select'| 'slot'| 'small'| 'source'| 'span'| 'strong'| 'style'| 'sub'| 'summary'| 'sup'| 'table'| 'tbody'| 'td'| 'template'| 'textarea'| 'tfoot'| 'th'| 'thead'| 'time'| 'title'| 'tr'| 'track'| 'u'| 'ul'| 'var'| 'video'| 'wbr')} tagNames
- */
-
-/**
- * @typedef {Object} elementCustomProps
- * @property {function(string|string[]|null):void} assignRemovedEvents remove event listeners from the element
- * @property {function(string|string[]|null):void} removeRemovedEvents assigns the removed event listeners to the element
- * @property {function():void} remove Removes the element from DOM.
- * @property {function(parentElement|null):void} restore Restores the element to the DOM.
- */
-
-/**
  * 
  * @param {tagNames|HTMLElement} tagName A string that specifies the type of element to be created. The nodeName of the created element is initialized with the value of tagName. Don't use qualified names (like "html:a") with this method. When called on an HTML document, createElement() converts tagName to lower case before creating the element. In Firefox, Opera, and Chrome, createElement(null) works like createElement("null").
  * @param {elementProperties} options HTMLElment properties and attributes
@@ -18,19 +6,20 @@
  */
 
 function tag(tagName, options = {}) {
-  const instanceofHtmlElement = tagName instanceof HTMLElement;
-  if (!instanceofHtmlElement && typeof tagName !== 'string') throw new Error(`{tag} is invalid value of tag`);
-  const el = instanceofHtmlElement ? tagName : document.createElement(tagName);
+  const iofHTML = tagName instanceof HTMLElement;
+
+  if (!iofHTML && typeof tagName !== 'string')
+    throw new Error(`{tag} is invalid value of tag`);
+
+  let el = iofHTML ? tagName : document.createElement(tagName);
   el.oldEventListener = el.addEventListener.bind(el);
 
   el.addEventListener = addEventListener.bind(el);
-  el.assignRemovedEvents = assignRemovedEvents.bind(el);
   el.append = append.bind(el);
   el.get = get.bind(el);
   el.getAll = getAll.bind(el);
   el.removeEvents = removeEvents.bind(el);
-  el.remove = remove.bind(el);
-  el.restore = restore.bind(el);
+  el.destroy = destroy.bind(el);
 
   for (let prop in options) {
 
@@ -82,29 +71,6 @@ function tag(tagName, options = {}) {
     }
   }
 
-  /**
-   * 
-   * @param {String|String[]|null} eventType
-   */
-  function assignRemovedEvents(eventType) {
-    const eventFunctions = this.eventFunctions;
-    if (!eventFunctions) return;
-    if (eventType) {
-      for (let event of eventFunctions) {
-        if (Array.isArray(eventType) && eventType.indexOf(event.type)) {
-          this.oldEventListener(event.type, event.listener, event.options);
-        } else if (typeof eventType === 'string' && event.type === eventType) {
-          this.oldEventListener(event.type, event.listener, event.options);
-        }
-      }
-
-      return;
-    }
-    for (let event of eventFunctions) {
-      this.oldEventListener(event.type, event.listener);
-    }
-  }
-
   function addEventListener(type, listener, options) {
     if (!this.eventFunctions) this.eventFunctions = [];
     this.eventFunctions[this.eventFunctions.length] = {
@@ -115,25 +81,15 @@ function tag(tagName, options = {}) {
     this.oldEventListener(type, listener, options);
   }
 
-  function remove() {
+  function destroy() {
     if (this.parentElement) {
       this.removeEvents();
-      this.oldParentelement = this.parentElement;
       this.parentElement.removeChild(this);
+      this.eventFunctions = null;
+      el = null;
     }
   }
 
-  /**
-   * 
-   * @param {HTMLElement} parentElement
-   */
-  function restore(parentElement) {
-    parentElement = parentElement || this.oldParentelement || null;
-    if (parentElement && !this.parentElement) {
-      this.assignRemovedEvents();
-      parentElement.appendChild(this);
-    }
-  }
 
   /**
    * @param {Node} ...nodes
@@ -171,7 +127,7 @@ function tag(tagName, options = {}) {
 
 tag.get = function (selector) {
   return tag(document.querySelector(selector));
-}
+};
 
 tag.getAll = function (selector) {
   const all = document.querySelectorAll(selector);
@@ -182,6 +138,6 @@ tag.getAll = function (selector) {
   });
 
   return all;
-}
+};
 
 export default tag;

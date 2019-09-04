@@ -100,7 +100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return tag; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tag", function() { return tag; });
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -317,5 +317,5 @@ tag.getAll = function (selector) {
 };
 
 /***/ })
-/******/ ])["default"];
+/******/ ]);
 });

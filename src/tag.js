@@ -5,7 +5,7 @@
  * @returns {HTMLElement & elementCustomProps}
  */
 
-export default function tag(tagName, options = {}) {
+export function tag(tagName, options = {}) {
   const iofHTML = tagName instanceof HTMLElement;
 
   if (!iofHTML && typeof tagName !== 'string')

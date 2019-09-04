@@ -1,14 +1,5 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["tag"] = factory();
-	else
-		root["tag"] = factory();
-})(window, function() {
-return /******/ (function(modules) { // webpackBootstrap
+window["tag"] =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -100,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tag", function() { return tag; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return tag; });
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -317,5 +308,4 @@ tag.getAll = function (selector) {
 };
 
 /***/ })
-/******/ ]);
-});
+/******/ ])["default"];

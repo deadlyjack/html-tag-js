@@ -133,11 +133,11 @@ tag.getAll = function (selector) {
   const all = document.querySelectorAll(selector);
   const allAr = [...all];
 
-  all.map(el => {
+  allAr.map(el => {
     tag(el);
   });
 
-  return all;
+  return allAr;
 };
 
 export default tag;

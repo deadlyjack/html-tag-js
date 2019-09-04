@@ -65,12 +65,12 @@ interface HTMLExtentedElement {
      * Returns first element that matches the selector.
      *  @param selector The name of an element.
      */
-    get<K extends keyof HTMLElementTagNameMap>(selector: string | K): HTMLExtentedElement & HTMLElementTagNameMap[K] | Element;
+    get(selector: string | K): HTMLExtentedElement & HTMLElement;
     /**
      * Returns all elements that matches the selector as HTMLCollection.
      *  @param selector The name of an element.
      */
-    getAll<K extends keyof HTMLElementTagNameMap>(selector: string | K): Array<HTMLExtentedElement & HTMLElementTagNameMap[K] | Element>;
+    getAll(selector: string | K): Array<HTMLExtentedElement & HTMLElement>;
     /**
      * Remove the element from DOM.
      *  @param selector The name of an element.
@@ -83,5 +83,5 @@ interface HTMLExtentedElement {
  *  @param tagName The name of an element.
  */
 declare function tag<K extends keyof HTMLElementTagNameMap>(tagName: K, options?: HTMLElementAttributes): HTMLExtentedElement & HTMLElementTagNameMap[K];
-tag.get = function <K extends keyof HTMLElementTagNameMap>(selector: K | string): HTMLExtentedElement & HTMLElementTagNameMap[K] | Element { };
-tag.getAll = function <K extends keyof HTMLElementTagNameMap>(selector: K | string): Array<HTMLExtentedElement & HTMLElementTagNameMap[K] | Element> { };
+tag.get = function (selector: string): HTMLExtentedElement & HTMLElement { };
+tag.getAll = function (selector: string): Array<HTMLExtentedElement & HTMLElement> { };

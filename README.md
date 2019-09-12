@@ -27,15 +27,7 @@ path/to/html-element-js/dist/tag.js
 import tag from 'html-tag-js';
 ```
 
-#### Create a new element
-
-##### To create a span tag
-
-```javascript
-const span = tag('span');
-```
-
-###### examples
+##### usage
 
 ```javascript
 //creating element with options
@@ -86,7 +78,3 @@ console.log(tag.template(html, {
 
 
 ```
-
-##### HTML tags
-
-* create tag `html.tag(tagName:String, options?:Object)` anchor tag

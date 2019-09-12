@@ -57,7 +57,7 @@ const elements = [el1, el2, el3];
 //append child(s)
 div.append(...elements);
 
-//easily get any child of parent element using get method which 
+//easily get any child of parent element using get method which
 //takes query selector string as argument
 div.get('#span1');
 

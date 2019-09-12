@@ -5,7 +5,7 @@
  * @returns {HTMLElement & elementCustomProps}
  */
 
-export default function tag(tagName, options = {}) {
+export function tag(tagName, options = {}) {
   const iofHTML = tagName instanceof HTMLElement;
 
   if (!iofHTML && typeof tagName !== 'string')
@@ -138,4 +138,33 @@ tag.getAll = function (selector) {
   });
 
   return allAr;
+};
+
+tag.parse = function (html) {
+  const div = tag('div');
+  div.innerHTML = html;
+  if (div.childElementCount === 1) {
+    return tag(div.firstElementChild);
+  } else {
+    const children = div.children;
+    children.forEach((child) => {
+      tag(child);
+    });
+
+    return children;
+  }
+};
+
+
+tag.template = function (html, values) {
+  if (values) {
+    for (let key in values) {
+      if (!/^[a-z_][a-z0-9_\-]*$/.test(key)) continue;
+      html = html.replace(new RegExp(`${'\\$'}{{${key}}}`, 'g'), values[key]);
+    }
+  }
+
+  html = html.replace(/\${{[a-z_][a-z0-9_\-]*}}/g, '');
+
+  return html;
 };

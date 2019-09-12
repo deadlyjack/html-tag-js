@@ -10,8 +10,8 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
     library: 'tag',
-    libraryExport: 'default',
-    libraryTarget: 'window'
+    libraryExport: 'tag',
+    libraryTarget: 'umd'
   },
   module: {
     rules: [{

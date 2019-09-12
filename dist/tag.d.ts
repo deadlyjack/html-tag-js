@@ -52,7 +52,7 @@ interface HTMLElementAttributes {
      * Returns or sets the value of element's slot content attribute.
      */
     slot?: string;
-    style?: CSSStyleDeclaration;
+    style?: any;
     /**
      * Position of the element in the tabbing order.
      */
@@ -78,10 +78,11 @@ interface HTMLExtentedElement {
     destroy(): void;
 }
 
-/**
- * Creates an instance of the element for the specified tag.
- *  @param tagName The name of an element.
- */
-declare function tag<K extends keyof HTMLElementTagNameMap>(tagName: K, options?: HTMLElementAttributes): HTMLExtentedElement & HTMLElementTagNameMap[K];
-tag.get = function (selector: string): HTMLExtentedElement & HTMLElement { };
-tag.getAll = function (selector: string): Array<HTMLExtentedElement & HTMLElement> { };
+declare module "html-tag-js" {
+    function tag<K extends keyof HTMLElementTagNameMap>(tagName: K, options?: HTMLElementAttributes | object): HTMLExtentedElement & HTMLElementTagNameMap[K];
+    tag.get = function (selector: string): HTMLExtentedElement & HTMLElement { };
+    tag.getAll = function (selector: string): Array<HTMLExtentedElement & HTMLElement> { };
+    tag.parse = function (html: string): Array<HTMLExtentedElement & HTMLElement> | HTMLExtentedElement & HTMLElement { };
+    tag.template = function (html: string, values: object): string { };
+    export = tag;
+}

@@ -302,7 +302,9 @@ function tag(tagName) {
 }
 
 tag.get = function (selector) {
-  return tag(document.querySelector(selector));
+  var el = document.querySelector(selector);
+  if (!el) return null;
+  return tag(el);
 };
 
 tag.getAll = function (selector) {
@@ -323,11 +325,7 @@ tag.parse = function (html) {
   if (div.childElementCount === 1) {
     return tag(div.firstElementChild);
   } else {
-    var children = div.children;
-    children.forEach(function (child) {
-      tag(child);
-    });
-    return children;
+    return _toConsumableArray(div.children);
   }
 };
 
@@ -335,11 +333,11 @@ tag.template = function (html, values) {
   if (values) {
     for (var key in values) {
       if (!/^[a-z_][a-z0-9_\-]*$/.test(key)) continue;
-      html = html.replace(new RegExp('\\$'.concat("{{", key, "}}"), 'g'), values[key]);
+      html = html.replace(new RegExp("{{".concat(key, "}}"), 'g'), values[key]);
     }
   }
 
-  html = html.replace(/\${{[a-z_][a-z0-9_\-]*}}/g, '');
+  html = html.replace(/{{[a-z_][a-z0-9_\-]*}}/g, '');
   return html;
 };
 

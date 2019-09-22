@@ -126,7 +126,9 @@ export function tag(tagName, options = {}) {
 }
 
 tag.get = function (selector) {
-  return tag(document.querySelector(selector));
+  const el = document.querySelector(selector);
+  if (!el) return null;
+  return tag(el);
 };
 
 tag.getAll = function (selector) {
@@ -146,12 +148,7 @@ tag.parse = function (html) {
   if (div.childElementCount === 1) {
     return tag(div.firstElementChild);
   } else {
-    const children = div.children;
-    children.forEach((child) => {
-      tag(child);
-    });
-
-    return children;
+    return [...div.children];
   }
 };
 
@@ -160,11 +157,11 @@ tag.template = function (html, values) {
   if (values) {
     for (let key in values) {
       if (!/^[a-z_][a-z0-9_\-]*$/.test(key)) continue;
-      html = html.replace(new RegExp(`${'\\$'}{{${key}}}`, 'g'), values[key]);
+      html = html.replace(new RegExp(`{{${key}}}`, 'g'), values[key]);
     }
   }
 
-  html = html.replace(/\${{[a-z_][a-z0-9_\-]*}}/g, '');
+  html = html.replace(/{{[a-z_][a-z0-9_\-]*}}/g, '');
 
   return html;
 };

@@ -1,16 +1,14 @@
-# html-element-js
-
-**NOTE:** Please do not install this library for prduction because this library is very unstable.
+# html-tag-js
 
 A simple library for creating and manipulating DOM using JavaScript DOM api.
-See [demo](https://deadlyjack.github.io/html-element-js/demo/)
+See
 
 ## Documentation
 
 ### Installation
 
 ```bash
-npm install --save html-element-js
+npm i html-tag-js
 ```
 
 or directly import into browser

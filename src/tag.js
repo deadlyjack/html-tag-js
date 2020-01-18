@@ -1,20 +1,12 @@
-/**
- * 
- * @param {tagNames|HTMLElement} tagName A string that specifies the type of element to be created. The nodeName of the created element is initialized with the value of tagName. Don't use qualified names (like "html:a") with this method. When called on an HTML document, createElement() converts tagName to lower case before creating the element. In Firefox, Opera, and Chrome, createElement(null) works like createElement("null").
- * @param {elementProperties} options HTMLElment properties and attributes
- * @returns {HTMLElement & elementCustomProps}
- */
-
 export function tag(tagName, options = {}) {
-  const iofHTML = tagName instanceof HTMLElement;
+  const isNode = tagName instanceof Node;
 
-  if (!iofHTML && typeof tagName !== 'string')
+  if (!isNode && typeof tagName !== 'string')
     throw new Error(`{tag} is invalid value of tag`);
 
-  let el = iofHTML ? tagName : document.createElement(tagName);
-  el.oldEventListener = el.addEventListener.bind(el);
-
-  el.addEventListener = addEventListener.bind(el);
+  let el = isNode ? tagName : document.createElement(tagName);
+  el.on = on.bind(el);
+  el.off = off.bind(el);
   el.append = append.bind(el);
   el.get = get.bind(el);
   el.getAll = getAll.bind(el);
@@ -48,58 +40,20 @@ export function tag(tagName, options = {}) {
 
   return el;
 
-  /**
-   * 
-   * @param {String|String[]|null} eventType 
-   */
-  function removeEvents(eventType) {
-    const eventFunctions = this.eventFunctions;
-    if (!eventFunctions) return;
-    if (eventType) {
-      for (let event of eventFunctions) {
-        if (Array.isArray(eventType) && eventType.indexOf(event.type)) {
-          this.removeEventListener(event.type, event.listener);
-        } else if (typeof eventType === 'string' && event.type === eventType) {
-          this.removeEventListener(event.type, event.listener);
-        }
-      }
-
-      return;
-    }
-    for (let event of eventFunctions) {
-      el.removeEventListener(event.type, event.listener);
-    }
+  function on(type, listener, options) {
+    this.addEventListener(type, listener, options);
   }
 
-  function addEventListener(type, listener, options) {
-    if (!this.eventFunctions) this.eventFunctions = [];
-    this.eventFunctions[this.eventFunctions.length] = {
-      type,
-      listener,
-      options
-    };
-    this.oldEventListener(type, listener, options);
+  function off(type, listener, options) {
+    this.removeEventListener(type, listener, options);
   }
 
-  function destroy() {
-    if (this.parentElement) {
-      this.removeEvents();
-      this.parentElement.removeChild(this);
-      this.eventFunctions = null;
-      el = null;
-    }
-  }
-
-
-  /**
-   * @param {Node} ...nodes
-   */
 
   function append(...nodes) {
     nodes.map(node => {
       if (node instanceof Node) {
-        this.appendChild(node);
-        if (node instanceof HTMLElement && node.id)
+        this.appendChild(tag(node));
+        if (node.id && !el[node.id])
           el[node.id] = node;
       }
     });
@@ -162,6 +116,5 @@ tag.template = function (html, values) {
   }
 
   html = html.replace(/{{[a-z_][a-z0-9_\-]*}}/g, '');
-
   return html;
 };

@@ -109,19 +109,13 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-/**
- * 
- * @param {tagNames|HTMLElement} tagName A string that specifies the type of element to be created. The nodeName of the created element is initialized with the value of tagName. Don't use qualified names (like "html:a") with this method. When called on an HTML document, createElement() converts tagName to lower case before creating the element. In Firefox, Opera, and Chrome, createElement(null) works like createElement("null").
- * @param {elementProperties} options HTMLElment properties and attributes
- * @returns {HTMLElement & elementCustomProps}
- */
 function tag(tagName) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var iofHTML = tagName instanceof HTMLElement;
-  if (!iofHTML && typeof tagName !== 'string') throw new Error("{tag} is invalid value of tag");
-  var el = iofHTML ? tagName : document.createElement(tagName);
-  el.oldEventListener = el.addEventListener.bind(el);
-  el.addEventListener = addEventListener.bind(el);
+  var isNode = tagName instanceof Node;
+  if (!isNode && typeof tagName !== 'string') throw new Error("{tag} is invalid value of tag");
+  var el = isNode ? tagName : document.createElement(tagName);
+  el.on = on.bind(el);
+  el.off = off.bind(el);
   el.append = append.bind(el);
   el.get = get.bind(el);
   el.getAll = getAll.bind(el);
@@ -173,95 +167,14 @@ function tag(tagName) {
   }
 
   return el;
-  /**
-   * 
-   * @param {String|String[]|null} eventType 
-   */
 
-  function removeEvents(eventType) {
-    var eventFunctions = this.eventFunctions;
-    if (!eventFunctions) return;
-
-    if (eventType) {
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
-
-      try {
-        for (var _iterator2 = eventFunctions[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var event = _step2.value;
-
-          if (Array.isArray(eventType) && eventType.indexOf(event.type)) {
-            this.removeEventListener(event.type, event.listener);
-          } else if (typeof eventType === 'string' && event.type === eventType) {
-            this.removeEventListener(event.type, event.listener);
-          }
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
-      }
-
-      return;
-    }
-
-    var _iteratorNormalCompletion3 = true;
-    var _didIteratorError3 = false;
-    var _iteratorError3 = undefined;
-
-    try {
-      for (var _iterator3 = eventFunctions[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-        var _event = _step3.value;
-        el.removeEventListener(_event.type, _event.listener);
-      }
-    } catch (err) {
-      _didIteratorError3 = true;
-      _iteratorError3 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-          _iterator3["return"]();
-        }
-      } finally {
-        if (_didIteratorError3) {
-          throw _iteratorError3;
-        }
-      }
-    }
+  function on(type, listener, options) {
+    this.addEventListener(type, listener, options);
   }
 
-  function addEventListener(type, listener, options) {
-    if (!this.eventFunctions) this.eventFunctions = [];
-    this.eventFunctions[this.eventFunctions.length] = {
-      type: type,
-      listener: listener,
-      options: options
-    };
-    this.oldEventListener(type, listener, options);
+  function off(type, listener, options) {
+    this.removeEventListener(type, listener, options);
   }
-
-  function destroy() {
-    if (this.parentElement) {
-      this.removeEvents();
-      this.parentElement.removeChild(this);
-      this.eventFunctions = null;
-      el = null;
-    }
-  }
-  /**
-   * @param {Node} ...nodes
-   */
-
 
   function append() {
     var _this = this;
@@ -272,9 +185,9 @@ function tag(tagName) {
 
     nodes.map(function (node) {
       if (node instanceof Node) {
-        _this.appendChild(node);
+        _this.appendChild(tag(node));
 
-        if (node instanceof HTMLElement && node.id) el[node.id] = node;
+        if (node.id && !el[node.id]) el[node.id] = node;
       }
     });
     return this;

@@ -14,7 +14,7 @@ npm i html-tag-js
 or directly import into browser
 
 ```text
-path/to/html-element-js/dist/tag.js
+path/to/html-tag-js/dist/tag.js
 ```
 
 ### Usage

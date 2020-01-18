@@ -6,7 +6,7 @@ interface HTMLElementAttributes {
     /**
      * Sets attributes of element.
      */
-    attr?: { "attribute"?: string }[];
+    attr?: { string: string };
     /**
      * Returns or sets the value of element's class attribute.
      */
@@ -34,6 +34,7 @@ interface HTMLElementAttributes {
      */
     id?: string;
     innerText?: string;
+    innerHTML?: string;
     lang?: string;
     nodeValue?: string;
     onclick?: (event: MouseEvent) => void;
@@ -52,7 +53,7 @@ interface HTMLElementAttributes {
      * Returns or sets the value of element's slot content attribute.
      */
     slot?: string;
-    style?: any;
+    style?: { string: string };
     /**
      * Position of the element in the tabbing order.
      */
@@ -65,17 +66,28 @@ interface HTMLExtentedElement {
      * Returns first element that matches the selector.
      *  @param selector The name of an element.
      */
-    get(selector: string | K): HTMLExtentedElement & HTMLElement;
+    get<K extends keyof HTMLElementTagNameMap>(selector: string | K): HTMLExtentedElement & HTMLElement;
     /**
      * Returns all elements that matches the selector as HTMLCollection.
      *  @param selector The name of an element.
      */
-    getAll(selector: string | K): Array<HTMLExtentedElement & HTMLElement>;
+    getAll<K extends keyof HTMLElementTagNameMap>(selector: string | K): Array<HTMLExtentedElement & HTMLElement>;
+
     /**
-     * Remove the element from DOM.
-     *  @param selector The name of an element.
+     * Add event listener to the element
+     * @param event event type
+     * @param listener listener
+     * @param option event listener options
      */
-    destroy(): void;
+    on<K extends keyof HTMLElementEventMap>(event: string | K, listener: (e: Event) => void, option: Boolean | EventListenerOptions): void;
+
+    /**
+     * Remove event listener to the element
+     * @param event event type
+     * @param listener listener
+     * @param option event listener options
+     */
+    off<K extends keyof HTMLElementEventMap>(event: string | K, listener: (e: Event) => void, option: Boolean | EventListenerOptions): void;
 }
 
 declare module "html-tag-js" {

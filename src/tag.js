@@ -10,7 +10,6 @@ export function tag(tagName, options = {}) {
   el.append = append.bind(el);
   el.get = get.bind(el);
   el.getAll = getAll.bind(el);
-  el.removeEvents = removeEvents.bind(el);
   el.destroy = destroy.bind(el);
 
   for (let prop in options) {

@@ -75,17 +75,17 @@ interface HTMLExtentedElement {
 
     /**
      * Add event listener to the element
-     * @param event event type
-     * @param listener listener
-     * @param option event listener options
+     * @param event A case-sensitive string representing the event type to listen for.
+     * @param listener The object which receives a notification (an object that implements the Event interface) when an event of the specified type occurs. This must be an object implementing the EventListener interface, or a JavaScript function. See The event listener callback for details on the callback itself.
+     * @param option An options object that specifies characteristics about the event listener. The available
      */
     on<K extends keyof HTMLElementEventMap>(event: string | K, listener: (e: Event) => void, option: Boolean | EventListenerOptions): void;
 
     /**
      * Remove event listener to the element
-     * @param event event type
-     * @param listener listener
-     * @param option event listener options
+     * @param event A case-sensitive string representing the event type to listen for.
+     * @param listener The object which receives a notification (an object that implements the Event interface) when an event of the specified type occurs. This must be an object implementing the EventListener interface, or a JavaScript function. See The event listener callback for details on the callback itself.
+     * @param option An options object that specifies characteristics about the event listener. The available
      */
     off<K extends keyof HTMLElementEventMap>(event: string | K, listener: (e: Event) => void, option: Boolean | EventListenerOptions): void;
 }

@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   context: __dirname,
-  mode: "none",
+  mode: "production",
   entry: {
     tag: "./src/tag.js"
   },

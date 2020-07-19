@@ -2,7 +2,7 @@
   "name": "html-tag-js",
   "version": "1.0.0",
   "description": "A simple library for create and manipulating DOM using JavaScript DOM api.",
-  "main": "src/tag.js",
+  "main": "dist/tag.js",
   "scripts": {
     "build": "webpack"
   },

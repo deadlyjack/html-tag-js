@@ -23,6 +23,7 @@ path/to/html-tag-js/dist/tag.js
 
 ```javascript
 import tag from 'html-tag-js';
+import 'html-tag-js/polyfill' //Important (only once);
 ```
 
 ##### usage

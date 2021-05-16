@@ -4,7 +4,8 @@ module.exports = {
   context: __dirname,
   mode: "production",
   entry: {
-    tag: "./src/tag.js"
+    tag: "./src/tag.js",
+    polyfill: './src/polyfill.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

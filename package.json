@@ -1,7 +1,7 @@
 {
   "name": "html-tag-js",
   "version": "1.0.1",
-  "description": "A simple library for create and manipulating DOM using JavaScript DOM api.",
+  "description": "A simple library for creating and manipulating DOM using JavaScript DOM API.",
   "main": "dist/tag.js",
   "scripts": {
     "build": "webpack"
@@ -24,11 +24,11 @@
   },
   "homepage": "https://github.com/deadlyjack/tag.git#readme",
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "babel-loader": "^8.0.5",
-    "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.0"
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.4",
+    "webpack": "^5.71.0",
+    "webpack-cli": "^4.9.2"
   },
   "dependencies": {},
   "browserslist": [

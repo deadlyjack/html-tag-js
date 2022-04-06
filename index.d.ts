@@ -74,14 +74,12 @@ interface HTMLElement extends HTMLElement {
     getAll<K extends keyof HTMLElementTagNameMap>(selector: string | K): Array<HTMLElement>;
 }
 
-declare const tag: {
-    <K extends keyof HTMLElementTagNameMap>(tagName: K, options?: HTMLElementAttributes | object): HTMLElementTagNameMap[K];
-    get(selector: String): HTMLElement;
-    getAll(selector: String): Array<HTMLElement>;
-    parse(html: String): HTMLElement;
-    template(html: String, values: object): String;
-}
-
-declare module "html-tag-js" {
-    export = tag;
+declare module 'html-tag-js'{
+    export const tag: {
+        <K extends keyof HTMLElementTagNameMap>(tagName: K, options?: HTMLElementAttributes | object): HTMLElementTagNameMap[K];
+        get(selector: String): HTMLElement;
+        getAll(selector: String): Array<HTMLElement>;
+        parse(html: String): HTMLElement;
+        template(html: String, values: object): String;
+    }
 }

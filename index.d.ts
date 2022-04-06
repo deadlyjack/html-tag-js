@@ -75,11 +75,13 @@ interface HTMLElement extends HTMLElement {
 }
 
 declare module 'html-tag-js'{
-    export const tag: {
+    const tag: {
         <K extends keyof HTMLElementTagNameMap>(tagName: K, options?: HTMLElementAttributes | object): HTMLElementTagNameMap[K];
         get(selector: String): HTMLElement;
         getAll(selector: String): Array<HTMLElement>;
         parse(html: String): HTMLElement;
         template(html: String, values: object): String;
     }
+
+    export default tag;
 }

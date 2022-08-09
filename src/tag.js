@@ -5,11 +5,11 @@ function create(tagName, options = {}) {
 
   const $el = document.createElement(tagName);
 
-  Object.keys(options).forEach((key) => {
-    const option = options[key];
+  Object.keys(options).forEach((prop) => {
+    const option = options[prop];
     if (option === undefined) return;
 
-    switch (key) {
+    switch (prop) {
       case 'child':
         if (!(option instanceof Node)) {
           throw new Error('child must be a Node');
@@ -33,12 +33,12 @@ function create(tagName, options = {}) {
       case 'style':
       case 'dataset':
         Object.keys(option).forEach((key) => {
-          $el.style[key] = option[key];
+          $el[prop][key] = option[key];
         });
         break;
 
       default:
-        $el[key] = option;
+        $el[prop] = option;
         break;
     }
   });

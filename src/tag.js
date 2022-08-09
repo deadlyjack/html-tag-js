@@ -31,8 +31,9 @@ function create(tagName, options = {}) {
         break;
 
       case 'style':
-        Object.keys(option).forEach((style) => {
-          $el.style[style] = option[style];
+      case 'dataset':
+        Object.keys(option).forEach((key) => {
+          $el.style[key] = option[key];
         });
         break;
 

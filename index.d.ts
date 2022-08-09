@@ -1,20 +1,40 @@
-interface HTMLElementAttributes {
+type HTMLTagNames = keyof HTMLElementTagNameMap & string;
+
+interface HTMLElement {
+  /**
+   * Returns first element that matches the selector.
+   *  @param selector The name of an element.
+   */
+  get(selector: HTMLTagNames): HTMLElement;
+  /**
+   * Returns all elements that matches the selector as HTMLCollection.
+   *  @param selector The name of an element.
+   */
+  getAll(selector: HTMLTagNames): Array<HTMLElement>;
+}
+
+declare module 'html-tag-js' {
+  type StyleList = {
+    [key in keyof CSSStyleDeclaration]?: CSSStyleDeclaration[key];
+  };
+
+  type Dataset = {
+    [key: string]: string;
+  };
+
+  type HTMLElementAttributes = {
     /**
-     * The accessKey property sets or returns the accesskey attribute of an element.
+     * The id of the element.
      */
-    accesskey?: string;
+    id?: string;
+    /**
+     * css class name
+     */
+    className?: string;
     /**
      * Sets attributes of element.
      */
     attr?: { string: string };
-    /**
-     * Returns or sets the value of element's class attribute.
-     */
-    className?: string;
-    /**
-     * where a value of "true" means the element is editable and a value of "false" means it isn't.
-     */
-    contentEditable?: string;
     /**
      * child of this element.
      */
@@ -22,66 +42,32 @@ interface HTMLElementAttributes {
     /**
      * children of the this element.
      */
-    children?: Node[];
+    children?: Array<Node>;
     /**
-     * text content direction
+     * style of the HTMLElement
      */
-    dir?: string;
-    draggable?: boolean;
-    hidden?: boolean;
+    style?: StyleList;
     /**
-     * Returns or sets the value of element's id content attribute.
+     * dataset of the HTMLElement
      */
-    id?: string;
-    innerText?: string;
-    innerHTML?: string;
-    lang?: string;
-    nodeValue?: string;
-    onclick?: (event: MouseEvent) => void;
-    onmousedown?: (event: MouseEvent) => void;
-    onmouseup?: (event: MouseEvent) => void;
-    onmousemove?: (event: MouseEvent) => void;
-    ontouchstart?: (event: TouchEvent) => void;
-    ontouchmove?: (event: TouchEvent) => void;
-    ontouchend?: (event: TouchEvent) => void;
-    onfullscreenchange?: (event: Event) => void;
-    onfullscreenerror?: (event: Event) => void;
-    outerHTML?: string;
-    spellcheck?: boolean;
-    translate?: boolean;
+    dataset?: Dataset;
     /**
-     * Returns or sets the value of element's slot content attribute.
+     * attributes of the HTMLElement
      */
-    slot?: string;
-    style?: { string: string };
-    /**
-     * Position of the element in the tabbing order.
-     */
-    tabIndex?: number;
-    textContent?: string;
-}
+    [key: string]: any;
+  };
 
-interface HTMLElement extends HTMLElement {
-    /**
-     * Returns first element that matches the selector.
-     *  @param selector The name of an element.
-     */
-    get<K extends keyof HTMLElementTagNameMap>(selector: string | K): HTMLElement;
-    /**
-     * Returns all elements that matches the selector as HTMLCollection.
-     *  @param selector The name of an element.
-     */
-    getAll<K extends keyof HTMLElementTagNameMap>(selector: string | K): Array<HTMLElement>;
-}
+  interface Tag {
+    <K extends HTMLTagNames>(
+      tagName: K,
+      options?: HTMLElementAttributes & object,
+    ): HTMLElementTagNameMap[K];
+    get(selector: String): HTMLElement;
+    getAll(selector: String): Array<HTMLElement>;
+    parse(html: String): HTMLElement;
+  }
 
-declare module 'html-tag-js'{
-    const tag: {
-        <K extends keyof HTMLElementTagNameMap>(tagName: K, options?: HTMLElementAttributes | object): HTMLElementTagNameMap[K];
-        get(selector: String): HTMLElement;
-        getAll(selector: String): Array<HTMLElement>;
-        parse(html: String): HTMLElement;
-        template(html: String, values: object): String;
-    }
+  const tag: Tag;
 
-    export default tag;
+  export default tag;
 }

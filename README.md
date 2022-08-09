@@ -23,24 +23,22 @@ path/to/html-tag-js/dist/tag.js
 
 ```javascript
 import tag from 'html-tag-js';
-import 'html-tag-js/dist/polyfill' //Important (only once);
+import 'html-tag-js/dist/polyfill'; //Important (only once);
 ```
 
 ##### usage
 
 ```javascript
 //creating element with options
-const span = tag('span' ,{
+const span = tag('span', {
   textContent: 'This is span tag',
   className: 'myspan',
-  id: 'span1'
+  id: 'span1',
 });
-
-console.log(span);
 
 //create element with child
 const div = tag('div', {
-  child: span
+  child: span,
 });
 
 const elements = [el1, el2, el3];
@@ -62,18 +60,11 @@ tag.get('body');
 tag.getAll('.mydiv');
 
 //parse html string
+
 //returns html element
 const el = tag.parse('<div class="mydiv"></div>');
 console.log(el);
 
 //return html element collection
 const el2 = tag.parse('<div class="mydiv"></div><p class="myp">');
-
-//templates
-const html = '<div class="mydiv">${{text}}</div>';
-console.log(tag.template(html, {
-  text: 'new text'
-})); //<div class="mydiv">new text</div>
-
-
 ```

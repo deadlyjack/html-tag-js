@@ -1,6 +1,6 @@
 {
   "name": "html-tag-js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A simple library for creating and manipulating DOM using JavaScript DOM API.",
   "main": "dist/tag.js",
   "scripts": {

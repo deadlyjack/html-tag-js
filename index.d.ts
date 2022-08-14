@@ -11,6 +11,10 @@ interface HTMLElement {
    *  @param selector The name of an element.
    */
   getAll(selector: HTMLTagNames): Array<HTMLElement>;
+  /**
+   * Sets or gets the content of the element.
+   */
+  content: HTMLElement & Array<HTMLElement>;
 }
 
 declare module 'html-tag-js' {
@@ -36,6 +40,11 @@ declare module 'html-tag-js' {
      * The id of the element.
      */
     id?: string;
+    /**
+     * Sets content of the element.
+     * @example $div.content = tag('span', 'Hello World!');
+     */
+    content?: HTMLElement & Array<HTMLElement>;
     /**
      * css class name
      */
@@ -490,7 +499,12 @@ declare module 'html-tag-js' {
       tagName: K,
       options?: HTMLElementAttributes & object,
     ): HTMLElementTagNameMap[K];
+    <K extends HTMLTagNames>(
+      tagName: K,
+      innerHTML: string,
+    ): HTMLElementTagNameMap[K];
     (tagName: string, options?: HTMLElementAttributes & object): HTMLElement;
+    (tagName: string, innerHTML: string): HTMLElement;
     get(selector: String): HTMLElement;
     getAll(selector: String): Array<HTMLElement>;
     parse(html: String): HTMLElement;

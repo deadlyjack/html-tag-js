@@ -47,6 +47,11 @@ function create(tagName, options = {}) {
 }
 
 export function tag(tagName, options = {}) {
+  if (typeof options === 'string') {
+    options = {
+      innerHTML: options,
+    }
+  }
   return create(tagName, options);
 }
 

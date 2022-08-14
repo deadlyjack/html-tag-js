@@ -1,3 +1,5 @@
+const nodes = [Element.prototype, CharacterData.prototype, DocumentType.prototype];
+
 if (!('isConnected' in Node.prototype)) {
   Object.defineProperty(Node.prototype, 'isConnected', {
     get() {
@@ -12,27 +14,63 @@ if (!('isConnected' in Node.prototype)) {
   });
 }
 
-if (!('get' in Element.prototype)) {
-  Object.defineProperty(Node.prototype, 'get', {
+if (!('get' in HTMLElement.prototype)) {
+  Object.defineProperty(HTMLElement.prototype, 'get', {
     value(selector) {
       return this.querySelector(selector);
     }
   });
 }
 
-if (!('getAll' in Element.prototype)) {
-  Object.defineProperty(Node.prototype, 'getAll', {
+if (!('getAll' in HTMLElement.prototype)) {
+  Object.defineProperty(HTMLElement.prototype, 'getAll', {
     value(selector) {
       return this.querySelectorAll(selector);
     }
   });
 }
 
-(function (arr) {
-  arr.forEach(function (item) {
-    if (item.hasOwnProperty('append')) {
-      return;
-    }
+if (!('content' in HTMLElement.prototype)) {
+  Object.defineProperty(HTMLElement.prototype, 'content', {
+    set: function (value) {
+      this.innerHTML = '';
+      if (Array.isArray(value)) {
+        this.append(...value);
+        return;
+      }
+      this.append(value);
+    },
+    get: function () {
+      const children = [...this.children];
+      if (children.length === 0) {
+        return null;
+      }
+      if (children.length === 1) {
+        return children[0];
+      }
+
+      return children;
+    },
+  });
+}
+
+
+[Element.prototype, CharacterData.prototype, DocumentType.prototype].forEach(function (item) {
+  if (!item.hasOwnProperty('remove')) {
+    Object.defineProperty(item, 'remove', {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: function remove() {
+        if (this.parentNode === null) {
+          return;
+        }
+        this.parentNode.removeChild(this);
+      }
+    });
+  }
+
+  if (!item.hasOwnProperty('append')) {
     Object.defineProperty(item, 'append', {
       configurable: true,
       enumerable: true,
@@ -49,24 +87,5 @@ if (!('getAll' in Element.prototype)) {
         this.appendChild(docFrag);
       }
     });
-  });
-})([Element.prototype, Document.prototype, DocumentFragment.prototype]);
-
-(function (arr) {
-  arr.forEach(function (item) {
-    if (item.hasOwnProperty('remove')) {
-      return;
-    }
-    Object.defineProperty(item, 'remove', {
-      configurable: true,
-      enumerable: true,
-      writable: true,
-      value: function remove() {
-        if (this.parentNode === null) {
-          return;
-        }
-        this.parentNode.removeChild(this);
-      }
-    });
-  });
-})([Element.prototype, CharacterData.prototype, DocumentType.prototype]);
+  }
+});

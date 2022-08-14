@@ -31,7 +31,7 @@ declare module 'html-tag-js' {
     | 'search'
     | 'send';
 
-  type HTMLElementAttributes = {
+  interface HTMLElementAttributes {
     /**
      * The id of the element.
      */
@@ -483,7 +483,7 @@ declare module 'html-tag-js' {
      * attributes of the HTMLElement
      */
     [key: string]: any;
-  };
+  }
 
   interface Tag {
     <K extends HTMLTagNames>(

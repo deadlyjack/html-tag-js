@@ -508,6 +508,7 @@ declare module 'html-tag-js' {
     get(selector: String): HTMLElement;
     getAll(selector: String): Array<HTMLElement>;
     parse(html: String): HTMLElement;
+    text(text: string): Text;
   }
 
   const tag: Tag;

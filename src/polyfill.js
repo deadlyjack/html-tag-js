@@ -1,5 +1,15 @@
 const nodes = [Element.prototype, CharacterData.prototype, DocumentType.prototype];
 
+if (!('flat' in Array.prototype)) {
+  Object.defineProperty(Array.prototype, 'flat', {
+    value(depth = Infinity) {
+      return depth > 0
+        ? this.reduce((acc, val) => acc.concat(val.flat()), [])
+        : this.slice();
+    }
+  })
+}
+
 if (!('isConnected' in Node.prototype)) {
   Object.defineProperty(Node.prototype, 'isConnected', {
     get() {

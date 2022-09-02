@@ -18,10 +18,17 @@ function create(tagName, options = {}) {
         break;
 
       case 'children':
-        if (!Array.isArray(option) || option.some((child) => !(child instanceof Node))) {
+        if (!Array.isArray(option)) {
           throw new Error('children must be an array of Nodes');
         }
-        $el.append(...option);
+        option.flat().forEach(($child) => {
+          if (!($child instanceof Node)) {
+            $child = tag.text(`${$child}`);
+            return;
+          }
+
+          $el.append($child);
+        });
         break;
 
       case 'attr':
@@ -77,4 +84,9 @@ Object.defineProperties(tag, {
       return [...$div.children];
     },
   },
+  text: {
+    value(text) {
+      return document.createTextNode(text);
+    }
+  }
 });

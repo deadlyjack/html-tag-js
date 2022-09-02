@@ -24,7 +24,6 @@ function create(tagName, options = {}) {
         option.flat().forEach(($child) => {
           if (!($child instanceof Node)) {
             $child = tag.text(`${$child}`);
-            return;
           }
 
           $el.append($child);

@@ -41,15 +41,6 @@ module.exports = (babel) => {
           }
 
           const { expression } = node;
-          // const { type: exprType } = expression;
-          // if (exprType === 'Identifier') {
-          //   options.push(types.objectProperty(
-          //     types.identifier('innerHTML'),
-          //     expression,
-          //   ));
-          //   return;
-          // }
-
           children.push(expression);
         });
 
@@ -67,17 +58,18 @@ module.exports = (babel) => {
             isString = false;
           }
 
-          const property = types.objectProperty(
-            types.identifier(name),
-            value,
-          );
-
           if (name === 'className' || !isString) {
-            options.unshift(property);
+            options.unshift(types.objectProperty(
+              types.identifier(name),
+              value,
+            ));
             return;
           }
 
-          attrs.push(property);
+          attrs.push(types.objectProperty(
+            types.stringLiteral(name),
+            value,
+          ));
         });
 
         args.push(types.stringLiteral(tagName));

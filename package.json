@@ -4,7 +4,8 @@
   "description": "A simple library for creating and manipulating DOM using JavaScript DOM API.",
   "main": "dist/tag.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "test": "jest ./test"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "@babel/core": "^7.17.8",
     "@babel/preset-env": "^7.16.11",
     "babel-loader": "^8.2.4",
+    "jest": "^29.0.2",
     "webpack": "^5.71.0",
     "webpack-cli": "^4.9.2"
   },

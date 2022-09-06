@@ -45,9 +45,19 @@ module.exports = (babel) => {
         });
 
         attributes.forEach((attr) => {
-          const { name } = attr.name;
+          let { name } = attr.name;
+
+          if (!attr.value) {
+            attrs.push(types.objectProperty(
+              types.stringLiteral(name),
+              types.stringLiteral(''),
+            ));
+            return;
+          }
+
           const { type } = attr.value;
-          let isString = false;
+
+          let isAttr = /-/.test(name);
           let value;
 
           if (type === 'StringLiteral') {
@@ -58,16 +68,22 @@ module.exports = (babel) => {
             isString = false;
           }
 
-          if (name === 'className' || !isString) {
-            options.unshift(types.objectProperty(
-              types.identifier(name),
+          const attrRegex = /^attr-(.+)/;
+          if (attrRegex.test(name)) {
+            [, name] = attrRegex.exec(name);
+            isAttr = true;
+          }
+
+          if (isAttr) {
+            attrs.push(types.objectProperty(
+              types.stringLiteral(name),
               value,
             ));
             return;
           }
 
-          attrs.push(types.objectProperty(
-            types.stringLiteral(name),
+          options.unshift(types.objectProperty(
+            types.identifier(name),
             value,
           ));
         });

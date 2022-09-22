@@ -4,10 +4,28 @@ module.exports = (babel) => {
   return {
     name: 'quickpage-jsx-plugin',
     visitor: {
+      JSXFragment(path) {
+        const { node } = path;
+        const { children: childrenNode } = node;
+
+        const children = [];
+
+        childrenNode.forEach((node) => {
+          children.push(parseNode(types, node));
+        });
+
+        const arrayExpression = types.arrayExpression(children);
+        path.replaceWith(arrayExpression, node);
+      },
       JSXElement(path) {
-        const { openingElement: el } = path.node;
+        const { node } = path;
+        const {
+          openingElement: el,
+          children: childrenNode,
+        } = node;
         const { name: tagName } = el.name;
         const { attributes } = el;
+
         const args = [];
         const attrs = [];
         const children = [];
@@ -22,26 +40,10 @@ module.exports = (babel) => {
           ),
         ];
 
-        path.node.children.forEach((node) => {
-          const { type } = node;
-          if (type === 'JSXElement') {
-            children.push(node);
-            return;
-          }
+        const isComponent = /^[A-Z]((?!-).)*$/.test(tagName);
 
-          if (type === 'JSXText') {
-            const tag = types.identifier('tag');
-            const text = types.identifier('text');
-            const callee = types.memberExpression(tag, text);
-            const callExpression = types.callExpression(callee, [
-              types.stringLiteral(node.value),
-            ]);
-            children.push(callExpression);
-            return;
-          }
-
-          const { expression } = node;
-          children.push(expression);
+        childrenNode.forEach((node) => {
+          children.push(parseNode(types, node));
         });
 
         attributes.forEach((attr) => {
@@ -82,21 +84,50 @@ module.exports = (babel) => {
             return;
           }
 
-          options.unshift(types.objectProperty(
-            types.identifier(name),
-            value,
-          ));
+          (isComponent ? arrts : options)
+            .unshift(types.objectProperty(
+              types.identifier(name),
+              value,
+            ));
         });
 
-        args.push(types.stringLiteral(tagName));
+        if (isComponent) {
+          args.push(
+            types.identifier(tagName),
+            types.objectExpression(attrs),
+            types.arrayExpression(children),
+          );
+        } else {
+          args.push(
+            types.stringLiteral(tagName),
+            types.objectExpression(options),
+          );
+        }
 
         const identifier = types.identifier('tag');
         const callExpression = types.callExpression(identifier, args);
-        callExpression.arguments = callExpression.arguments.concat(
-          types.objectExpression(options),
-        );
-        path.replaceWith(callExpression, path.node);
+        path.replaceWith(callExpression, node);
       },
     },
   };
 };
+
+function parseNode(types, node) {
+  const { type } = node;
+
+  if (type === 'JSXText') {
+    const tag = types.identifier('tag');
+    const text = types.identifier('text');
+    const callee = types.memberExpression(tag, text);
+    return types.callExpression(callee, [
+      types.stringLiteral(node.value),
+    ]);
+  }
+
+  if (type === 'JSXElement') {
+    return node;
+  }
+
+  const { expression } = node;
+  return expression;
+}

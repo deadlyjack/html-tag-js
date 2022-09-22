@@ -1,4 +1,9 @@
-function create(tagName, options = {}) {
+function create(tagName, options = {}, children = []) {
+  if (typeof tagName === 'function') {
+    tagName(options, children);
+    return;
+  }
+
   if (typeof tagName !== 'string') {
     throw new Error('tagName must be a string');
   }

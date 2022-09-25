@@ -1,14 +1,16 @@
 function create(tagName, options = {}, children = []) {
+  let $el;
+
   if (typeof tagName === 'function') {
     tagName(options, children);
     return;
+  } else if (tagName instanceof Node) {
+    $el = tagName;
+  } else if (typeof tagName === 'string') {
+    $el = document.createElement(tagName);
+  } else {
+    throw new Error('Invalid tag, ', typeof tagName);
   }
-
-  if (typeof tagName !== 'string') {
-    throw new Error('tagName must be a string');
-  }
-
-  const $el = document.createElement(tagName);
 
   Object.keys(options).forEach((prop) => {
     const option = options[prop];

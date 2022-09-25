@@ -2,8 +2,7 @@ function create(tagName, options = {}, children = []) {
   let $el;
 
   if (typeof tagName === 'function') {
-    tagName(options, children);
-    return;
+    return tagName(options, children);
   } else if (tagName instanceof Node) {
     $el = tagName;
   } else if (typeof tagName === 'string') {

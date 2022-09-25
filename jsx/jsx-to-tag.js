@@ -84,7 +84,7 @@ module.exports = (babel) => {
             return;
           }
 
-          (isComponent ? arrts : options)
+          (isComponent ? attrs : options)
             .unshift(types.objectProperty(
               types.identifier(name),
               value,

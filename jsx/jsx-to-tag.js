@@ -8,6 +8,29 @@ module.exports = (babel) => {
         const { node } = path;
         const { children: childrenNode } = node;
 
+        if (childrenNode.length === 1) {
+          let [el] = childrenNode;
+          let arg;
+          const { type } = el;
+          const tag = types.identifier('tag');
+          const text = types.identifier('use');
+          const callee = types.memberExpression(tag, text);
+          if (type === 'JSXText') {
+            arg = types.stringLiteral(el.value);
+          } else if (type === 'JSXElement') {
+            arg = el;
+          } else {
+            arg = el.expression;
+          }
+
+
+          console.log(arg);
+
+          const replacement = types.callExpression(callee, [arg]);
+          path.replaceWith(replacement, node);
+          return;
+        }
+
         const children = [];
 
         childrenNode.forEach((node) => {

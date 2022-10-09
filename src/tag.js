@@ -93,5 +93,23 @@ Object.defineProperties(tag, {
     value(text) {
       return document.createTextNode(text);
     }
-  }
+  },
+  use: {
+    value(arg) {
+      let value = arg;
+      const el = document.createTextNode(arg);
+
+      Object.defineProperty(el, 'value', {
+        set(val) {
+          value = val;
+          this.textContent = val;
+        },
+        get() {
+          return value;
+        }
+      })
+
+      return el;
+    },
+  },
 });

@@ -10,9 +10,17 @@
   </head>
   <body>
     <div id="app"></div>
+    <button onclick="inc()">+</button>
     <script>
       const app = tag.get('#app');
-      app.content = tag('h1', 'Hello world');
+      const count = tag.use(0);
+      app.content = tag('div', {
+        children: [tag.text('Count is: '), count],
+      });
+
+      function inc() {
+        count.value += 1;
+      }
     </script>
   </body>
 </html>

@@ -117,10 +117,16 @@ test(`<Test></Test>`, () => {
 }), tag.text("\\n")]);`);
 });
 
-test(`<>"Hello"</>`, () => {
+test(`<>test</>`, () => {
   const code = `const test = <>test</>`;
   const transformed = babel.transformSync(code, config);
   expect(transformed.code).toBe(`const test = tag.use("test");`);
+});
+
+test(`<>0</>`, () => {
+  const code = `const test = <>0</>`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`const test = tag.use(0);`);
 });
 
 test(`<>{text}</>`, () => {

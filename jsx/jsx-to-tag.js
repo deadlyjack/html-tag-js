@@ -1,5 +1,5 @@
 module.exports = (babel) => {
-  const { types } = babel;
+  const { types: t } = babel;
 
   return {
     name: 'quickpage-jsx-plugin',
@@ -12,21 +12,19 @@ module.exports = (babel) => {
           let [el] = childrenNode;
           let arg;
           const { type } = el;
-          const tag = types.identifier('tag');
-          const text = types.identifier('use');
-          const callee = types.memberExpression(tag, text);
+          const tag = t.identifier('tag');
+          const text = t.identifier('use');
+          const callee = t.memberExpression(tag, text);
           if (type === 'JSXText') {
-            arg = types.stringLiteral(el.value);
+            const { value } = el;
+            arg = isNaN(value) ? t.stringLiteral(value) : t.numericLiteral(+value);
           } else if (type === 'JSXElement') {
             arg = el;
           } else {
             arg = el.expression;
           }
 
-
-          console.log(arg);
-
-          const replacement = types.callExpression(callee, [arg]);
+          const replacement = t.callExpression(callee, [arg]);
           path.replaceWith(replacement, node);
           return;
         }
@@ -34,10 +32,10 @@ module.exports = (babel) => {
         const children = [];
 
         childrenNode.forEach((node) => {
-          children.push(parseNode(types, node));
+          children.push(parseNode(t, node));
         });
 
-        const arrayExpression = types.arrayExpression(children);
+        const arrayExpression = t.arrayExpression(children);
         path.replaceWith(arrayExpression, node);
       },
       JSXElement(path) {
@@ -53,29 +51,29 @@ module.exports = (babel) => {
         const attrs = [];
         const children = [];
         const options = [
-          types.objectProperty(
-            types.identifier('children'),
-            types.arrayExpression(children),
+          t.objectProperty(
+            t.identifier('children'),
+            t.arrayExpression(children),
           ),
-          types.objectProperty(
-            types.identifier('attr'),
-            types.objectExpression(attrs),
+          t.objectProperty(
+            t.identifier('attr'),
+            t.objectExpression(attrs),
           ),
         ];
 
         const isComponent = /^[A-Z]((?!-).)*$/.test(tagName);
 
         childrenNode.forEach((node) => {
-          children.push(parseNode(types, node));
+          children.push(parseNode(t, node));
         });
 
         attributes.forEach((attr) => {
           let { name } = attr.name;
 
           if (!attr.value) {
-            attrs.push(types.objectProperty(
-              types.stringLiteral(name),
-              types.stringLiteral(''),
+            attrs.push(t.objectProperty(
+              t.stringLiteral(name),
+              t.stringLiteral(''),
             ));
             return;
           }
@@ -100,35 +98,35 @@ module.exports = (babel) => {
           }
 
           if (isAttr) {
-            attrs.push(types.objectProperty(
-              types.stringLiteral(name),
+            attrs.push(t.objectProperty(
+              t.stringLiteral(name),
               value,
             ));
             return;
           }
 
           (isComponent ? attrs : options)
-            .unshift(types.objectProperty(
-              types.identifier(name),
+            .unshift(t.objectProperty(
+              t.identifier(name),
               value,
             ));
         });
 
         if (isComponent) {
           args.push(
-            types.identifier(tagName),
-            types.objectExpression(attrs),
-            types.arrayExpression(children),
+            t.identifier(tagName),
+            t.objectExpression(attrs),
+            t.arrayExpression(children),
           );
         } else {
           args.push(
-            types.stringLiteral(tagName),
-            types.objectExpression(options),
+            t.stringLiteral(tagName),
+            t.objectExpression(options),
           );
         }
 
-        const identifier = types.identifier('tag');
-        const callExpression = types.callExpression(identifier, args);
+        const identifier = t.identifier('tag');
+        const callExpression = t.callExpression(identifier, args);
         path.replaceWith(callExpression, node);
       },
     },

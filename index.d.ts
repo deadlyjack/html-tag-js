@@ -494,6 +494,10 @@ declare module 'html-tag-js' {
     [key: string]: any;
   }
 
+  interface UseText extends Text {
+    value: string | number;
+  }
+
   interface Tag {
     <K extends HTMLTagNames>(
       tagName: K,
@@ -509,6 +513,7 @@ declare module 'html-tag-js' {
     getAll(selector: String): Array<HTMLElement>;
     parse(html: String): HTMLElement;
     text(text: string): Text;
+    use(text: string | number): UseText;
   }
 
   const tag: Tag;

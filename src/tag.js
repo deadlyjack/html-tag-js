@@ -17,10 +17,7 @@ function create(tagName, options = {}, children = []) {
 
     switch (prop) {
       case 'child':
-        if (!(option instanceof Node)) {
-          throw new Error('child must be a Node');
-        }
-        $el.appendChild(option);
+        appendChild($el, option);
         break;
 
       case 'children':
@@ -28,11 +25,7 @@ function create(tagName, options = {}, children = []) {
           throw new Error('children must be an array of Nodes');
         }
         option.flat().forEach(($child) => {
-          if (!($child instanceof Node)) {
-            $child = tag.text(`${$child}`);
-          }
-
-          $el.append($child);
+          appendChild($el, $child);
         });
         break;
 
@@ -56,6 +49,17 @@ function create(tagName, options = {}, children = []) {
   });
 
   return $el;
+}
+
+function appendChild($el, $child) {
+  if (!($child instanceof Node)) {
+    $child = tag.text(`${$child}`);
+  }
+
+  if ($child instanceof Text && 'clone' in $child) {
+    $child = $child.clone();
+  }
+  $el.append($child);
 }
 
 export function tag(tagName, options = {}) {
@@ -97,17 +101,33 @@ Object.defineProperties(tag, {
   use: {
     value(arg) {
       let value = arg;
+      let shouldClone = false;
       const el = document.createTextNode(arg);
+      const clones = [el];
 
       Object.defineProperty(el, 'value', {
         set(val) {
           value = val;
-          this.textContent = val;
+          clones.forEach((clone) => {
+            clone.textContent = val;
+          });
         },
         get() {
           return value;
-        }
-      })
+        },
+      });
+
+      Object.defineProperty(el, 'clone', {
+        value() {
+          if (!shouldClone) {
+            shouldClone = true;
+            return el;
+          }
+          const clone = el.cloneNode();
+          clones.push(clone);
+          return clone;
+        },
+      });
 
       return el;
     },

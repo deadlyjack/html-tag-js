@@ -15,7 +15,13 @@
       const app = tag.get('#app');
       const count = tag.use(0);
       app.content = tag('div', {
-        children: [tag.text('Count is: '), count],
+        children: [
+          tag.text('Count is: '),
+          count,
+          tag.text('\n'),
+          tag.text('Another Instance of count: '),
+          count,
+        ],
       });
 
       function inc() {

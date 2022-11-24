@@ -62,7 +62,7 @@ function appendChild($el, $child) {
   $el.append($child);
 }
 
-export function tag(tagName, options = {}) {
+export default function tag(tagName, options = {}) {
   if (typeof options === 'string') {
     options = {
       innerHTML: options,

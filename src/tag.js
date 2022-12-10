@@ -62,13 +62,13 @@ function appendChild($el, $child) {
   $el.append($child);
 }
 
-export default function tag(tagName, options = {}) {
+export default function tag(tagName, options = {}, children = []) {
   if (typeof options === 'string') {
     options = {
       innerHTML: options,
     }
   }
-  return create(tagName, options);
+  return create(tagName, options, children);
 }
 
 Object.defineProperties(tag, {

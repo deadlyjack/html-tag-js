@@ -83,7 +83,7 @@ test('<div attr-required={true}></div>', () => {
 });`);
 });
 
-test(`<></>`, () => {
+test(`<>...</>`, () => {
   const code = `<>
   <div className='test1'></div>
   <div className='test2'></div>
@@ -133,4 +133,10 @@ test(`<>{text}</>`, () => {
   const code = `const test = <>{test}</>`;
   const transformed = babel.transformSync(code, config);
   expect(transformed.code).toBe(`const test = tag.use(test);`);
+});
+
+test(`<></>`, () => {
+  const code = `const test = <></>`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`const test = tag.use();`);
 });

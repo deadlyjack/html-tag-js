@@ -7,14 +7,19 @@ module.exports = (babel) => {
       JSXFragment(path) {
         const { node } = path;
         const { children: childrenNode } = node;
+        const tag = t.identifier('tag');
+        const text = t.identifier('use');
+        const callee = t.memberExpression(tag, text);
+
+        if (childrenNode.length === 0) {
+          path.replaceWith(t.callExpression(callee, []), node);
+          return;
+        }
 
         if (childrenNode.length === 1) {
           let [el] = childrenNode;
           let arg;
           const { type } = el;
-          const tag = t.identifier('tag');
-          const text = t.identifier('use');
-          const callee = t.memberExpression(tag, text);
           if (type === 'JSXText') {
             const { value } = el;
             arg = isNaN(value) ? t.stringLiteral(value) : t.numericLiteral(+value);

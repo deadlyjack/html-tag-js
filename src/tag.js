@@ -99,7 +99,7 @@ Object.defineProperties(tag, {
     }
   },
   use: {
-    value(arg) {
+    value(arg = '') {
       let value = arg;
       let shouldClone = false;
       const el = document.createTextNode(arg);

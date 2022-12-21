@@ -73,6 +73,11 @@ module.exports = (babel) => {
         });
 
         attributes.forEach((attr) => {
+          if (attr.type === 'JSXSpreadAttribute') {
+            attrs.push(t.spreadElement(attr.argument));
+            return;
+          }
+
           let { name } = attr.name;
 
           if (!attr.value) {

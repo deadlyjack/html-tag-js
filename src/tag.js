@@ -42,6 +42,12 @@ function create(tagName, options = {}, children = []) {
         });
         break;
 
+      case 'ref':
+        if (option.constructor.name === 'Ref') {
+          option.el = $el;
+        }
+        break;
+
       default:
         $el[prop] = option;
         break;

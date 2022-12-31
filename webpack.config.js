@@ -1,18 +1,20 @@
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = (webpack, options) => {
-  const { mode = 'production' } = options;
-  return {
+  const { mode = 'development' } = options;
+  return [{
     context: __dirname,
     mode,
     entry: {
+      Ref: "./src/ref.js",
       tag: "./src/tag.js",
-      polyfill: './src/polyfill.js'
+      polyfill: './src/polyfill.js',
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].js',
-      library: 'tag',
+      library: '[name]',
       libraryExport: 'default',
       libraryTarget: 'umd',
       globalObject: 'this',
@@ -23,6 +25,15 @@ module.exports = (webpack, options) => {
         exclude: /(node_modules|bower_components)/,
         use: 'babel-loader',
       }]
-    }
-  }
+    },
+    optimization: {
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            keep_classnames: true,
+          },
+        }),
+      ],
+    },
+  }]
 };

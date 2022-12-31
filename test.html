@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="./dist/polyfill.js"></script>
     <script src="./dist/tag.js"></script>
+    <script src="./dist/ref.js"></script>
     <title>Tag js test</title>
   </head>
   <body>
@@ -14,15 +15,18 @@
     <script>
       const app = tag.get('#app');
       const count = tag.use(0);
+      const ref = new Ref();
       app.content = tag('div', {
+        ref,
         children: [
           tag.text('Count is: '),
           count,
-          tag.text('\n'),
           tag.text('Another Instance of count: '),
           count,
         ],
       });
+
+      window.ref = ref;
 
       function inc() {
         count.value += 1;

@@ -520,3 +520,57 @@ declare module 'html-tag-js' {
 
   export default tag;
 }
+
+declare module 'html-tag-js/ref' {
+  export default class Ref {
+    /**
+     * Element reference
+     */
+    el: HTMLElement;
+    /**
+     * Get element by query selector
+     * @param selector
+     */
+    get(selector: String): HTMLElement;
+    /**
+     * Get all elements by query selector
+     * @param selector
+     */
+    getAll(selector: String): Array<HTMLElement>;
+    /**
+     * Parse html string to HTMLElement
+     * @param name name of the attribute
+     * @param value value of the attribute
+     */
+    attr(name: string, value: string): void;
+    /**
+     * Get attribute value
+     * @param name name of the attribute
+     * @returns value of the attribute
+     */
+    attr(name: string): string;
+    /**
+     * Append child to the element
+     * @param els child element
+     */
+    append(...els: Node[]): void;
+    /** Element classlist */
+    classList: DOMTokenList;
+    /** Element id */
+    id: string;
+    /** Element class */
+    className: string;
+    /** Element textConent */
+    textContent: string;
+    /** Element innerText */
+    innterText: string;
+    /** Element innerHTML */
+    innerHTML: string;
+    /** Element value */
+    value: string;
+    /** Element style */
+    style: CSSStyleDeclaration;
+    /** Element dataset */
+    dataset: DOMStringMap;
+  }
+}

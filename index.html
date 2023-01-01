@@ -16,10 +16,6 @@
     <script>
       const p = new Ref();
 
-      p.on('ref', (ref) => {
-        console.log(ref);
-      });
-
       app.append(
         tag('button', {
           textContent: 'This is a button',
@@ -32,6 +28,10 @@
           textContent: 'This is a paragraph',
         }),
       );
+
+      p.onref = (ref) => {
+        console.log(ref);
+      };
     </script>
   </body>
 </html>

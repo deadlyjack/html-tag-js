@@ -516,14 +516,12 @@ declare module 'html-tag-js' {
     use(text: string | number): UseText;
   }
 
-  interface Window {
-    tag: Tag;
-  }
-
   const tag: Tag;
 
   export default tag;
 }
+
+declare var tag: typeof import('html-tag-js').default;
 
 declare module 'html-tag-js/ref' {
   export default class Ref {

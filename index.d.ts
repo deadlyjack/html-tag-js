@@ -557,6 +557,22 @@ declare module 'html-tag-js/ref' {
      */
     append(...els: Node[]): void;
     /**
+     * Attach event listener
+     * @param event event name
+     * @param cb callback function
+     */
+    on(event: 'ref', cb: (this: Ref, ref: HTMLElement) => void): void;
+    /**
+     * Remove event listener
+     * @param event event name
+     * @param cb callback function
+     */
+    off(event: 'ref', cb: (this: Ref, ref: HTMLElement) => void): void;
+    /**
+     * Called when reference is set
+     */
+    onref: (this: Ref, ref: HTMLElement) => void;
+    /**
      * Get the classList
      * If the element is not yet created
      * `Setter` will store the value and apply it when the element is created

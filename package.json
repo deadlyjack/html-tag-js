@@ -103,5 +103,9 @@
   "dependencies": {},
   "browserslist": [
     "> 0.25%, not dead"
-  ]
+  ],
+  "resolutions": {
+    "terser": ">=5.14.2",
+    "json5": ">=2.2.2"
+  }
 }

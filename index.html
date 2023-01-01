@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test 'html-tag-js'</title>
+
+    <script src="./dist/Ref.js"></script>
+    <script src="./dist/tag.js"></script>
+  </head>
+  <body>
+    <h1>HTML-TAG-JS</h1>
+    <div id="app"></div>
+
+    <script>
+      const p = new Ref();
+
+      p.on('ref', (ref) => {
+        console.log(ref);
+      });
+
+      app.append(
+        tag('button', {
+          textContent: 'This is a button',
+          onclick: () => {
+            p.textContent = 'The button was clicked';
+          },
+        }),
+        tag('p', {
+          ref: p,
+          textContent: 'This is a paragraph',
+        }),
+      );
+    </script>
+  </body>
+</html>

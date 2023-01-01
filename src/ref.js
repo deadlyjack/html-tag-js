@@ -12,6 +12,10 @@ export default class Ref {
   #dataset = {};
   #children = [];
   #attr = {};
+  #on = {
+    ref: [],
+  };
+  #onref;
 
   /**
    * Append children to the element
@@ -61,6 +65,38 @@ export default class Ref {
    */
   getAll(query) {
     return this.#el?.getAll(query);
+  }
+
+  /**
+   * Attach an event listener
+   * @param {'ref'} event
+   * @param {(this:Ref, ref:Ref)=>void} callback
+   */
+  on(event, callback) {
+    this.#on[event]?.push(callback);
+    if (event === 'ref' && this.#el) {
+      callback.call(this, this.#el);
+      if (typeof this.#onref === 'function') this.#onref.call(this, this.#el);
+    }
+  }
+
+  /**
+   * Remove an event listener
+   * @param {'ref'} event
+   * @param {(this:Ref, ref:Ref)=>void} callback
+   */
+  off(event, callback) {
+    if (!this.#on[event]) return;
+    this.#on[event] = this.#on[event].filter(c => c !== callback);
+  }
+
+  /**
+   * Emits an event
+   * @param {'ref'} event Event name
+   * @param  {...any} args Arguments to pass to the callback
+   */
+  #emit(event, ...args) {
+    this.#on[event]?.forEach(c => c.call(this, ...args));
   }
 
   /**
@@ -133,6 +169,9 @@ export default class Ref {
       datasetProps.forEach(p => this.dataset[p] = this.#dataset[p]);
       this.#dataset = {};
     }
+
+    this.#emit('ref', el);
+    if (typeof this.#onref === 'function') this.#onref(this, el);
   }
 
   /**

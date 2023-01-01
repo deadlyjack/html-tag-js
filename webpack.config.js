@@ -1,5 +1,4 @@
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = (webpack, options) => {
   const { mode = 'development' } = options;
@@ -25,15 +24,6 @@ module.exports = (webpack, options) => {
         exclude: /(node_modules|bower_components)/,
         use: 'babel-loader',
       }]
-    },
-    optimization: {
-      minimizer: [
-        new TerserPlugin({
-          terserOptions: {
-            keep_classnames: true,
-          },
-        }),
-      ],
     },
   }]
 };

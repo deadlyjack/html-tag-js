@@ -96,16 +96,11 @@
     "@babel/preset-env": "^7.20.2",
     "babel-loader": "^9.1.0",
     "jest": "^29.3.1",
-    "terser-webpack-plugin": "^5.3.6",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
   },
   "dependencies": {},
   "browserslist": [
     "> 0.25%, not dead"
-  ],
-  "resolutions": {
-    "terser": ">=5.14.2",
-    "json5": ">=2.2.2"
-  }
+  ]
 }

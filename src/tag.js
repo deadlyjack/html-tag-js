@@ -43,7 +43,7 @@ function create(tagName, options = {}, children = []) {
         break;
 
       case 'ref':
-        if (option.constructor.name === 'Ref') {
+        if (option.instanceOfRef) {
           option.el = $el;
         }
         break;

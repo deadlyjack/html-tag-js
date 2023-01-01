@@ -1,4 +1,5 @@
 export default class Ref {
+  instanceOfRef = true;
   /**@type {HTMLElement} */
   #el;
   #value;

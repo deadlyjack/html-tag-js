@@ -15,7 +15,7 @@ export default class Ref {
   #on = {
     ref: [],
   };
-  #onref;
+  onref;
 
   /**
    * Append children to the element
@@ -76,7 +76,7 @@ export default class Ref {
     this.#on[event]?.push(callback);
     if (event === 'ref' && this.#el) {
       callback.call(this, this.#el);
-      if (typeof this.#onref === 'function') this.#onref.call(this, this.#el);
+      if (typeof this.onref === 'function') this.onref.call(this, this.#el);
     }
   }
 
@@ -171,7 +171,7 @@ export default class Ref {
     }
 
     this.#emit('ref', el);
-    if (typeof this.#onref === 'function') this.#onref(this, el);
+    if (typeof this.onref === 'function') this.onref(this, el);
   }
 
   /**

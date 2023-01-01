@@ -2,7 +2,74 @@
   "name": "html-tag-js",
   "version": "1.1.27",
   "description": "A simple library for creating and manipulating DOM using JavaScript DOM API.",
-  "main": "dist/tag.js",
+  "main": "./dist/tag.js",
+  "types": "./index.d.ts",
+  "files": [
+    "dist/",
+    "jsx/"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/tag.js",
+      "require": "./dist/tag.js",
+      "default": "./dist/tag.js"
+    },
+    "./Ref": {
+      "import": "./dist/Ref.js",
+      "require": "./dist/Ref.js",
+      "default": "./dist/Ref.js"
+    },
+    "./ref": {
+      "import": "./dist/Ref.js",
+      "require": "./dist/Ref.js",
+      "default": "./dist/Ref.js"
+    },
+    "./dist/polyfill": {
+      "import": "./dist/polyfill.js",
+      "require": "./dist/polyfill.js",
+      "default": "./dist/polyfill.js"
+    },
+    "./dist/polyfill.js": {
+      "import": "./dist/polyfill.js",
+      "require": "./dist/polyfill.js",
+      "default": "./dist/polyfill.js"
+    },
+    "./polyfill": {
+      "import": "./dist/polyfill.js",
+      "require": "./dist/polyfill.js",
+      "default": "./dist/polyfill.js"
+    },
+    "./jsx/syntax-parser.js": {
+      "import": "./jsx/syntax-parser.js",
+      "require": "./jsx/syntax-parser.js",
+      "default": "./jsx/syntax-parser.js"
+    },
+    "./jsx/jsx-to-tag.js": {
+      "import": "./jsx/jsx-to-tag.js",
+      "require": "./jsx/jsx-to-tag.js",
+      "default": "./jsx/jsx-to-tag.js"
+    },
+    "./jsx/jsx-to-tag": {
+      "import": "./jsx/jsx-to-tag.js",
+      "require": "./jsx/jsx-to-tag.js",
+      "default": "./jsx/jsx-to-tag.js"
+    },
+    "./jsx/syntax-parser": {
+      "import": "./jsx/syntax-parser.js",
+      "require": "./jsx/syntax-parser.js",
+      "default": "./jsx/syntax-parser.js"
+    },
+    "./jsx/tag-loader.js": {
+      "import": "./jsx/tag-loader.js",
+      "require": "./jsx/tag-loader.js",
+      "default": "./jsx/tag-loader.js"
+    },
+    "./jsx/tag-loader": {
+      "import": "./jsx/tag-loader.js",
+      "require": "./jsx/tag-loader.js",
+      "default": "./jsx/tag-loader.js"
+    }
+  },
   "scripts": {
     "build": "webpack",
     "test": "jest ./test"

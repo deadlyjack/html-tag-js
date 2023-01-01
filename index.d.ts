@@ -516,6 +516,10 @@ declare module 'html-tag-js' {
     use(text: string | number): UseText;
   }
 
+  interface Window {
+    tag: Tag;
+  }
+
   const tag: Tag;
 
   export default tag;

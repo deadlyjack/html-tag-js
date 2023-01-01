@@ -556,23 +556,67 @@ declare module 'html-tag-js/ref' {
      * @param els child element
      */
     append(...els: Node[]): void;
-    /** Element classlist */
+    /**
+     * Get the classList
+     * If the element is not yet created
+     * `Setter` will store the value and apply it when the element is created
+     * `Getter` will return a similar object to DOMTokenList which will store the value and apply it when the element is created
+     */
     classList: DOMTokenList;
-    /** Element id */
+    /**
+     * Get the id
+     * If the element is not yet created
+     * `Setter` will store the value and apply it when the element is created
+     * `Getter` will return the stored value
+     */
     id: string;
-    /** Element class */
+    /**
+     * Get the class name
+     * If the element is not yet created
+     * `Setter` will store the value and apply it when the element is created
+     * `Getter` will return the stored value
+     */
     className: string;
-    /** Element textConent */
+    /**
+     * Get the textContent
+     * If the element is not yet created
+     * `Setter` will store the value and apply it when the element is created
+     * `Getter` will return the stored value
+     */
     textContent: string;
-    /** Element innerText */
+    /**
+     * Get the innerText
+     * If the element is not yet created
+     * `Setter` will store the value and apply it when the element is created
+     * `Getter` will return the stored value
+     */
     innterText: string;
-    /** Element innerHTML */
+    /**
+     * Get the innerHTML
+     * If the element is not yet created
+     * `Setter` will store the value and apply it when the element is created
+     * `Getter` will return the stored value
+     */
     innerHTML: string;
-    /** Element value */
+    /**
+     * Get the value
+     * If the element is not yet created
+     * `Setter` will store the value and apply it when the element is created
+     */
     value: string;
-    /** Element style */
+    /**
+     * Get the value
+     * If the element is not yet created
+     * `Setter` will store the value and apply it when the element is created
+     * `Getter` will return proxy object similar to CSSStyleDeclaration
+     */
     style: CSSStyleDeclaration;
-    /** Element dataset */
+    /**
+     * Get the value
+     * If the element is not yet created
+     * `Setter` will store the value and apply it when the element is created
+     * `Getter` will return proxy object
+     */
     dataset: DOMStringMap;
   }
 }

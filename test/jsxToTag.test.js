@@ -144,6 +144,7 @@ test(`<></>`, () => {
 test(`<Test {...rest} />`, () => {
   const code = `<Test {...rest} />`;
   const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`tag(Test, { ...rest
+  expect(transformed.code).toBe(`tag(Test, {
+  ...rest
 }, []);`);
 });

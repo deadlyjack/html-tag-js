@@ -95,10 +95,8 @@ module.exports = (babel) => {
 
           if (type === 'StringLiteral') {
             value = attr.value;
-            isString = true;
           } else {
             value = attr.value.expression;
-            isString = false;
           }
 
           const attrRegex = /^attr-(.+)/;

@@ -9,7 +9,7 @@ export default class Ref {
   #id;
   #className;
   #classList = new ClassList();
-  #style = {};
+  #style = new CSSStyle();
   #dataset = {};
   #children = [];
   #attr = {};
@@ -301,7 +301,7 @@ export default class Ref {
    * If the element is not yet created, return a proxy object that will be applied when the element is created
    */
   get style() {
-    return this.#el?.style ?? CSSStyle(this.#style);
+    return this.#el?.style ?? this.#style;
   }
 
   /**
@@ -310,6 +310,13 @@ export default class Ref {
    */
   get dataset() {
     return this.#el?.dataset ?? this.#dataset;
+  }
+
+  /**
+   * Remove the element from the DOM
+   */
+  remove() {
+    this.#el.remove();
   }
 }
 
@@ -366,24 +373,17 @@ class ClassList {
   }
 }
 
-function CSSStyle(style) {
-  Object.defineProperties(style, {
-    item: {
-      value(index) {
-        Object.keys(this)[index];
-      }
-    },
-    removeProperty: {
-      value(name) {
-        delete this[name];
-      }
-    },
-    setProperty: {
-      value(name, value) {
-        this[name] = value;
-      },
-    },
-  });
+class CSSStyle {
+  item(index) {
+    Object.keys(this)[index];
+  }
 
-  return style;
+  removeProperty(index) {
+    const key = Object.keys(this)[index];
+    delete this[key];
+  }
+
+  setProperty(name, value) {
+    this[name] = value;
+  }
 }

@@ -31,14 +31,18 @@ function create(tagName, options = {}, children = []) {
 
       case 'attr':
         Object.keys(option).forEach((attr) => {
-          $el.setAttribute(attr, option[attr]);
+          const value = option[attr];
+          if (value === undefined) return;
+          $el.setAttribute(attr, value);
         });
         break;
 
       case 'style':
       case 'dataset':
         Object.keys(option).forEach((key) => {
-          $el[prop][key] = option[key];
+          const value = option[key];
+          if (value === undefined) return;
+          $el[prop][key] = value;
         });
         break;
 

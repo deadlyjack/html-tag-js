@@ -148,3 +148,11 @@ test(`<Test {...rest} />`, () => {
   ...rest
 }, []);`);
 });
+
+test(`<Test arg={undefined} />`, () => {
+  const code = `<Test arg={undefined} />`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`tag(Test, {
+  arg: undefined
+}, []);`);
+});

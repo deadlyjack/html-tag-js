@@ -509,8 +509,39 @@ declare module 'html-tag-js' {
     ): HTMLElementTagNameMap[K];
     (tagName: string, options?: HTMLElementAttributes & object): HTMLElement;
     (tagName: string, innerHTML: string): HTMLElement;
-    get(selector: String): HTMLElement;
-    getAll(selector: String): Array<HTMLElement>;
+    get<K extends keyof HTMLElementTagNameMap>(
+      selectors: K,
+    ): HTMLElementTagNameMap[K] | null;
+    get<K extends keyof SVGElementTagNameMap>(
+      selectors: K,
+    ): SVGElementTagNameMap[K] | null;
+    get<K extends keyof MathMLElementTagNameMap>(
+      selectors: K,
+    ): MathMLElementTagNameMap[K] | null;
+    /** @deprecated */
+    get<K extends keyof HTMLElementDeprecatedTagNameMap>(
+      selectors: K,
+    ): HTMLElementDeprecatedTagNameMap[K] | null;
+    get<E extends Element = Element>(selectors: string): E | null;
+    /**
+     * Returns all element descendants of node that match selectors.
+     *
+     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/getAll)
+     */
+    getAll<K extends keyof HTMLElementTagNameMap>(
+      selectors: K,
+    ): NodeListOf<HTMLElementTagNameMap[K]>;
+    getAll<K extends keyof SVGElementTagNameMap>(
+      selectors: K,
+    ): NodeListOf<SVGElementTagNameMap[K]>;
+    getAll<K extends keyof MathMLElementTagNameMap>(
+      selectors: K,
+    ): NodeListOf<MathMLElementTagNameMap[K]>;
+    /** @deprecated */
+    getAll<K extends keyof HTMLElementDeprecatedTagNameMap>(
+      selectors: K,
+    ): NodeListOf<HTMLElementDeprecatedTagNameMap[K]>;
+    getAll<E extends Element = Element>(selectors: string): NodeListOf<E>;
     parse(html: String): HTMLElement;
     text(text: string): Text;
     use(text: string | number): UseText;

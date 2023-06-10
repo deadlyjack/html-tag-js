@@ -2,15 +2,31 @@ type HTMLTagNames = keyof HTMLElementTagNameMap & string;
 
 interface HTMLElement {
   /**
-   * Returns first element that matches the selector.
-   *  @param selector The name of an element.
+   * Returns the first element that is a descendant of node that matches selectors.
    */
-  get(selector: HTMLTagNames): HTMLElement;
+  get<K extends keyof HTMLElementTagNameMap>(
+    selectors: K,
+  ): HTMLElementTagNameMap[K] | null;
+  get<K extends keyof SVGElementTagNameMap>(
+    selectors: K,
+  ): SVGElementTagNameMap[K] | null;
+  get<K extends keyof MathMLElementTagNameMap>(
+    selectors: K,
+  ): MathMLElementTagNameMap[K] | null;
+  get<E extends Element = Element>(selectors: string): E | null;
   /**
-   * Returns all elements that matches the selector as HTMLCollection.
-   *  @param selector The name of an element.
+   * Returns all element descendants of node that match selectors.
    */
-  getAll(selector: HTMLTagNames): Array<HTMLElement>;
+  getAll<K extends keyof HTMLElementTagNameMap>(
+    selectors: K,
+  ): NodeListOf<HTMLElementTagNameMap[K]>;
+  getAll<K extends keyof SVGElementTagNameMap>(
+    selectors: K,
+  ): NodeListOf<SVGElementTagNameMap[K]>;
+  getAll<K extends keyof MathMLElementTagNameMap>(
+    selectors: K,
+  ): NodeListOf<MathMLElementTagNameMap[K]>;
+  getAll<E extends Element = Element>(selectors: string): NodeListOf<E>;
   /**
    * Sets or gets the content of the element.
    */
@@ -509,6 +525,9 @@ declare module 'html-tag-js' {
     ): HTMLElementTagNameMap[K];
     (tagName: string, options?: HTMLElementAttributes & object): HTMLElement;
     (tagName: string, innerHTML: string): HTMLElement;
+    /**
+     * Returns the first element that is a descendant of node that matches selectors.
+     */
     get<K extends keyof HTMLElementTagNameMap>(
       selectors: K,
     ): HTMLElementTagNameMap[K] | null;
@@ -518,15 +537,9 @@ declare module 'html-tag-js' {
     get<K extends keyof MathMLElementTagNameMap>(
       selectors: K,
     ): MathMLElementTagNameMap[K] | null;
-    /** @deprecated */
-    get<K extends keyof HTMLElementDeprecatedTagNameMap>(
-      selectors: K,
-    ): HTMLElementDeprecatedTagNameMap[K] | null;
     get<E extends Element = Element>(selectors: string): E | null;
     /**
      * Returns all element descendants of node that match selectors.
-     *
-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/getAll)
      */
     getAll<K extends keyof HTMLElementTagNameMap>(
       selectors: K,
@@ -537,10 +550,6 @@ declare module 'html-tag-js' {
     getAll<K extends keyof MathMLElementTagNameMap>(
       selectors: K,
     ): NodeListOf<MathMLElementTagNameMap[K]>;
-    /** @deprecated */
-    getAll<K extends keyof HTMLElementDeprecatedTagNameMap>(
-      selectors: K,
-    ): NodeListOf<HTMLElementDeprecatedTagNameMap[K]>;
     getAll<E extends Element = Element>(selectors: string): NodeListOf<E>;
     parse(html: String): HTMLElement;
     text(text: string): Text;

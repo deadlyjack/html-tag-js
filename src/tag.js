@@ -81,6 +81,10 @@ export default function tag(tagName, options = {}, children = []) {
   return create(tagName, options, children);
 }
 
+if (window && !window.tag) {
+  window.tag = tag;
+}
+
 Object.defineProperties(tag, {
   get: {
     value(selector) {

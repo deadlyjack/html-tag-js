@@ -1,11 +1,11 @@
 const babel = require('@babel/core');
 const jsxToTag = require('../jsx/jsx-to-tag');
-const syntaxparser = require('../jsx/syntax-parser');
+const syntaxParser = require('../jsx/syntax-parser');
 
 const config = {
   plugins: [
     jsxToTag,
-    syntaxparser,
+    syntaxParser,
   ],
 };
 

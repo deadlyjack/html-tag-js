@@ -1,5 +1,6 @@
 module.exports = (source) => {
-  const sourceHasTagJsUsed = /tag\(/.test(source);
+  // if tag(), tag.use(), tag.get() is used in source, then import tag from 'html-tag-js'
+  const sourceHasTagJsUsed = source.search(/tag((\.(use|get|getAll)\()|\()/) >= 0;
   const sourceNoImportTagJS = source.search(/import tag from ['"]html-tag-js['"]/) >= 0;
 
   if (sourceHasTagJsUsed && !sourceNoImportTagJS) {

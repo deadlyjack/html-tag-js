@@ -1,3 +1,7 @@
 {
-  "liveServer.settings.port": 3223
+  "liveServer.settings.port": 3223,
+  "cSpell.words": [
+    "mydiv",
+    "quickpage"
+  ]
 }

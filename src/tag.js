@@ -1,3 +1,12 @@
+export default function tag(tagName, options = {}, children = []) {
+  if (typeof options === 'string') {
+    options = {
+      innerHTML: options,
+    }
+  }
+  return create(tagName, options, children);
+}
+
 function create(tagName, options = {}, children = []) {
   let $el;
 
@@ -11,22 +20,23 @@ function create(tagName, options = {}, children = []) {
     throw new Error('Invalid tag, ', typeof tagName);
   }
 
+  const ref = options.ref;
+  delete options.ref;
+
   Object.keys(options).forEach((prop) => {
     const option = options[prop];
     if (option === undefined) return;
 
     switch (prop) {
       case 'child':
-        appendChild($el, option);
+        addChildren($el, [option]);
         break;
 
       case 'children':
         if (!Array.isArray(option)) {
           throw new Error('children must be an array of Nodes');
         }
-        option.flat().forEach(($child) => {
-          appendChild($el, $child);
-        });
+        addChildren($el, option.flat());
         break;
 
       case 'attr':
@@ -46,10 +56,15 @@ function create(tagName, options = {}, children = []) {
         });
         break;
 
-      case 'ref':
-        if (option.instanceOfRef) {
-          option.el = $el;
-        }
+      case 'on':
+        Object.keys(option).forEach((event) => {
+          const handlers = option[event];
+          if (handlers === undefined) return;
+          handlers.forEach((handler) => {
+            $el.addEventListener(event, handler);
+          });
+        });
+
         break;
 
       default:
@@ -58,27 +73,32 @@ function create(tagName, options = {}, children = []) {
     }
   });
 
+  if (ref && ref.instanceOfRef) {
+    ref.el = $el;
+  }
+
   return $el;
 }
 
-function appendChild($el, $child) {
-  if (!($child instanceof Node)) {
-    $child = tag.text(`${$child}`);
-  }
-
-  if ($child instanceof Text && 'clone' in $child) {
-    $child = $child.clone();
-  }
-  $el.append($child);
-}
-
-export default function tag(tagName, options = {}, children = []) {
-  if (typeof options === 'string') {
-    options = {
-      innerHTML: options,
+/**
+ * Add children to an element
+ * @param {HTMLElement} $el 
+ * @param {Array<HTMLElement>} children 
+ */
+function addChildren($el, children) {
+  for (let child of children) {
+    if (child instanceof Text) {
+      if ('clone' in child) {
+        child = child.clone();
+      }
     }
+
+    if (!(child instanceof Node)) {
+      child = tag.text(`${child}`);
+    }
+
+    $el.appendChild(child);
   }
-  return create(tagName, options, children);
 }
 
 if (window && !window.tag) {

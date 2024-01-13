@@ -646,7 +646,7 @@ declare module 'html-tag-js/ref' {
      * `Setter` will store the value and apply it when the element is created
      * `Getter` will return the stored value
      */
-    innterText: string;
+    innerText: string;
     /**
      * Get the innerHTML
      * If the element is not yet created
@@ -675,4 +675,12 @@ declare module 'html-tag-js/ref' {
      */
     dataset: DOMStringMap;
   }
+}
+
+declare module JSX {
+  interface IntrinsicElements {
+    [name: string]: HTMLElementAttributes & object;
+  }
+
+  type Element = HTMLElement;
 }

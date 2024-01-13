@@ -16,6 +16,10 @@
     <script>
       const p = new Ref();
 
+      p.onref = () => {
+        console.log(p.el.children[0]);
+      };
+
       p.style.display = 'block';
       p.style.color = 'red';
       p.style.width = '100px';
@@ -34,6 +38,13 @@
           attr: {
             data: undefined,
           },
+          children: [
+            tag('span', {
+              textContent: 'This is a span',
+            }),
+            ['\nThis is a text'],
+            ['\nAnother text'],
+          ],
         }),
       );
 

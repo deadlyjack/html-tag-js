@@ -1,20 +1,18 @@
 const babel = require('@babel/core');
 const jsxToTag = require('../jsx/jsx-to-tag');
-const syntaxparser = require('../jsx/syntax-parser');
+const syntaxParser = require('../jsx/syntax-parser');
 
 const config = {
   plugins: [
     jsxToTag,
-    syntaxparser,
+    syntaxParser,
   ],
 };
 
 test('<div className=\'test\'></div>', () => {
   const transformed = babel.transformSync(`<div className='test'></div>`, config);
   expect(transformed.code).toBe(`tag("div", {
-  className: 'test',
-  children: [],
-  attr: {}
+  className: 'test'
 });`);
 });
 
@@ -22,9 +20,7 @@ test('<div className=\'test\' id=\'mydiv\'></div>', () => {
   const transformed = babel.transformSync(`<div className='test' id='mydiv'></div>`, config);
   expect(transformed.code).toBe(`tag("div", {
   id: 'mydiv',
-  className: 'test',
-  children: [],
-  attr: {}
+  className: 'test'
 });`);
 });
 
@@ -34,7 +30,6 @@ test('<div className=\'test\' id=\'mydiv\' attr-section={section}></div>', () =>
   expect(transformed.code).toBe(`tag("div", {
   id: 'mydiv',
   className: 'test',
-  children: [],
   attr: {
     "section": section
   }
@@ -45,7 +40,6 @@ test('<div required></div>', () => {
   const code = `<div required></div>`;
   const transformed = babel.transformSync(code, config);
   expect(transformed.code).toBe(`tag("div", {
-  children: [],
   attr: {
     "required": ""
   }
@@ -56,9 +50,7 @@ test('<div required=\'true\'></div>', () => {
   const code = `<div required='true'></div>`;
   const transformed = babel.transformSync(code, config);
   expect(transformed.code).toBe(`tag("div", {
-  required: 'true',
-  children: [],
-  attr: {}
+  required: 'true'
 });`);
 });
 
@@ -66,9 +58,7 @@ test('<div required={true}></div>', () => {
   const code = `<div required={true}></div>`;
   const transformed = babel.transformSync(code, config);
   expect(transformed.code).toBe(`tag("div", {
-  required: true,
-  children: [],
-  attr: {}
+  required: true
 });`);
 });
 
@@ -76,7 +66,6 @@ test('<div attr-required={true}></div>', () => {
   const code = `<div attr-required={true}></div>`;
   const transformed = babel.transformSync(code, config);
   expect(transformed.code).toBe(`tag("div", {
-  children: [],
   attr: {
     "required": true
   }
@@ -89,32 +78,24 @@ test(`<>...</>`, () => {
   <div className='test2'></div>
 </>`;
   const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`[tag.text("\\n  "), tag("div", {
-  className: 'test1',
-  children: [],
-  attr: {}
-}), tag.text("\\n  "), tag("div", {
-  className: 'test2',
-  children: [],
-  attr: {}
-}), tag.text("\\n")];`);
+  expect(transformed.code).toBe(`["\\n  ", tag("div", {
+  className: 'test1'
+}), "\\n  ", tag("div", {
+  className: 'test2'
+}), "\\n"];`);
 });
 
-test(`<Test></Test>`, () => {
+test(`<Test>...</Test>`, () => {
   const code = `<Test>
   <div className='test1'></div>
   <div className='test2'></div>
 </Test>`;
   const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`tag(Test, {}, [tag.text("\\n  "), tag("div", {
-  className: 'test1',
-  children: [],
-  attr: {}
-}), tag.text("\\n  "), tag("div", {
-  className: 'test2',
-  children: [],
-  attr: {}
-}), tag.text("\\n")]);`);
+  expect(transformed.code).toBe(`tag(Test, {}, ["\\n  ", tag("div", {
+  className: 'test1'
+}), "\\n  ", tag("div", {
+  className: 'test2'
+}), "\\n"]);`);
 });
 
 test(`<>test</>`, () => {
@@ -146,7 +127,7 @@ test(`<Test {...rest} />`, () => {
   const transformed = babel.transformSync(code, config);
   expect(transformed.code).toBe(`tag(Test, {
   ...rest
-}, []);`);
+});`);
 });
 
 test(`<Test arg={undefined} />`, () => {
@@ -154,5 +135,61 @@ test(`<Test arg={undefined} />`, () => {
   const transformed = babel.transformSync(code, config);
   expect(transformed.code).toBe(`tag(Test, {
   arg: undefined
-}, []);`);
+});`);
+});
+
+test(`<Test on:click={(e)=>console.log(e)} />`, () => {
+  const code = `<Test on:click={(e)=>console.log(e)} />`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`tag(Test, {
+  on: {
+    "click": [e => console.log(e)]
+  }
+});`);
+});
+
+test(`<Test on:click={clickHandler} />`, () => {
+  const code = `<Test on:click={clickHandler} />`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`tag(Test, {
+  on: {
+    "click": [clickHandler]
+  }
+});`);
+});
+
+test(`<Test off:click={clickHandler} />`, () => {
+  const code = `<Test off:click={clickHandler} />`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`tag(Test);`);
+});
+
+test(`<button on:click={(e)=>console.log(e)}>Click me</button>`, () => {
+  const code = `<button on:click={(e)=>console.log(e)}>Click me</button>`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`tag("button", {
+  on: {
+    "click": [e => console.log(e)]
+  },
+  children: ["Click me"]
+});`);
+});
+
+test(`<button on:click={clickHandler}>Click me</button>`, () => {
+  const code = `<button on:click={clickHandler}>Click me</button>`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`tag("button", {
+  on: {
+    "click": [clickHandler]
+  },
+  children: ["Click me"]
+});`);
+});
+
+test(`<button off:click={clickHandler}>Click me</button>`, () => {
+  const code = `<button off:click={clickHandler}>Click me</button>`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`tag("button", {
+  children: ["Click me"]
+});`);
 });

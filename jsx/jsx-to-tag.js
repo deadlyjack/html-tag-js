@@ -54,17 +54,10 @@ module.exports = (babel) => {
 
         const args = [];
         const attrs = [];
+        const on = [];
         const children = [];
-        const options = [
-          t.objectProperty(
-            t.identifier('children'),
-            t.arrayExpression(children),
-          ),
-          t.objectProperty(
-            t.identifier('attr'),
-            t.objectExpression(attrs),
-          ),
-        ];
+        const options = [];
+        const events = {};
 
         const isComponent = /^[A-Z]((?!-).)*$/.test(tagName);
 
@@ -78,7 +71,12 @@ module.exports = (babel) => {
             return;
           }
 
-          let { name } = attr.name;
+          let { name, namespace } = attr.name;
+
+          if (namespace) {
+            namespace = namespace.name;
+            name = name.name;
+          }
 
           if (!attr.value) {
             attrs.push(t.objectProperty(
@@ -89,7 +87,6 @@ module.exports = (babel) => {
           }
 
           const { type } = attr.value;
-
           let isAttr = /-/.test(name);
           let value;
 
@@ -99,13 +96,26 @@ module.exports = (babel) => {
             value = attr.value.expression;
           }
 
-          const attrRegex = /^attr-(.+)/;
-          if (attrRegex.test(name)) {
-            [, name] = attrRegex.exec(name);
-            isAttr = true;
+          if (namespace) {
+            if (namespace !== 'on') return;
+            if (!events[name]) {
+              events[name] = [];
+              on.push(t.objectProperty(
+                t.stringLiteral(name),
+                t.arrayExpression(events[name]),
+              ));
+            }
+
+            events[name].push(value);
+            return;
           }
 
           if (isAttr) {
+            const attrRegex = /^attr-(.+)/;
+            if (attrRegex.test(name)) {
+              [, name] = attrRegex.exec(name);
+            }
+
             attrs.push(t.objectProperty(
               t.stringLiteral(name),
               value,
@@ -121,17 +131,58 @@ module.exports = (babel) => {
         });
 
         if (isComponent) {
-          args.push(
-            t.identifier(tagName),
-            t.objectExpression(attrs),
-            t.arrayExpression(children),
-          );
+          args.push(t.identifier(tagName));
+
+          if (on.length > 0) {
+            attrs.push(
+              t.objectProperty(
+                t.identifier('on'),
+                t.objectExpression(on),
+              )
+            );
+          }
+
+          if (attrs.length > 0 || children.length > 0) {
+            args.push(t.objectExpression(attrs));
+          }
+
+          if (children.length > 0) {
+            args.push(t.arrayExpression(children));
+          }
         } else {
           args.push(
             t.stringLiteral(tagName),
             t.objectExpression(options),
           );
+
+          if (on.length > 0) {
+            options.push(
+              t.objectProperty(
+                t.identifier('on'),
+                t.objectExpression(on),
+              )
+            );
+          }
+
+          if (attrs.length > 0) {
+            options.push(
+              t.objectProperty(
+                t.identifier('attr'),
+                t.objectExpression(attrs),
+              )
+            );
+          }
+
+          if (children.length > 0) {
+            options.push(
+              t.objectProperty(
+                t.identifier('children'),
+                t.arrayExpression(children),
+              )
+            );
+          }
         }
+
 
         const identifier = t.identifier('tag');
         const callExpression = t.callExpression(identifier, args);
@@ -145,12 +196,7 @@ function parseNode(types, node) {
   const { type } = node;
 
   if (type === 'JSXText') {
-    const tag = types.identifier('tag');
-    const text = types.identifier('text');
-    const callee = types.memberExpression(tag, text);
-    return types.callExpression(callee, [
-      types.stringLiteral(node.value),
-    ]);
+    return types.stringLiteral(node.value);
   }
 
   if (type === 'JSXElement') {

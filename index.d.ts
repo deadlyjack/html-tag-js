@@ -551,7 +551,6 @@ declare module 'html-tag-js' {
       selectors: K,
     ): NodeListOf<MathMLElementTagNameMap[K]>;
     getAll<E extends Element = Element>(selectors: string): NodeListOf<E>;
-    parse(html: String): HTMLElement;
     text(text: string): Text;
     use(text: string | number): UseText;
   }

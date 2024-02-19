@@ -33,3 +33,5 @@
   ```html
   <div></div>
   ```
+
+- Removed tag.parse method

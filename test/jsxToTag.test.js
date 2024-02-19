@@ -91,7 +91,7 @@ test(`<Test>...</Test>`, () => {
   <div className='test2'></div>
 </Test>`;
   const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`tag(Test, {}, ["\\n  ", tag("div", {
+  expect(transformed.code).toBe(`tag(Test, ["\\n  ", tag("div", {
   className: 'test1'
 }), "\\n  ", tag("div", {
   className: 'test2'
@@ -192,4 +192,16 @@ test(`<button off:click={clickHandler}>Click me</button>`, () => {
   expect(transformed.code).toBe(`tag("button", {
   children: ["Click me"]
 });`);
+});
+
+test(`<div>{}</div>`, () => {
+  const code = `<div>{}</div>`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`tag("div");`);
+});
+
+test(`<div>{/*Comment*/}</div>`, () => {
+  const code = `<div>{/*Comment*/}</div>`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`tag("div");`);
 });

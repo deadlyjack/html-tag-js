@@ -10,6 +10,11 @@ export default function tag(tagName, options = {}, children = []) {
 function create(tagName, options = {}, children = []) {
   let $el;
 
+  if (Array.isArray(options)) {
+    children = options;
+    options = {};
+  }
+
   if (typeof tagName === 'function') {
     return tagName(options, children);
   } else if (tagName instanceof Node) {
@@ -87,14 +92,17 @@ function create(tagName, options = {}, children = []) {
  */
 function addChildren($el, children) {
   for (let child of children) {
-    if (child instanceof Text) {
+    if (!(child instanceof Node)) {
+      if (
+        child === null
+        || child === undefined
+        || child === ''
+      ) continue;
+      child = tag.text(`${child}`);
+    } else if (child instanceof Text) {
       if ('clone' in child) {
         child = child.clone();
       }
-    }
-
-    if (!(child instanceof Node)) {
-      child = tag.text(`${child}`);
     }
 
     $el.appendChild(child);
@@ -115,16 +123,6 @@ Object.defineProperties(tag, {
     value(selector) {
       const $els = document.querySelectorAll(selector);
       return [...$els];
-    },
-  },
-  parse: {
-    value(html) {
-      const $div = document.createElement('div');
-      $div.innerHTML = html;
-      if ($div.childElementCount === 1) {
-        return $div.firstElementChild;
-      }
-      return [...$div.children];
     },
   },
   text: {

@@ -46,6 +46,9 @@
             ['\nAnother text'],
           ],
         }),
+        tag('span', {
+          children: [null, undefined, tag.text('This is a span')],
+        }),
       );
 
       p.style.backgroundColor = 'blue';

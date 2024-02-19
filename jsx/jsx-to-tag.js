@@ -35,11 +35,7 @@ module.exports = (babel) => {
         }
 
         const children = [];
-
-        childrenNode.forEach((node) => {
-          children.push(parseNode(t, node));
-        });
-
+        populateChildren(childrenNode, children, t);
         const arrayExpression = t.arrayExpression(children);
         path.replaceWith(arrayExpression, node);
       },
@@ -58,12 +54,9 @@ module.exports = (babel) => {
         const children = [];
         const options = [];
         const events = {};
-
         const isComponent = /^[A-Z]((?!-).)*$/.test(tagName);
 
-        childrenNode.forEach((node) => {
-          children.push(parseNode(t, node));
-        });
+        populateChildren(childrenNode, children, t);
 
         attributes.forEach((attr) => {
           if (attr.type === 'JSXSpreadAttribute') {
@@ -142,7 +135,7 @@ module.exports = (babel) => {
             );
           }
 
-          if (attrs.length > 0 || children.length > 0) {
+          if (attrs.length > 0) {
             args.push(t.objectExpression(attrs));
           }
 
@@ -150,10 +143,7 @@ module.exports = (babel) => {
             args.push(t.arrayExpression(children));
           }
         } else {
-          args.push(
-            t.stringLiteral(tagName),
-            t.objectExpression(options),
-          );
+          args.push(t.stringLiteral(tagName));
 
           if (on.length > 0) {
             options.push(
@@ -173,13 +163,17 @@ module.exports = (babel) => {
             );
           }
 
-          if (children.length > 0) {
+          if (children.length) {
             options.push(
               t.objectProperty(
                 t.identifier('children'),
                 t.arrayExpression(children),
               )
             );
+          }
+
+          if (options.length) {
+            args.push(t.objectExpression(options));
           }
         }
 
@@ -192,6 +186,12 @@ module.exports = (babel) => {
   };
 };
 
+/**
+ * Parse node to expression
+ * @param {any} types  babel.types
+ * @param {any} node 
+ * @returns expression
+ */
 function parseNode(types, node) {
   const { type } = node;
 
@@ -204,5 +204,25 @@ function parseNode(types, node) {
   }
 
   const { expression } = node;
+  const invalidExpressions = ['JSXEmptyExpression'];
+
+  if (invalidExpressions.includes(expression.type)) {
+    return null;
+  }
+
   return expression;
+}
+
+/**
+ * Populate children
+ * @param {Array<any>} childrenNode 
+ * @param {Array<any>} children 
+ * @param {any} t 
+ */
+function populateChildren(childrenNode, children, t) {
+  childrenNode.forEach((node) => {
+    node = parseNode(t, node);
+    if (!node) return;
+    children.push(node);
+  });
 }

@@ -68,11 +68,6 @@
       "import": "./jsx/tag-loader.js",
       "require": "./jsx/tag-loader.js",
       "default": "./jsx/tag-loader.js"
-    },
-    "./jsx/eslint/jsx-uses-vars.js": {
-      "import": "./jsx/eslint/jsx-uses-vars.js",
-      "require": "./jsx/eslint/jsx-uses-vars.js",
-      "default": "./jsx/eslint/jsx-uses-vars.js"
     }
   },
   "scripts": {

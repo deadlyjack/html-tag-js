@@ -68,6 +68,11 @@
       "import": "./jsx/tag-loader.js",
       "require": "./jsx/tag-loader.js",
       "default": "./jsx/tag-loader.js"
+    },
+    "./jsx/eslint/jsx-uses-vars.js": {
+      "import": "./jsx/eslint/jsx-uses-vars.js",
+      "require": "./jsx/eslint/jsx-uses-vars.js",
+      "default": "./jsx/eslint/jsx-uses-vars.js"
     }
   },
   "scripts": {
@@ -103,6 +108,8 @@
     "webpack": "^5.85.0",
     "webpack-cli": "^5.1.1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "eslint": "^8.57.0"
+  },
   "browserslist": "cover 100%,not android < 5"
 }

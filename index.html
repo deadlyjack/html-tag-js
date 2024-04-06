@@ -55,7 +55,11 @@
       app.append(
         tag('p', {
           children: [
-            ...Array(100000)
+            tag('div', {
+              textContent: text,
+            }),
+            tag('br'),
+            ...Array(10000)
               .fill(null)
               .map(() => text),
             tag('button', {

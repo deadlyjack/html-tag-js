@@ -153,6 +153,12 @@ Object.defineProperties(tag, {
         },
       });
 
+      Object.defineProperty(el, 'toString', {
+        value() {
+          return el._value;
+        },
+      });
+
       Object.defineProperty(el, 'clone', {
         value() {
           if (!el.shouldClone) {

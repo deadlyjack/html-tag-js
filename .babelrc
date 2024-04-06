@@ -1,10 +1,15 @@
 {
   "presets": [
-    "@babel/preset-env"
+    "@babel/env"
   ],
+  "env": {
+    "test": {
+      "presets": [
+        "@babel/env"
+      ]
+    }
+  },
   "plugins": [
-    "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-proposal-private-methods",
     [
       "@babel/transform-runtime",
       {
@@ -12,5 +17,5 @@
       }
     ]
   ],
-  "compact": false
+  "compact": true
 }

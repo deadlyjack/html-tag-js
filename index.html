@@ -47,7 +47,18 @@
           ],
         }),
         tag('span', {
-          children: [null, undefined, tag.text('This is a span')],
+          children: [null, undefined, tag.text('This is a span'), tag('br')],
+        }),
+      );
+
+      const text = tag.use('text');
+      app.append(
+        text,
+        tag('button', {
+          textContent: 'This is a button',
+          onclick: () => {
+            text.value = 'The button was clicked';
+          },
         }),
       );
 

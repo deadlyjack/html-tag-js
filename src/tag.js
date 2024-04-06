@@ -132,31 +132,35 @@ Object.defineProperties(tag, {
   },
   use: {
     value(arg = '') {
-      let value = arg;
-      let shouldClone = false;
       const el = document.createTextNode(arg);
-      const clones = [el];
+      el.clones = [el];
+      el.shouldClone = false;
+      el._value = arg;
 
       Object.defineProperty(el, 'value', {
         set(val) {
-          value = val;
-          clones.forEach((clone) => {
+          el._value = val;
+          el.clones.forEach((clone) => {
             clone.textContent = val;
           });
+
+          if (typeof el.onChange === 'function') {
+            el.onChange.call(el, val);
+          }
         },
         get() {
-          return value;
+          return el._value;
         },
       });
 
       Object.defineProperty(el, 'clone', {
         value() {
-          if (!shouldClone) {
-            shouldClone = true;
+          if (!el.shouldClone) {
+            el.shouldClone = true;
             return el;
           }
           const clone = el.cloneNode();
-          clones.push(clone);
+          el.clones.push(clone);
           return clone;
         },
       });

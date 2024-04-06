@@ -505,6 +505,7 @@ interface HTMLElementAttributes {
 
 interface UseText extends Text {
   value: string | number;
+  onChange: (this: UseText, value: string | number) => void;
 }
 
 interface Tag {

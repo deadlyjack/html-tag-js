@@ -53,14 +53,26 @@
 
       const text = tag.use('text');
       app.append(
-        text,
-        tag('button', {
-          textContent: 'This is a button',
-          onclick: () => {
-            text.value = 'The button was clicked';
-          },
+        tag('p', {
+          children: [
+            ...Array(100000)
+              .fill(null)
+              .map(() => text),
+            tag('button', {
+              textContent: 'Click me',
+              onclick: () => {
+                text.value = 'The button was clicked';
+              },
+            }),
+          ],
         }),
       );
+
+      text.onChange = (value) => {
+        console.log(value);
+      };
+
+      console.log({ text });
 
       p.style.backgroundColor = 'blue';
 

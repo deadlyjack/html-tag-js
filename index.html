@@ -51,6 +51,27 @@
         }),
       );
 
+      app.append(
+        tag('div', {
+          children: [
+            [
+              tag('span', {
+                textContent: 'This is a span',
+              }),
+              [
+                tag('span', {
+                  textContent: 'This is a span',
+                }),
+                ['\nThis is a text'],
+                ['\nAnother text'],
+              ],
+              ['\nThis is a text'],
+              ['\nAnother text'],
+            ],
+          ],
+        }),
+      );
+
       const text = tag.use('text');
       app.append(
         tag('p', {

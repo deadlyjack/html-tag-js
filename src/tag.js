@@ -1,3 +1,10 @@
+/**
+ * Creates an HTML element with the specified tag name, options, and children.
+ * @param {string|function|Node} tagName 
+ * @param {object} options 
+ * @param {Array} children 
+ * @returns 
+ */
 export default function tag(tagName, options = {}, children = []) {
   if (typeof options === 'string') {
     options = {
@@ -7,6 +14,15 @@ export default function tag(tagName, options = {}, children = []) {
   return create(tagName, options, children);
 }
 
+/**
+ * Creates an HTML element with the specified tag name, options, and children.
+ *
+ * @param {string|function|Node} tagName - The tag name of the element to create. It can be a string, a function, or a Node object.
+ * @param {Object} [options={}] - The options for the element.
+ * @param {Array} [children=[]] - The children of the element.
+ * @returns {Node} The created HTML element.
+ * @throws {Error} If the tag name is invalid.
+ */
 function create(tagName, options = {}, children = []) {
   let $el;
 
@@ -98,11 +114,9 @@ function addChildren($el, children) {
     }
 
     if (!(child instanceof Node)) {
-      if (
-        child === null
-        || child === undefined
-        || child === ''
-      ) continue;
+      const type = typeof child;
+      if (!['number', 'bigint', 'string'].includes(type)) continue;
+      if (type === 'string' && !child) continue;
       child = tag.text(`${child}`);
     } else if (child instanceof Text) {
       if ('clone' in child) {

@@ -45,7 +45,23 @@ if (!('content' in HTMLElement.prototype)) {
     set: function (value) {
       this.innerHTML = '';
       if (Array.isArray(value)) {
-        this.append(...value);
+        value = value.flat();
+        value.forEach((child) => {
+          if (child instanceof Node) {
+            this.append(child);
+            return;
+          }
+
+          if (typeof child === 'string') {
+            this.append(document.createTextNode(child));
+            return;
+          }
+
+          if (typeof child === 'number') {
+            this.append(document.createTextNode(`${child}`));
+            return;
+          }
+        });
         return;
       }
       this.append(value);

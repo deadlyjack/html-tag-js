@@ -54,19 +54,54 @@
       app.append(
         tag('div', {
           children: [
+            Promise.resolve([
+              tag('span', {
+                textContent: 'This is a span promise 1',
+              }),
+              tag('br'),
+              tag('span', {
+                textContent: 'This is a span promise 2',
+              }),
+              tag('br'),
+              tag('span', {
+                textContent: 'This is a span promise 3',
+              }),
+            ]),
+          ],
+        }),
+      );
+
+      app.append(
+        tag('div', {
+          children: [
+            Promise.resolve(
+              tag('span', {
+                textContent: 'This is a span promise 4',
+              }),
+            ),
+          ],
+        }),
+      );
+
+      app.append(
+        tag('div', {
+          children: [
             [
               tag('span', {
-                textContent: 'This is a span',
+                innerText: 'This is a span\n',
               }),
               [
                 tag('span', {
-                  textContent: 'This is a span',
+                  innerText: 'This is a span\n',
                 }),
-                ['\nThis is a text'],
-                ['\nAnother text'],
+                ['This is a text'],
+                tag('br'),
+                ['Another text'],
               ],
-              ['\nThis is a text'],
-              ['\nAnother text'],
+              tag('br'),
+              ['This is a text'],
+              tag('br'),
+              ['Another text'],
             ],
           ],
         }),

@@ -114,4 +114,26 @@ if (!('content' in HTMLElement.prototype)) {
       }
     });
   }
+
+  if (!item.hasOwnProperty('after')) {
+    Object.defineProperty(item, 'after', {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: function after() {
+        if (this.parentNode === null) {
+          return;
+        }
+        var argArr = Array.prototype.slice.call(arguments),
+          docFrag = document.createDocumentFragment();
+
+        argArr.forEach(function (argItem) {
+          var isNode = argItem instanceof Node;
+          docFrag.appendChild(isNode ? argItem : document.createTextNode(String(argItem)));
+        });
+
+        this.parentNode.insertBefore(docFrag, this.nextSibling);
+      }
+    });
+  }
 });

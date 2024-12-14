@@ -104,7 +104,7 @@ function create(tagName, options = {}, children = []) {
 /**
  * Add children to an element
  * @param {HTMLElement} $el 
- * @param {Array<HTMLElement>} children 
+ * @param {Array<HTMLElement|Promise>} children 
  */
 function addChildren($el, children) {
   for (let child of children) {
@@ -113,19 +113,59 @@ function addChildren($el, children) {
       continue;
     }
 
-    if (!(child instanceof Node)) {
-      const type = typeof child;
-      if (!['number', 'bigint', 'string'].includes(type)) continue;
-      if (type === 'string' && !child) continue;
-      child = tag.text(`${child}`);
-    } else if (child instanceof Text) {
-      if ('clone' in child) {
-        child = child.clone();
-      }
+    child = getChild(child);
+    if (child) {
+      $el.appendChild(child);
     }
-
-    $el.appendChild(child);
   }
+}
+
+/**
+ * Processes a given child element and returns a valid DOM Node.
+ * 
+ * @param {any} child - The child element to process. It can be of various types including function, Node, string, number, bigint, symbol, undefined, or Promise.
+ * @returns {Node|null} - Returns a valid DOM Node or null if the child cannot be processed.
+ */
+function getChild(child) {
+  if (typeof child === 'function') {
+    return getChild(child());
+  }
+
+  if (child instanceof Promise) {
+    const $placeholder = document.createTextNode('');
+    child.then((child) => {
+      if (Array.isArray(child)) {
+        child = child.flat();
+        child.forEach((child) => {
+          child = getChild(child);
+          if (child) {
+            $placeholder.before(child);
+          }
+        });
+        $placeholder.remove();
+        return;
+      }
+
+      child = getChild(child);
+      if (child) {
+        $placeholder.replaceWith(child);
+      } else {
+        $placeholder.remove();
+      }
+    });
+    child = $placeholder;
+  } else if (child instanceof Text) {
+    if ('clone' in child) {
+      child = child.clone();
+    }
+  } else if (!(child instanceof Node)) {
+    const type = typeof child;
+    if (!['number', 'bigint', 'string'].includes(type)) return null;
+    if (type === 'string' && !child) return null;
+    child = tag.text(`${child}`);
+  }
+
+  return child;
 }
 
 if (window && !window.tag) {

@@ -2,12 +2,21 @@ const nodes = [Element.prototype, CharacterData.prototype, DocumentType.prototyp
 
 if (!('flat' in Array.prototype)) {
   Object.defineProperty(Array.prototype, 'flat', {
-    value(depth = Infinity) {
-      return depth > 0
-        ? this.reduce((acc, val) => acc.concat(val.flat()), [])
-        : this.slice();
-    }
-  })
+    value: function (depth = 1) { // Default depth changed to 1 (spec compliance)
+      const flatten = (arr, currentDepth) => {
+        return arr.reduce((acc, val) => {
+          if (Array.isArray(val) && currentDepth > 0) {
+            return acc.concat(flatten(val, currentDepth - 1));
+          } else {
+            return acc.concat(val);
+          }
+        }, []);
+      };
+      return flatten(this, depth);
+    },
+    writable: true,
+    configurable: true
+  });
 }
 
 if (!('isConnected' in Node.prototype)) {

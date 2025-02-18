@@ -1,5 +1,32 @@
 const nodes = [Element.prototype, CharacterData.prototype, DocumentType.prototype];
 
+if (!('includes' in Array.prototype)) {
+  Object.defineProperty(Array.prototype, 'includes', {
+    value: function (searchElement, fromIndex) {
+      if (this == null) {
+        throw new TypeError('"this" is null or not defined');
+      }
+
+      const o = Object(this);
+      const len = o.length >>> 0;
+      if (len === 0) {
+        return false;
+      }
+      const n = fromIndex | 0;
+      let k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
+      while (k < len) {
+        if (o[k] === searchElement) {
+          return true;
+        }
+        k++;
+      }
+      return false;
+    },
+    configurable: true,
+    writable: true
+  });
+}
+
 if (!('flat' in Array.prototype)) {
   Object.defineProperty(Array.prototype, 'flat', {
     value: function (depth = 1) { // Default depth changed to 1 (spec compliance)

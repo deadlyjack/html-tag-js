@@ -72,7 +72,8 @@
   },
   "scripts": {
     "build": "webpack",
-    "test": "jest ./test"
+    "test": "jest ./test",
+    "dev": "nodemon --exec 'jest ./test/dev.test.js' --watch ./test --watch ./jsx"
   },
   "repository": {
     "type": "git",
@@ -92,15 +93,15 @@
   },
   "homepage": "https://github.com/deadlyjack/tag.git#readme",
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/plugin-transform-runtime": "^7.25.9",
-    "@babel/preset-env": "^7.26.0",
-    "@babel/types": "^7.26.3",
+    "@babel/core": "^7.26.9",
+    "@babel/plugin-transform-runtime": "^7.26.9",
+    "@babel/preset-env": "^7.26.9",
+    "@babel/types": "^7.26.9",
     "babel-loader": "^9.2.1",
     "jest": "^29.7.0",
-    "webpack": "^5.97.1",
-    "webpack-cli": "^5.1.4"
+    "nodemon": "^3.1.9",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1"
   },
-  "dependencies": {},
   "browserslist": "cover 100%,not android < 5"
 }

@@ -45,7 +45,7 @@ module.exports = (babel) => {
           openingElement: el,
           children: childrenNode,
         } = node;
-        const { name: tagName } = el.name;
+        let { name: tagName } = el.name;
         const { attributes } = el;
 
         const args = [];
@@ -54,7 +54,13 @@ module.exports = (babel) => {
         const children = [];
         const options = [];
         const events = {};
-        const isComponent = /^[A-Z]((?!-).)*$/.test(tagName);
+        let isComponent = /^(?:[A-Z][a-zA-Z0-9_$]*|(?:[a-zA-Z_$][a-zA-Z0-9_$]*\.)+[a-zA-Z_$][a-zA-Z0-9_$]*)$/.test(tagName);
+
+        if (el.name.type === 'JSXMemberExpression') {
+          const { object, property } = el.name;
+          tagName = `${object.name}.${property.name}`;
+          isComponent = true;
+        }
 
         populateChildren(childrenNode, children, t);
 
@@ -90,7 +96,16 @@ module.exports = (babel) => {
           }
 
           if (namespace) {
-            if (namespace !== 'on') return;
+            if (!['on', 'once', 'off'].includes(namespace)) {
+              attrs.push(t.objectProperty(
+                t.stringLiteral(namespace === 'attr' ? name : `${namespace}:${name}`),
+                value,
+              ));
+              return;
+            }
+
+            if (namespace === 'off') return;
+
             if (!events[name]) {
               events[name] = [];
               on.push(t.objectProperty(

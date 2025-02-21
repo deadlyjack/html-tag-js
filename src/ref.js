@@ -334,7 +334,11 @@ export default class Ref {
       throw new Error('Element is not yet created');
     }
     this.innerHTML = '';
-    addChildren(this.#el, value);
+    if (Array.isArray(value)) {
+      addChildren(this.#el, value);
+    } else {
+      this.#el.append(value);
+    }
   }
 
   /**

@@ -1,3 +1,5 @@
+import { addChildren } from './tag';
+
 export default class Ref {
   instanceOfRef = true;
   /**@type {HTMLElement} */
@@ -310,6 +312,29 @@ export default class Ref {
    */
   get dataset() {
     return this.#el?.dataset ?? this.#dataset;
+  }
+
+  get content() {
+    if (!this.#el) {
+      throw new Error('Element is not yet created');
+    }
+    const children = [...this.el.children];
+    if (children.length === 0) {
+      return null;
+    }
+    if (children.length === 1) {
+      return children[0];
+    }
+
+    return children;
+  }
+
+  set content(value) {
+    if (!this.#el) {
+      throw new Error('Element is not yet created');
+    }
+    this.innerHTML = '';
+    addChildren(this.#el, value);
   }
 
   /**

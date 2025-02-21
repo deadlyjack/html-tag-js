@@ -30,7 +30,7 @@ interface HTMLElement {
   /**
    * Sets or gets the content of the element.
    */
-  content: HTMLElement & Array<HTMLElement>;
+  content: Node | Array<Node>;
 }
 
 type StyleList = {
@@ -55,6 +55,10 @@ interface HTMLElementAttributes {
    * The id of the element.
    */
   id?: string;
+  /**
+   * A reference to the element
+   */
+  ref?: import('html-tag-js/ref').default;
   /**
    * Sets content of the element.
    * @example $div.content = tag('span', 'Hello World!');
@@ -555,8 +559,6 @@ declare module 'html-tag-js' {
   export default tag;
 }
 
-declare var tag: typeof import('html-tag-js').default;
-
 declare module 'html-tag-js/ref' {
   export default class Ref {
     /**
@@ -668,13 +670,20 @@ declare module 'html-tag-js/ref' {
      * `Getter` will return proxy object
      */
     dataset: DOMStringMap;
+    /**
+     * Get and set the content of the element
+     * @throws Error if the element is not yet created
+     */
+    content: Node | Array<Node>;
   }
 }
 
-declare module JSX {
+declare namespace JSX {
   interface IntrinsicElements {
-    [name: string]: HTMLElementAttributes & object;
+    [name: string]: HTMLElementAttributes;
   }
 
   type Element = HTMLElement;
 }
+
+declare const tag: typeof import('html-tag-js').default;

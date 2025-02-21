@@ -106,7 +106,7 @@ function create(tagName, options = {}, children = []) {
  * @param {HTMLElement} $el 
  * @param {Array<HTMLElement|Promise>} children 
  */
-function addChildren($el, children) {
+export function addChildren($el, children) {
   for (let child of children) {
     if (Array.isArray(child)) {
       addChildren($el, child.flat());

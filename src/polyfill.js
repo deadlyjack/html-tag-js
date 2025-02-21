@@ -1,4 +1,4 @@
-const nodes = [Element.prototype, CharacterData.prototype, DocumentType.prototype];
+import { addChildren } from './tag';
 
 if (!('includes' in Array.prototype)) {
   Object.defineProperty(Array.prototype, 'includes', {
@@ -80,27 +80,7 @@ if (!('content' in HTMLElement.prototype)) {
   Object.defineProperty(HTMLElement.prototype, 'content', {
     set: function (value) {
       this.innerHTML = '';
-      if (Array.isArray(value)) {
-        value = value.flat();
-        value.forEach((child) => {
-          if (child instanceof Node) {
-            this.append(child);
-            return;
-          }
-
-          if (typeof child === 'string') {
-            this.append(document.createTextNode(child));
-            return;
-          }
-
-          if (typeof child === 'number') {
-            this.append(document.createTextNode(`${child}`));
-            return;
-          }
-        });
-        return;
-      }
-      this.append(value);
+      addChildren(this, value);
     },
     get: function () {
       const children = [...this.children];

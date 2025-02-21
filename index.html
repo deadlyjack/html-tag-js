@@ -13,9 +13,34 @@
   <body>
     <h1>HTML-TAG-JS</h1>
     <div id="app"></div>
+    <div id="dynamic" style="background-color: green;">
+      <div>Dynamic content</div>
+    </div>
 
     <script>
       const p = new Ref();
+
+      dynamic.content = [
+        (() => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve([
+                tag('span', {
+                  textContent: 'This is a span dynamic 1',
+                }),
+                tag('br'),
+                tag('span', {
+                  textContent: 'This is a span dynamic 2',
+                }),
+                tag('br'),
+                tag('span', {
+                  textContent: 'This is a span dynamic 3',
+                }),
+              ]);
+            }, 1000);
+          })
+        })(),
+      ]
 
       p.onref = function(){
         console.log(p.el.children[0]);

@@ -112,7 +112,7 @@ myRef.append(otherElement, anotherElement);
 import Ref from 'html-tag-js/ref';
 
 // Create reference
-const cardRef = new Ref();
+const cardRef = Ref();
 
 // Configure element
 cardRef.classList.add('card', 'shadow');

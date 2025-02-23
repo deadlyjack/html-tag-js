@@ -681,7 +681,7 @@ declare module 'html-tag-js/ref' {
 }
 
 declare module 'html-tag-js/reactive' {
-  interface Reactive<T = any> extends Text {
+  interface Reactive<T = string> extends Text {
     value: T;
     onChange: (this: Reactive<T>, value: T) => void;
     toString: () => string;

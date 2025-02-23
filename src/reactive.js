@@ -6,7 +6,7 @@ class Reactive extends Text {
   /** @type {number|string} */
   #value;
 
-  constructor(value) {
+  constructor(value = '') {
     super(value);
     this.clones = [this];
     this.shouldClone = false;

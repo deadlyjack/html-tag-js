@@ -20,7 +20,7 @@ path/to/html-tag-js/dist/tag.js
 
 To enable JSX like syntax, use `html-tag-js/tag-loader` as loader in webpack.
 
-```json
+```js
 module.exports = {
   module: {
     ...
@@ -38,7 +38,7 @@ module.exports = {
 
 And in add following lines in babel configuration file.
 
-```json
+```js
 {
   ...
   "plugins": [

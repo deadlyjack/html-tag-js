@@ -58,7 +58,7 @@ interface HTMLElementAttributes {
   /**
    * A reference to the element
    */
-  ref?: import('html-tag-js/ref').default;
+  ref?: import('html-tag-js/ref').Ref;
   /**
    * Sets content of the element.
    * @example $div.content = tag('span', 'Hello World!');
@@ -560,7 +560,7 @@ declare module 'html-tag-js' {
 }
 
 declare module 'html-tag-js/ref' {
-  export default class Ref {
+  interface Ref {
     /**
      * Element reference
      */
@@ -676,14 +676,18 @@ declare module 'html-tag-js/ref' {
      */
     content: Node | Array<Node>;
   }
+
+  export default function Ref(onref?: (this: Ref, element: HTMLElement) => void): Ref;
 }
 
 declare module 'html-tag-js/reactive' {
-  export default function Reactive<T = any>(initialValue?: T): Text & {
+  interface Reactive<T = any> extends Text {
     value: T;
-    onChange: (this: typeof Reactive<T>, value: T) => void;
+    onChange: (this: Reactive<T>, value: T) => void;
     toString: () => string;
-  };
+  }
+
+  export default function Reactive<T = any>(initialValue?: T): Reactive<T>;
 }
 
 declare namespace JSX {

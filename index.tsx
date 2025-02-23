@@ -5,7 +5,7 @@ import Reactive from 'html-tag-js/reactive';
 
 const val = Reactive(100);
 
-const test = <div ref={new Ref()} className='test' xyz="test" style={{
+const test = <div ref={Ref()} className='test' xyz="test" style={{
   color: 'red'
 }}></div>;
 

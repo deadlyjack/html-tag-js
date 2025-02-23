@@ -8,11 +8,14 @@ module.exports = (webpack, options) => {
     entry: {
       Ref: "./src/ref.js",
       tag: "./src/tag.js",
+      Reactive: "./src/reactive.js",
       polyfill: './src/polyfill.js',
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: '[name].js',
+      filename: (args) => {
+        return `${args.chunk.name.toLowerCase()}.js`;
+      },
       library: '[name]',
       libraryExport: 'default',
       libraryTarget: 'umd',

@@ -678,6 +678,14 @@ declare module 'html-tag-js/ref' {
   }
 }
 
+declare module 'html-tag-js/reactive' {
+  export default function Reactive<T = any>(initialValue?: T): Text & {
+    value: T;
+    onChange: (this: typeof Reactive<T>, value: T) => void;
+    toString: () => string;
+  };
+}
+
 declare namespace JSX {
   interface IntrinsicElements {
     [name: string]: HTMLElementAttributes;

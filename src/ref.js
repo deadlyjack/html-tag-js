@@ -1,6 +1,6 @@
 import { addChildren } from './tag';
 
-export default class Ref {
+class Ref {
   instanceOfRef = true;
   /**@type {HTMLElement} */
   #el;
@@ -23,6 +23,15 @@ export default class Ref {
     ],
   };
   #onref;
+
+  constructor(onref) {
+    if (onref) {
+      if (typeof onref !== 'function') {
+        throw new Error('onref must be a function');
+      }
+      this.#onref = onref;
+    }
+  }
 
   /**
    * Append children to the element
@@ -416,3 +425,5 @@ class CSSStyle {
     this[name] = value;
   }
 }
+
+export default (onref) => new Ref(onref);

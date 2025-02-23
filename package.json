@@ -15,14 +15,24 @@
       "default": "./dist/tag.js"
     },
     "./Ref": {
-      "import": "./dist/Ref.js",
-      "require": "./dist/Ref.js",
-      "default": "./dist/Ref.js"
+      "import": "./dist/ref.js",
+      "require": "./dist/ref.js",
+      "default": "./dist/ref.js"
     },
     "./ref": {
-      "import": "./dist/Ref.js",
-      "require": "./dist/Ref.js",
-      "default": "./dist/Ref.js"
+      "import": "./dist/ref.js",
+      "require": "./dist/ref.js",
+      "default": "./dist/ref.js"
+    },
+    "./Reactive": {
+      "import": "./dist/reactive.js",
+      "require": "./dist/reactive.js",
+      "default": "./dist/reactive.js"
+    },
+    "./reactive": {
+      "import": "./dist/reactive.js",
+      "require": "./dist/reactive.js",
+      "default": "./dist/reactive.js"
     },
     "./dist/polyfill": {
       "import": "./dist/polyfill.js",

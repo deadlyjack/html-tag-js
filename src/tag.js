@@ -41,6 +41,10 @@ function create(tagName, options = {}, children = []) {
     throw new Error('Invalid tag, ', typeof tagName);
   }
 
+  if (!options.children && Array.isArray(children) && children.length) {
+    options.children = children;
+  }
+
   const ref = options.ref;
   delete options.ref;
 
@@ -188,49 +192,5 @@ Object.defineProperties(tag, {
     value(text) {
       return document.createTextNode(text);
     }
-  },
-  use: {
-    value(arg = '') {
-      const el = document.createTextNode(arg);
-      el.clones = [el];
-      el.shouldClone = false;
-      el._value = arg;
-
-      Object.defineProperty(el, 'value', {
-        set(val) {
-          el._value = val;
-          el.clones.forEach((clone) => {
-            clone.textContent = val;
-          });
-
-          if (typeof el.onChange === 'function') {
-            el.onChange.call(el, val);
-          }
-        },
-        get() {
-          return el._value;
-        },
-      });
-
-      Object.defineProperty(el, 'toString', {
-        value() {
-          return el._value;
-        },
-      });
-
-      Object.defineProperty(el, 'clone', {
-        value() {
-          if (!el.shouldClone) {
-            el.shouldClone = true;
-            return el;
-          }
-          const clone = el.cloneNode();
-          el.clones.push(clone);
-          return clone;
-        },
-      });
-
-      return el;
-    },
   },
 });

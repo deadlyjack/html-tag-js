@@ -1,7 +1,6 @@
 # html-tag-js
 
-A simple library for creating and manipulating DOM using JavaScript DOM api.
-See
+A simple library for creating and manipulating DOM using JavaScript DOM api with out of the box support for JSX like syntax.
 
 ## Documentation
 
@@ -17,54 +16,87 @@ or directly import into browser
 path/to/html-tag-js/dist/tag.js
 ```
 
-### Usage
+### Enable JSX like syntax
 
-#### es6
+To enable JSX like syntax, use `html-tag-js/tag-loader` as loader in webpack.
 
-```javascript
-import tag from 'html-tag-js';
-import 'html-tag-js/dist/polyfill'; //Important (only once);
+```json
+module.exports = {
+  module: {
+    ...
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: ['html-tag-js/jsx/tag-loader.js'],
+      },
+      ...
+    ],
+  },
+};
 ```
 
-##### usage
+And in add following lines in babel configuration file.
+
+```json
+{
+  ...
+  "plugins": [
+    "html-tag-js/jsx/jsx-to-tag.js",
+    "html-tag-js/jsx/syntax-parser.js",
+    ...
+  ],
+  ...
+}
+```
+
+### Usage
+
+To create elements, use `tag` function. It accepts tag name, options and children as arguments. Checkout [tag](./docs/tag.md) for more details.
 
 ```javascript
-//creating element with options
-const span = tag('span', {
-  textContent: 'This is span tag',
-  className: 'myspan',
-  id: 'span1',
+import 'html-tag-js/dist/polyfill'; // optional
+// no need to import tag from 'html-tag-js'
+// if you are using tag-loader
+import tag from 'html-tag-js';
+```
+
+### Cheat Sheet
+
+#### Use `Reactive` to create reactive node
+
+To create a reactive node, use `Reactive` constructor. It accepts initial value and returns an object with `value` property to get/set the value and `onChange` callback to listen for value changes. Checkout [Reactive](./docs/reactive.md) for more details.
+
+```javascript
+import Reactive from 'html-tag-js/Reactive';
+
+const count = Reactive(0);
+
+document.body.append(
+  <div>
+    <h1>{count}</h1>
+    <button onclick={() => count.value++}>Increment</button>
+  </div>
+);
+```
+
+#### Use `Ref` to get reference of the node
+
+To get reference of the node, use `Ref` constructor. It accepts a callback function which will be called with the node as argument. Checkout [Ref](./docs/ref.md) for more details.
+
+```javascript
+import Ref from 'html-tag-js/Ref';
+
+const ref = Ref(node => {
+  console.log(node); // <h1>Hello</h1>
 });
 
-//create element with child
-const div = tag('div', {
-  child: span,
-});
+// Change style of the node before or after referencing
+ref.style.color = 'red';
 
-const elements = [el1, el2, el3];
-
-//append child(s)
-div.append(...elements);
-
-//easily get any child of parent element using get method which
-//takes query selector string as argument
-div.get('#span1');
-
-//get all element
-//return array of html elements
-div.getAll('span');
-
-// --or--
-
-tag.get('body');
-tag.getAll('.mydiv');
-
-//parse html string
-
-//returns html element
-const el = tag.parse('<div class="mydiv"></div>');
-console.log(el);
-
-//return html element collection
-const el2 = tag.parse('<div class="mydiv"></div><p class="myp">');
+document.body.append(
+  <div>
+    <h1 ref={ref}>Hello</h1>
+  </div>
+);
 ```

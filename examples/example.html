@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example</title>
+  <script src="../dist/polyfill.js"></script>
+  <script src="../dist/Ref.js"></script>
+  <script src="../dist/tag.js"></script>
+  <script src="../dist/Reactive.js"></script>
+</head>
+
+<body>
+
+  <script>
+    const user = Reactive('Guest');
+    const app = tag('main', {
+      attr: { id: 'app-container' },
+      children: [
+        tag('header', {
+          style: {
+            padding: '1rem',
+            background: '#f0f0f0'
+          },
+          children: [
+            tag('h1', {}, ['Welcome ', user])
+          ]
+        }),
+        tag('section', {
+          children: [
+            tag('input', {
+              type: 'text',
+              placeholder: 'Enter name',
+              on: {
+                input: [(e) => user.value = e.target.value]
+              }
+            }),
+            tag('div', {
+              children: [
+                new Promise(resolve => {
+                  setTimeout(() => resolve(
+                    tag('p', 'Async loaded content!')
+                  ), 1000);
+                })
+              ]
+            })
+          ]
+        })
+      ]
+    });
+    document.body.append(app);
+  </script>
+</body>
+
+</html>

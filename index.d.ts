@@ -58,7 +58,7 @@ interface HTMLElementAttributes {
   /**
    * A reference to the element
    */
-  ref?: import('html-tag-js/ref').Ref;
+  ref?: import('html-tag-js/ref').RefConstructor;
   /**
    * Sets content of the element.
    * @example $div.content = tag('span', 'Hello World!');
@@ -560,7 +560,7 @@ declare module 'html-tag-js' {
 }
 
 declare module 'html-tag-js/ref' {
-  interface Ref {
+  export interface RefConstructor {
     /**
      * Element reference
      */
@@ -597,17 +597,17 @@ declare module 'html-tag-js/ref' {
      * @param event event name
      * @param cb callback function
      */
-    on(event: 'ref', cb: (this: Ref, ref: HTMLElement) => void): void;
+    on(event: 'ref', cb: (this: RefConstructor, ref: HTMLElement) => void): void;
     /**
      * Remove event listener
      * @param event event name
      * @param cb callback function
      */
-    off(event: 'ref', cb: (this: Ref, ref: HTMLElement) => void): void;
+    off(event: 'ref', cb: (this: RefConstructor, ref: HTMLElement) => void): void;
     /**
      * Called when reference is set
      */
-    onref: (this: Ref, ref: HTMLElement) => void;
+    onref: (this: RefConstructor, ref: HTMLElement) => void;
     /**
      * Get the classList
      * If the element is not yet created
@@ -677,17 +677,37 @@ declare module 'html-tag-js/ref' {
     content: Node | Array<Node>;
   }
 
-  export default function Ref(onref?: (this: Ref, element: HTMLElement) => void): Ref;
+  const Ref: {
+    (onref?: (this: RefConstructor, element: HTMLElement) => void): RefConstructor;
+    /**
+     * Check if the value is object of RefConstructor
+     * @param value Object to check
+     * @returns 
+     */
+    isRef: (value: any) => boolean;
+  }
+
+  export default Ref;
 }
 
 declare module 'html-tag-js/reactive' {
-  interface Reactive<T = string> extends Text {
+  export interface ReactiveConstructor<T = string> extends Text {
     value: T;
-    onChange: (this: Reactive<T>, value: T) => void;
+    onChange: (this: ReactiveConstructor<T>, value: T) => void;
     toString: () => string;
   }
 
-  export default function Reactive<T = any>(initialValue?: T): Reactive<T>;
+  const Reactive: {
+    <T = string>(value: T): ReactiveConstructor<T>;
+    /**
+     * Check if the value is object of ReactiveConstructor
+     * @param value Object to check
+     * @returns 
+     */
+    isReactive: (value: any) => boolean;
+  };
+
+  export default Reactive;
 }
 
 declare namespace JSX {

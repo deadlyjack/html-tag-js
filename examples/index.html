@@ -27,6 +27,8 @@
       console.log(p);
     });
 
+    console.log('p isRef:', Ref.isRef(p));
+
     dynamic.content = [
       (() => {
         return new Promise((resolve) => {
@@ -138,6 +140,10 @@
 
     const text = Reactive('This is a reactive text');
     const count = Reactive(0);
+
+    console.log('text isReactive:', Reactive.isReactive(text));
+    console.log('count isReactive:', Reactive.isReactive(count));
+
     app.append(
       tag('hr'),
       tag('p', {

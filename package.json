@@ -81,7 +81,7 @@
     }
   },
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode production",
     "test": "jest ./test",
     "dev": "nodemon --exec 'jest ./test/dev.test.js' --watch ./test --watch ./jsx"
   },

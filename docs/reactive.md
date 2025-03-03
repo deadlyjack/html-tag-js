@@ -56,6 +56,7 @@ const message = Reactive('Hello');
 | Method    | Description                                     |
 |-----------|-------------------------------------------------|
 | `toString()` | Returns string representation of the value   |
+| `static isReactive(value)` | Check if a value is a reactive instance |
 
 ## Complete Example
 

@@ -1,5 +1,5 @@
 
-class Reactive extends Text {
+class ReactiveClass extends Text {
   /** @type {(value:string)=>void} */
   onChange = null;
 
@@ -44,4 +44,8 @@ class Reactive extends Text {
  * @param {number|string} value - The initial value of the text node
  * @returns {Text}
  */
-export default (value) => new Reactive(value);
+export default function Reactive(value) {
+  return new ReactiveClass(value);
+}
+
+Reactive.isReactive = (value) => value instanceof ReactiveClass;

@@ -60,6 +60,7 @@ const element = myRef.el;
 |--------------|--------------------------------------|
 | `get()`      | Query child elements                 |
 | `getAll()`   | Query all matching child elements    |
+| `static isRef(value)` | Check if a value is a reference instance |
 
 ```js
 const btn = myRef.get('#submit-btn');

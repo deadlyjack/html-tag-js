@@ -1,6 +1,6 @@
 import { addChildren } from './tag';
 
-class Ref {
+class RefClass {
   instanceOfRef = true;
   /**@type {HTMLElement} */
   #el;
@@ -426,4 +426,8 @@ class CSSStyle {
   }
 }
 
-export default (onref) => new Ref(onref);
+export default function Ref(onref) {
+  return new RefClass(onref);
+}
+
+Ref.isRef = (value) => value instanceof RefClass;

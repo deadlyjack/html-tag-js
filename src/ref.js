@@ -23,6 +23,7 @@ class RefClass {
     ],
   };
   #onref;
+  #content;
 
   constructor(onref) {
     if (onref) {
@@ -194,6 +195,11 @@ class RefClass {
       this.#dataset = {};
     }
 
+    if (this.#content) {
+      this.content = this.#content;
+      this.#content = null
+    }
+
     this.#emit('ref', el);
   }
 
@@ -325,7 +331,7 @@ class RefClass {
 
   get content() {
     if (!this.#el) {
-      throw new Error('Element is not yet created');
+      return this.#content;
     }
     const children = [...this.el.children];
     if (children.length === 0) {
@@ -340,7 +346,8 @@ class RefClass {
 
   set content(value) {
     if (!this.#el) {
-      throw new Error('Element is not yet created');
+      this.#content = value;
+      return;
     }
     this.innerHTML = '';
     if (Array.isArray(value)) {

@@ -50,6 +50,45 @@
       ]
     });
     document.body.append(app);
+
+
+    const svgFlower = tag('svg', {
+      attr: {
+        viewBox: '0 0 100 100',
+        width: '100px',
+        height: '100px'
+      },
+      children: [
+        tag('circle', {
+          attr: {
+            cx: '50',
+            cy: '50',
+            r: '40',
+            fill: 'yellow'
+          }
+        }),
+        tag('circle', {
+          attr: {
+            cx: '50',
+            cy: '50',
+            r: '20',
+            fill: 'red'
+          }
+        })
+      ]
+    });
+    const svgContainer = tag('div', {
+      style: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+      },
+      children: [
+        svgFlower
+      ]
+    });
+    document.body.append(svgContainer);
   </script>
 </body>
 

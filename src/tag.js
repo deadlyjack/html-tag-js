@@ -1,3 +1,5 @@
+const svgElements = ['svg', 'path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse', 'g', 'defs', 'use', 'symbol', 'text', 'tspan', 'textPath', 'marker', 'linearGradient', 'radialGradient'];
+
 /**
  * Creates an HTML element with the specified tag name, options, and children.
  * @param {string|function|Node} tagName 
@@ -36,7 +38,11 @@ function create(tagName, options = {}, children = []) {
   } else if (tagName instanceof Node) {
     $el = tagName;
   } else if (typeof tagName === 'string') {
-    $el = document.createElement(tagName);
+    if (svgElements.includes(tagName)) {
+      $el = document.createElementNS("http://www.w3.org/2000/svg", tagName);
+    } else {
+      $el = document.createElement(tagName);
+    }
   } else {
     throw new Error('Invalid tag, ', typeof tagName);
   }
@@ -93,7 +99,11 @@ function create(tagName, options = {}, children = []) {
         break;
 
       default:
-        $el[prop] = option;
+        if (svgElements.includes(tagName) && ['number', 'string', 'bigint'].includes(typeof option)) {
+          $el.setAttribute(prop, option);
+        } else {
+          $el[prop] = option;
+        }
         break;
     }
   });

@@ -719,3 +719,4 @@ declare namespace JSX {
 }
 
 declare const tag: typeof import('html-tag-js').default;
+declare const Ref: typeof import('html-tag-js/ref').default;

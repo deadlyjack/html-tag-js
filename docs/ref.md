@@ -20,7 +20,7 @@ import Ref from 'html-tag-js/ref';
 ### 2. Create a reference
 
 ```js
-const myRef = new Ref();
+const myRef = Ref();
 ```
 
 ### 3. Use proxy properties (works before element exists)

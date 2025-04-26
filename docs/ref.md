@@ -71,10 +71,13 @@ const images = myRef.getAll('img');
 
 ```js
 // Set attribute
-myRef.attr('data-custom', 'value');
+myRef.setAttribute('data-custom', 'value');
+
+// Remove attribute
+myRef.removeAttribute('data-custom');
 
 // Get attribute
-const value = myRef.attr('data-custom');
+const value = myRef.getAttribute('data-custom');
 ```
 
 ### Event Handling

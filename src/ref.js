@@ -45,25 +45,56 @@ class RefClass {
   }
 
   /**
+   * Get attribute value
+   * If the element is not yet created, return the stored value
+   * @param {string} name attribute name
+   */
+  getAttribute(name) {
+    if (name === undefined || name === null || name === '') {
+      throw new Error('Invalid attribute name');
+    }
+
+    if (!this.#el) {
+      return this.#attr[name];
+    }
+    return this.#el.getAttribute(name);
+  }
+
+  /**
    * Set or get an attribute
    * If the element is not yet created, store the value and apply it when the element is created
    * @param {string} name  attribute name
    * @param {string|number|boolean} value attribute value 
    * @returns 
    */
-  attr(name, value) {
-    if (!name && !value) return null;
-    if (!this.#el) {
-      if (value) {
-        this.#attr[name] = value;
-        return;
-      }
-      return this.#attr[name];
+  setAttribute(name, value) {
+    if (name === undefined || name === null || name === '') {
+      throw new Error('Invalid attribute name');
     }
-    if (value) {
+
+    if (value === undefined || value === null) {
+      value = '';
+    }
+
+    if (!this.#el) {
+      this.#attr[name] = value;
+    } else {
       this.#el.setAttribute(name, value);
     }
-    return this.#el.getAttribute(name);
+  }
+
+  /**
+   * Remove an attribute
+   * If the element is not yet created, remove the value from the stored attributes
+   * @param {string} name 
+   * @returns 
+   */
+  removeAttribute(name) {
+    if (!this.#el) {
+      delete this.#attr[name];
+      return;
+    }
+    this.#el.removeAttribute(name);
   }
 
   /**
@@ -179,7 +210,7 @@ class RefClass {
 
     const attrProps = Object.keys(this.#attr);
     if (attrProps.length) {
-      attrProps.forEach(p => this.attr(p, this.#attr[p]));
+      attrProps.forEach(p => this.setAttribute(p, this.#attr[p]));
       this.#attr = {};
     }
 

@@ -576,17 +576,22 @@ declare module 'html-tag-js/ref' {
      */
     getAll(selector: String): Array<HTMLElement>;
     /**
-     * Parse html string to HTMLElement
+     * Set attribute value
      * @param name name of the attribute
      * @param value value of the attribute
      */
-    attr(name: string, value: string): void;
+    setAttribute(name: string, value: string): void;
     /**
      * Get attribute value
      * @param name name of the attribute
      * @returns value of the attribute
      */
-    attr(name: string): string;
+    getAttribute(name: string): string;
+    /**
+     * Remove attribute value
+     * @param name name of the attribute
+     */
+    removeAttribute(name: string): void;
     /**
      * Append child to the element
      * @param els child element

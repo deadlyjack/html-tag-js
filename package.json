@@ -6,7 +6,8 @@
   "files": [
     "dist/",
     "jsx/",
-    "index.d.ts"
+    "index.d.ts",
+    "types"
   ],
   "exports": {
     ".": {

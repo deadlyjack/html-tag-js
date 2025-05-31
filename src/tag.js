@@ -44,7 +44,7 @@ function create(tagName, options = {}, children = []) {
       $el = document.createElement(tagName);
     }
   } else {
-    throw new Error('Invalid tag, ', typeof tagName);
+    throw new Error(`Invalid tag ${typeof tagName}`);
   }
 
   if (!options.children && Array.isArray(children) && children.length) {

@@ -28,7 +28,11 @@
     });
 
     p.setAttribute('data', 'data');
-    p.content = 'This is a paragraph content';
+    p.content = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('This is a paragraph content');
+      }, 1000);
+    });
 
     console.log('p isRef:', Ref.isRef(p));
 

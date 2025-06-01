@@ -80,11 +80,10 @@ if (!('content' in HTMLElement.prototype)) {
   Object.defineProperty(HTMLElement.prototype, 'content', {
     set: function (value) {
       this.innerHTML = '';
-      if (Array.isArray(value)) {
-        addChildren(this, value);
-      } else {
-        this.append(value);
+      if (!Array.isArray(value)) {
+        value = [value];
       }
+      addChildren(this, value);
     },
     get: function () {
       const children = [...this.children];

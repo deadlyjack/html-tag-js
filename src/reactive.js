@@ -10,7 +10,7 @@ class ReactiveClass extends Text {
     super(value);
     this.clones = [this];
     this.shouldClone = false;
-    this.value = `${value}`;
+    this.value = value;
   }
 
   set value(val) {

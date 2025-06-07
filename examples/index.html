@@ -30,7 +30,15 @@
     p.setAttribute('data', 'data');
     p.content = new Promise((resolve) => {
       setTimeout(() => {
-        resolve('This is a paragraph content');
+        resolve([
+          tag('span', {
+            textContent: 'This is a span',
+          }),
+          tag('br'),
+          tag('span', {
+            textContent: 'This is another span',
+          }),
+        ]);
       }, 1000);
     });
 

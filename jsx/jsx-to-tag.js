@@ -176,13 +176,13 @@ module.exports = (babel) => {
             if (className) {
               args.push(className);
             } else if (id) {
-              args.push(t.stringLiteral(''));
+              args.push(t.nullLiteral());
             }
 
             if (id) {
               args.push(id);
             } else if (children.length) {
-              args.push(t.stringLiteral(''));
+              args.push(t.nullLiteral());
             }
 
             if (children.length) {
@@ -247,7 +247,7 @@ function parseNode(types, node) {
 function populateChildren(childrenNode, children, t) {
   for (let node of childrenNode) {
     node = parseNode(t, node);
-    if (!node) return;
+    if (!node) continue;
     children.push(node);
   }
 }

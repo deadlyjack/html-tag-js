@@ -14,6 +14,11 @@ test('<div className=\'test\'></div>', () => {
   expect(transformed.code).toBe(`tag("div", 'test');`);
 });
 
+test('<div id=\'test\'></div>', () => {
+  const transformed = babel.transformSync(`<div id='test'></div>`, config);
+  expect(transformed.code).toBe(`tag("div", null, 'test');`);
+});
+
 test('<div className=\'test\' id=\'mydiv\'></div>', () => {
   const transformed = babel.transformSync(`<div className='test' id='mydiv'></div>`, config);
   expect(transformed.code).toBe(`tag("div", 'test', 'mydiv');`);

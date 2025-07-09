@@ -22,7 +22,11 @@
   </div>
 
   <script>
-    const div = tag("div", null, 'toast-container');
+    const div = tag("label", null, 'icon-menu', {
+      attr: {
+        "for": 'menu-toggler'
+      }
+    });
     document.body.append(div);
 
     const p = Ref(function () {

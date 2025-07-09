@@ -14,6 +14,24 @@ test('<div className=\'test\'></div>', () => {
   expect(transformed.code).toBe(`tag("div", 'test');`);
 });
 
+test('<label attr-for=\'menu-toggler\' className=\'icon-menu\' />', () => {
+  const transformed = babel.transformSync(`<label attr-for='menu-toggler' className='icon-menu' />`, config);
+  expect(transformed.code).toBe(`tag("label", 'icon-menu', {
+  attr: {
+    "for": 'menu-toggler'
+  }
+});`);
+});
+
+test('<label attr-for=\'menu-toggler\' id=\'icon-menu\' />', () => {
+  const transformed = babel.transformSync(`<label attr-for='menu-toggler' id='icon-menu' />`, config);
+  expect(transformed.code).toBe(`tag("label", null, 'icon-menu', {
+  attr: {
+    "for": 'menu-toggler'
+  }
+});`);
+});
+
 test('<div id=\'test\'></div>', () => {
   const transformed = babel.transformSync(`<div id='test'></div>`, config);
   expect(transformed.code).toBe(`tag("div", null, 'test');`);

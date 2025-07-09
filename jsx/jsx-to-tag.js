@@ -181,8 +181,6 @@ module.exports = (babel) => {
 
             if (id) {
               args.push(id);
-            } else if (children.length) {
-              args.push(t.nullLiteral());
             }
 
             if (children.length) {

@@ -2,7 +2,8 @@ const svgElements = ['svg', 'path', 'circle', 'rect', 'line', 'polyline', 'polyg
 
 /**
  * @typedef {[tagName: string|function|Node, options:object, children: []]} tagArgs
- * @typedef {[tagName: string|function|Node, className: string, id: string,, children: [], options: {}]} tagArgsOverload
+ * @typedef {[tagName: string|function|Node, className: string, id: string, children: [], options: {}]} tagArgsOverload
+ * @typedef {[tagName: string|function|Node, className: string, options: {}]} tagArgsOverload2
  */
 
 /**
@@ -12,12 +13,21 @@ const svgElements = ['svg', 'path', 'circle', 'rect', 'line', 'polyline', 'polyg
  */
 export default function tag(...args) {
   if (typeof args[1] === 'string' || typeof args[2] === 'string') {
-    const [tagName, className, id, children = [], options = {}] = args;
-    return create(tagName, {
-      ...options,
-      id,
-      className,
-    }, children);
+    const [tagName] = args;
+    const id = typeof args[2] === 'string' ? args[2] : undefined;
+    const className = typeof args[1] === 'string' ? args[1] : undefined;
+    const options = args.find((arg) => arg && !Array.isArray(arg) && typeof arg === 'object') || {};
+    const children = args.find((arg) => Array.isArray(arg)) || [];
+
+    if (id) {
+      options.id = id;
+    }
+
+    if (className) {
+      options.className = className;
+    }
+
+    return create(tagName, options, children);
   }
 
   const [tagName, options = {}, children = []] = args;

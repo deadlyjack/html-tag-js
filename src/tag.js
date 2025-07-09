@@ -12,7 +12,7 @@ const svgElements = ['svg', 'path', 'circle', 'rect', 'line', 'polyline', 'polyg
  */
 export default function tag(...args) {
   if (typeof args[1] === 'string') {
-    const [tagName, className, id, children, options = {}] = args;
+    const [tagName, className, id, children = [], options = {}] = args;
     return create(tagName, {
       ...options,
       id,

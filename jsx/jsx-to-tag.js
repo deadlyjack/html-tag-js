@@ -182,17 +182,10 @@ module.exports = (babel) => {
             if (id) {
               args.push(id);
             }
+          }
 
-            if (children.length) {
-              args.push(t.arrayExpression(children));
-            }
-          } else if (children.length) {
-            options.push(
-              t.objectProperty(
-                t.identifier('children'),
-                t.arrayExpression(children),
-              )
-            );
+          if (children.length) {
+            args.push(t.arrayExpression(children));
           }
 
           if (options.length) {

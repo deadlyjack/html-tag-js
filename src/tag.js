@@ -2,8 +2,11 @@ const svgElements = ['svg', 'path', 'circle', 'rect', 'line', 'polyline', 'polyg
 
 /**
  * @typedef {[tagName: string|function|Node, options:object, children: []]} tagArgs
- * @typedef {[tagName: string|function|Node, className: string, id: string, children: [], options: {}]} tagArgsOverload
- * @typedef {[tagName: string|function|Node, className: string, options: {}]} tagArgsOverload2
+ * @typedef {[tagName: string|function|Node, className: string, id: string, children: [], options: object]} tagArgsOverload
+ * @typedef {[tagName: string|function|Node, className: string, options: object}]} tagArgsOverload2
+ * @typedef {[tagName: string|function|Node, className: string, children: []]} tagArgsOverload2
+ * @typedef {[tagName: string|function|Node, children: []]} tagArgsOverload2
+ * @typedef {[tagName: string|function|Node, children: [], options: object]} tagArgsOverload2
  */
 
 /**
@@ -27,23 +30,28 @@ export default function tag(...args) {
       options.className = className;
     }
 
-    return create(tagName, options, children);
+    return create(tagName, children, options);
+  }
+
+  if (Array.isArray(args[1])) {
+    const [tagName, children = [], options = {}] = args;
+    return create(tagName, children, options);
   }
 
   const [tagName, options = {}, children = []] = args;
-  return create(tagName, options, children);
+  return create(tagName, children, options);
 }
 
 /**
  * Creates an HTML element with the specified tag name, options, and children.
  *
  * @param {string|function|Node} tagName - The tag name of the element to create. It can be a string, a function, or a Node object.
- * @param {Object} [options={}] - The options for the element.
  * @param {Array} [children=[]] - The children of the element.
+ * @param {Object} [options={}] - The options for the element.
  * @returns {Node} The created HTML element.
  * @throws {Error} If the tag name is invalid.
  */
-function create(tagName, options = {}, children = []) {
+function create(tagName, children = [], options = {}) {
   let $el;
 
   if (Array.isArray(options)) {

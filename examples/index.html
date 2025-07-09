@@ -22,12 +22,18 @@
   </div>
 
   <script>
-    const div = tag("label", null, 'icon-menu', {
+    document.body.append(tag("label", null, 'icon-menu', ["icon-menu"], {
       attr: {
         "for": 'menu-toggler'
       }
-    });
-    document.body.append(div);
+    }));
+
+    document.body.append(tag("span", ['This is a span']));
+    document.body.append(tag("span", "my-class", ["This is a span with class"]));
+    document.body.append(tag("span", null, "my-id", ["This is a span with id"]));
+    document.body.append(tag("span", null, "my-id2", {
+      style: { height: '100px', width: '100px', backgroundColor: 'red', display: 'block' },
+    }));
 
     const p = Ref(function () {
       p.style.backgroundColor = 'yellow';

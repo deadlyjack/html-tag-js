@@ -175,31 +175,27 @@ test(`<Test off:click={clickHandler} />`, () => {
 test(`<button on:click={(e)=>console.log(e)}>Click me</button>`, () => {
   const code = `<button on:click={(e)=>console.log(e)}>Click me</button>`;
   const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`tag("button", {
+  expect(transformed.code).toBe(`tag("button", ["Click me"], {
   on: {
     "click": [e => console.log(e)]
-  },
-  children: ["Click me"]
+  }
 });`);
 });
 
 test(`<button on:click={clickHandler}>Click me</button>`, () => {
   const code = `<button on:click={clickHandler}>Click me</button>`;
   const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`tag("button", {
+  expect(transformed.code).toBe(`tag("button", ["Click me"], {
   on: {
     "click": [clickHandler]
-  },
-  children: ["Click me"]
+  }
 });`);
 });
 
 test(`<button off:click={clickHandler}>Click me</button>`, () => {
   const code = `<button off:click={clickHandler}>Click me</button>`;
   const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`tag("button", {
-  children: ["Click me"]
-});`);
+  expect(transformed.code).toBe(`tag("button", ["Click me"]);`);
 });
 
 test(`<div>{}</div>`, () => {

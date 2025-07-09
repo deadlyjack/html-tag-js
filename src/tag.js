@@ -1,18 +1,26 @@
 const svgElements = ['svg', 'path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse', 'g', 'defs', 'use', 'symbol', 'text', 'tspan', 'textPath', 'marker', 'linearGradient', 'radialGradient'];
 
 /**
+ * @typedef {[tagName: string|function|Node, options:object, children: []]} tagArgs
+ * @typedef {[tagName: string|function|Node, className: string, id: string,, children: [], options: {}]} tagArgsOverload
+ */
+
+/**
  * Creates an HTML element with the specified tag name, options, and children.
- * @param {string|function|Node} tagName 
- * @param {object} options 
- * @param {Array} children 
+ * @param {tagArgs|tagArgsOverload} args 
  * @returns 
  */
-export default function tag(tagName, options = {}, children = []) {
-  if (typeof options === 'string') {
-    options = {
-      innerHTML: options,
-    }
+export default function tag(...args) {
+  if (typeof args[1] === 'string') {
+    const [tagName, className, id, children, options = {}] = args;
+    return create(tagName, {
+      ...options,
+      id,
+      className,
+    }, children);
   }
+
+  const [tagName, options = {}, children = []] = args;
   return create(tagName, options, children);
 }
 

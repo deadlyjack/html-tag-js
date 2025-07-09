@@ -7,32 +7,6 @@ module.exports = (babel) => {
       JSXFragment(path) {
         const { node } = path;
         const { children: childrenNode } = node;
-        const tag = t.identifier('tag');
-        const text = t.identifier('use');
-        const callee = t.memberExpression(tag, text);
-
-        if (childrenNode.length === 0) {
-          path.replaceWith(t.callExpression(callee, []), node);
-          return;
-        }
-
-        if (childrenNode.length === 1) {
-          let [el] = childrenNode;
-          let arg;
-          const { type } = el;
-          if (type === 'JSXText') {
-            const { value } = el;
-            arg = isNaN(value) ? t.stringLiteral(value) : t.numericLiteral(+value);
-          } else if (type === 'JSXElement') {
-            arg = el;
-          } else {
-            arg = el.expression;
-          }
-
-          const replacement = t.callExpression(callee, [arg]);
-          path.replaceWith(replacement, node);
-          return;
-        }
 
         const children = [];
         populateChildren(childrenNode, children, t);
@@ -48,9 +22,11 @@ module.exports = (babel) => {
         let { name: tagName } = el.name;
         const { attributes } = el;
 
+        let id;
+        let className;
+        const on = [];
         const args = [];
         const attrs = [];
-        const on = [];
         const children = [];
         const options = [];
         const events = {};
@@ -64,13 +40,31 @@ module.exports = (babel) => {
 
         populateChildren(childrenNode, children, t);
 
-        attributes.forEach((attr) => {
+        for (const attr of attributes) {
           if (attr.type === 'JSXSpreadAttribute') {
             attrs.push(t.spreadElement(attr.argument));
-            return;
+            continue;
           }
 
           let { name, namespace } = attr.name;
+
+          if (name === 'id') {
+            if (attr.value && attr.value.type === 'StringLiteral') {
+              id = attr.value;
+            } else if (attr.value && attr.value.type === 'JSXExpressionContainer') {
+              id = attr.value.expression;
+            }
+            continue;
+          }
+
+          if (['class', 'className'].includes(name)) {
+            if (attr.value && attr.value.type === 'StringLiteral') {
+              className = attr.value;
+            } else if (attr.value && attr.value.type === 'JSXExpressionContainer') {
+              className = attr.value.expression;
+            }
+            continue;
+          }
 
           if (namespace) {
             namespace = namespace.name;
@@ -82,11 +76,11 @@ module.exports = (babel) => {
               t.stringLiteral(name),
               t.stringLiteral(''),
             ));
-            return;
+            continue;
           }
 
           const { type } = attr.value;
-          let isAttr = /-/.test(name);
+          const isAttr = /-/.test(name);
           let value;
 
           if (type === 'StringLiteral') {
@@ -101,10 +95,10 @@ module.exports = (babel) => {
                 t.stringLiteral(namespace === 'attr' ? name : `${namespace}:${name}`),
                 value,
               ));
-              return;
+              continue;
             }
 
-            if (namespace === 'off') return;
+            if (namespace === 'off') continue;
 
             if (!events[name]) {
               events[name] = [];
@@ -115,7 +109,7 @@ module.exports = (babel) => {
             }
 
             events[name].push(value);
-            return;
+            continue;
           }
 
           if (isAttr) {
@@ -128,7 +122,7 @@ module.exports = (babel) => {
               t.stringLiteral(name),
               value,
             ));
-            return;
+            continue;
           }
 
           (isComponent ? attrs : options)
@@ -136,7 +130,7 @@ module.exports = (babel) => {
               t.identifier(name),
               value,
             ));
-        });
+        }
 
         if (isComponent) {
           args.push(t.identifier(tagName));
@@ -178,7 +172,23 @@ module.exports = (babel) => {
             );
           }
 
-          if (children.length) {
+          if (id || className) {
+            if (className) {
+              args.push(className);
+            } else if (id) {
+              args.push(t.stringLiteral(''));
+            }
+
+            if (id) {
+              args.push(id);
+            } else if (children.length) {
+              args.push(t.stringLiteral(''));
+            }
+
+            if (children.length) {
+              args.push(t.arrayExpression(children));
+            }
+          } else if (children.length) {
             options.push(
               t.objectProperty(
                 t.identifier('children'),
@@ -211,9 +221,6 @@ function parseNode(types, node) {
   const { type } = node;
 
   if (type === 'JSXText') {
-    if (node.value.trim() === '') {
-      return null;
-    }
     return types.stringLiteral(node.value);
   }
 
@@ -238,9 +245,9 @@ function parseNode(types, node) {
  * @param {any} t 
  */
 function populateChildren(childrenNode, children, t) {
-  childrenNode.forEach((node) => {
+  for (let node of childrenNode) {
     node = parseNode(t, node);
     if (!node) return;
     children.push(node);
-  });
+  }
 }

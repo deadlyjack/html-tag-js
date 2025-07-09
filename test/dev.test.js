@@ -9,25 +9,18 @@ const config = {
   ],
 };
 
-test(`<div>
-  <div>
-    foo
-    <span>bar</span>
-  </div>  
-</div>`, () => {
-  const code = `<div>
-  <div>
-    foo
-    <span>bar</span>
-  </div>
-</div>`;
+test('Test JSX to Tag Transformation', () => {
+  const code = `
+const id = 'test';
+<div id={id} className="test-class" onClick={() => {}} onMouseOver={() => {}}>
+  <div className="inner"></div>  
+</div>
+`;
 
   const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`tag("div", {
-  children: [tag("div", {
-    children: ["foo", tag("span", {
-      children: ["bar"]
-    })]
-  })]
+  expect(transformed.code).toBe(`const id = 'test';
+tag("div", "test-class", id, ["\\n  ", tag("div", "inner"), "  \\n"], {
+  onMouseOver: () => {},
+  onClick: () => {}
 });`);
 });

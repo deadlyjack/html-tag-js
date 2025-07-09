@@ -1,5 +1,10 @@
 # Change log html-tag-js
 
+## 2.4.0
+
+- Shortened `tag` function to for jsx. Now you can use `tag('div', 'class', 'id', children, options)` instead of `tag('div', options)`.
+- Revert the change where jsx was ignoring whitespace only text nodes. Now it will render text nodes as they are.
+
 ## 2.0.0
 
 - Removed `tag.use` method instead use `html-tag-js/Reactive` to create reactive node. E.g. `const count = Reactive(0);`

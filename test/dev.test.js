@@ -11,22 +11,22 @@ const config = {
 
 test(`<div>
   <div>
-    <span>
-      Test
-    </span>
+    foo
+    <span>bar</span>
   </div>  
 </div>`, () => {
   const code = `<div>
   <div>
-    <span>Test</span>
+    foo
+    <span>bar</span>
   </div>
 </div>`;
 
   const transformed = babel.transformSync(code, config);
   expect(transformed.code).toBe(`tag("div", {
   children: [tag("div", {
-    children: [tag("span", {
-      children: ["Test"]
+    children: ["foo", tag("span", {
+      children: ["bar"]
     })]
   })]
 });`);

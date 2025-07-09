@@ -211,6 +211,9 @@ function parseNode(types, node) {
   const { type } = node;
 
   if (type === 'JSXText') {
+    if (node.value.trim() === '') {
+      return null;
+    }
     return types.stringLiteral(node.value);
   }
 

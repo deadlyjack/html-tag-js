@@ -9,18 +9,25 @@ const config = {
   ],
 };
 
-test(`<alert.error />`, () => {
-  const code = `<alert.error />`;
-  const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`tag(alert.error);`);
-});
+test(`<div>
+  <div>
+    <span>
+      Test
+    </span>
+  </div>  
+</div>`, () => {
+  const code = `<div>
+  <div>
+    <span>Test</span>
+  </div>
+</div>`;
 
-test(`<svg xmlns:xlink="http://www.w3.org/1999/xlink"></svg>`, () => {
-  const code = `<svg xmlns:xlink="http://www.w3.org/1999/xlink"></svg>`;
   const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`tag("svg", {
-  attr: {
-    "xmlns:xlink": "http://www.w3.org/1999/xlink"
-  }
+  expect(transformed.code).toBe(`tag("div", {
+  children: [tag("div", {
+    children: [tag("span", {
+      children: ["Test"]
+    })]
+  })]
 });`);
 });

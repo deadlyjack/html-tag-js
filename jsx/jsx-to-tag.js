@@ -214,7 +214,7 @@ function parseNode(types, node) {
     if (node.value.trim() === '') {
       return null;
     }
-    return types.stringLiteral(node.value.trim());
+    return types.stringLiteral(node.value);
   }
 
   if (type === 'JSXElement') {

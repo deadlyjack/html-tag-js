@@ -22,6 +22,9 @@
   </div>
 
   <script>
+    const div = tag("div", null, 'toast-container');
+    document.body.append(div);
+
     const p = Ref(function () {
       p.style.backgroundColor = 'yellow';
       console.log(p);

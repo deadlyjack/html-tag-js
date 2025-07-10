@@ -14,6 +14,13 @@ test('<div className=\'test\'></div>', () => {
   expect(transformed.code).toBe(`tag("div", 'test');`);
 });
 
+test('<Card className=\'test\'></Card>', () => {
+  const transformed = babel.transformSync(`<Card className='test'></Card>`, config);
+  expect(transformed.code).toBe(`tag(Card, {
+  className: 'test'
+});`);
+});
+
 test('<label attr-for=\'menu-toggler\' className=\'icon-menu\' />', () => {
   const transformed = babel.transformSync(`<label attr-for='menu-toggler' className='icon-menu' />`, config);
   expect(transformed.code).toBe(`tag("label", 'icon-menu', {

@@ -48,22 +48,24 @@ module.exports = (babel) => {
 
           let { name, namespace } = attr.name;
 
-          if (name === 'id') {
-            if (attr.value && attr.value.type === 'StringLiteral') {
-              id = attr.value;
-            } else if (attr.value && attr.value.type === 'JSXExpressionContainer') {
-              id = attr.value.expression;
+          if (!isComponent) {
+            if (name === 'id') {
+              if (attr.value && attr.value.type === 'StringLiteral') {
+                id = attr.value;
+              } else if (attr.value && attr.value.type === 'JSXExpressionContainer') {
+                id = attr.value.expression;
+              }
+              continue;
             }
-            continue;
-          }
 
-          if (['class', 'className'].includes(name)) {
-            if (attr.value && attr.value.type === 'StringLiteral') {
-              className = attr.value;
-            } else if (attr.value && attr.value.type === 'JSXExpressionContainer') {
-              className = attr.value.expression;
+            if (['class', 'className'].includes(name)) {
+              if (attr.value && attr.value.type === 'StringLiteral') {
+                className = attr.value;
+              } else if (attr.value && attr.value.type === 'JSXExpressionContainer') {
+                className = attr.value.expression;
+              }
+              continue;
             }
-            continue;
           }
 
           if (namespace) {
@@ -192,7 +194,6 @@ module.exports = (babel) => {
             args.push(t.objectExpression(options));
           }
         }
-
 
         const identifier = t.identifier('tag');
         const callExpression = t.callExpression(identifier, args);

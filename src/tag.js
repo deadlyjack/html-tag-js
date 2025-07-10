@@ -15,6 +15,7 @@ const svgElements = ['svg', 'path', 'circle', 'rect', 'line', 'polyline', 'polyg
  * @returns 
  */
 export default function tag(...args) {
+
   if (typeof args[1] === 'string' || typeof args[2] === 'string') {
     const [tagName] = args;
     const id = typeof args[2] === 'string' ? args[2] : undefined;
@@ -32,6 +33,8 @@ export default function tag(...args) {
 
     return create(tagName, children, options);
   }
+
+  args = args.filter((arg) => arg !== undefined && arg !== null);
 
   if (Array.isArray(args[1])) {
     const [tagName, children = [], options = {}] = args;

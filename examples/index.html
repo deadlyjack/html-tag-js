@@ -28,6 +28,11 @@
       }
     }));
 
+    document.body.append(tag("img", undefined, {
+      src: "https://foxbiz.app/logo_text.png",
+      alt: "FoxBiz Logo",
+      style: { width: '100px', height: '100px' }
+    }))
     document.body.append(tag("span", ['This is a span']));
     document.body.append(tag("span", "my-class", ["This is a span with class"]));
     document.body.append(tag("span", null, "my-id", ["This is a span with id"]));

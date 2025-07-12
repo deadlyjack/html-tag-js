@@ -145,6 +145,14 @@ test(`<Test {...rest} />`, () => {
 });`);
 });
 
+test(`<test className='test' {...rest} />`, () => {
+  const code = `<test className='test' {...rest} />`;
+  const transformed = babel.transformSync(code, config);
+  expect(transformed.code).toBe(`tag("test", 'test', {
+  ...rest
+});`);
+});
+
 test(`<Test arg={undefined} />`, () => {
   const code = `<Test arg={undefined} />`;
   const transformed = babel.transformSync(code, config);

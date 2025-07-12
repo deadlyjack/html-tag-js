@@ -28,6 +28,12 @@
       }
     }));
 
+    document.body.append(tag("button", "my-button", ["Click me"], {
+      onclick: function () {
+        console.log('Button clicked');
+      },
+    }))
+
     document.body.append(tag("img", undefined, {
       src: "https://foxbiz.app/logo_text.png",
       alt: "FoxBiz Logo",

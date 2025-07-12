@@ -42,7 +42,11 @@ module.exports = (babel) => {
 
         for (const attr of attributes) {
           if (attr.type === 'JSXSpreadAttribute') {
-            attrs.push(t.spreadElement(attr.argument));
+            if (isComponent) {
+              attrs.push(t.spreadElement(attr.argument));
+            } else {
+              options.push(t.spreadElement(attr.argument));
+            }
             continue;
           }
 

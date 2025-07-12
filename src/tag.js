@@ -127,7 +127,7 @@ function create(tagName, children = [], options = {}) {
         break;
 
       default:
-        if (['number', 'string', 'bigint'].includes(typeof option)) {
+        if (svgElements.includes(prop) && ['number', 'string', 'bigint'].includes(typeof option) || /-/.test(prop)) {
           $el.setAttribute(prop, option);
         } else {
           $el[prop] = option;

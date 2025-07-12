@@ -15,6 +15,11 @@
 
 <body>
   <h1>HTML-TAG-JS</h1>
+  <p>This is a test page for the 'html-tag-js' library.</p>
+  <ul>
+    <li><a href="counter.html">counter.html</a></li>
+    <li><a href="example.html">example.html</a></li>
+  </ul>
   <div id="app">
     <div id="dynamic" style="background-color: green;">
       <div>Dynamic content loading...</div>
@@ -29,6 +34,7 @@
     }));
 
     document.body.append(tag("button", "my-button", ["Click me"], {
+      "data-title": 'My Button',
       onclick: function () {
         console.log('Button clicked');
       },

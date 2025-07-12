@@ -124,11 +124,10 @@ function create(tagName, children = [], options = {}) {
             $el.addEventListener(event, handler);
           });
         });
-
         break;
 
       default:
-        if (svgElements.includes(tagName) && ['number', 'string', 'bigint'].includes(typeof option)) {
+        if (['number', 'string', 'bigint'].includes(typeof option)) {
           $el.setAttribute(prop, option);
         } else {
           $el[prop] = option;

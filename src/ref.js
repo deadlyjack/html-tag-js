@@ -1,4 +1,4 @@
-import { addChildren } from './tag';
+import { addChildren } from "./tag";
 
 class RefClass {
   instanceOfRef = true;
@@ -18,8 +18,8 @@ class RefClass {
   #on = {
     ref: [
       (el) => {
-        if (typeof this.onref === 'function') this.onref.call(this, el);
-      }
+        if (typeof this.onref === "function") this.onref.call(this, el);
+      },
     ],
   };
   #onref;
@@ -27,8 +27,8 @@ class RefClass {
 
   constructor(onref) {
     if (onref) {
-      if (typeof onref !== 'function') {
-        throw new Error('onref must be a function');
+      if (typeof onref !== "function") {
+        throw new Error("onref must be a function");
       }
       this.#onref = onref;
     }
@@ -37,11 +37,21 @@ class RefClass {
   /**
    * Append children to the element
    * If the element is not yet created, store the children and apply them when the element is created
-   * @param  {...Node} children 
+   * @param  {...Node} children
    */
   append(...children) {
     if (this.#el) this.#el.append(...children);
     else this.#children.push(...children);
+  }
+
+  /**
+   * Prepend children to the element
+   * If the element is not yet created, store the children and apply them when the element is created
+   * @param  {...Node} children
+   */
+  prepend(...children) {
+    if (this.#el) this.#el.prepend(...children);
+    else this.#children.unshift(...children);
   }
 
   /**
@@ -50,8 +60,8 @@ class RefClass {
    * @param {string} name attribute name
    */
   getAttribute(name) {
-    if (name === undefined || name === null || name === '') {
-      throw new Error('Invalid attribute name');
+    if (name === undefined || name === null || name === "") {
+      throw new Error("Invalid attribute name");
     }
 
     if (!this.#el) {
@@ -64,16 +74,16 @@ class RefClass {
    * Set or get an attribute
    * If the element is not yet created, store the value and apply it when the element is created
    * @param {string} name  attribute name
-   * @param {string|number|boolean} value attribute value 
-   * @returns 
+   * @param {string|number|boolean} value attribute value
+   * @returns
    */
   setAttribute(name, value) {
-    if (name === undefined || name === null || name === '') {
-      throw new Error('Invalid attribute name');
+    if (name === undefined || name === null || name === "") {
+      throw new Error("Invalid attribute name");
     }
 
     if (value === undefined || value === null) {
-      value = '';
+      value = "";
     }
 
     if (!this.#el) {
@@ -86,8 +96,8 @@ class RefClass {
   /**
    * Remove an attribute
    * If the element is not yet created, remove the value from the stored attributes
-   * @param {string} name 
-   * @returns 
+   * @param {string} name
+   * @returns
    */
   removeAttribute(name) {
     if (!this.#el) {
@@ -99,7 +109,7 @@ class RefClass {
 
   /**
    * Get a single element by query selector
-   * @param {string} query 
+   * @param {string} query
    * @returns {HTMLElement}
    */
   get(query) {
@@ -108,8 +118,8 @@ class RefClass {
 
   /**
    * Get all elements by query selector
-   * @param {string} query 
-   * @returns 
+   * @param {string} query
+   * @returns
    */
   getAll(query) {
     return this.#el?.getAll(query);
@@ -122,7 +132,7 @@ class RefClass {
    */
   on(event, callback) {
     this.#on[event]?.push(callback);
-    if (event === 'ref' && this.#el) {
+    if (event === "ref" && this.#el) {
       this.#emit(event, this.#el);
     }
   }
@@ -134,7 +144,7 @@ class RefClass {
    */
   off(event, callback) {
     if (!this.#on[event]) return;
-    this.#on[event] = this.#on[event].filter(c => c !== callback);
+    this.#on[event] = this.#on[event].filter((c) => c !== callback);
   }
 
   /**
@@ -143,7 +153,7 @@ class RefClass {
    * @param  {...any} args Arguments to pass to the callback
    */
   #emit(event, ...args) {
-    this.#on[event]?.forEach(c => c.call(this, ...args));
+    this.#on[event]?.forEach((c) => c.call(this, ...args));
   }
 
   get onref() {
@@ -152,7 +162,7 @@ class RefClass {
 
   set onref(callback) {
     this.#onref = callback;
-    if (this.#el) this.#emit('ref', this.#el);
+    if (this.#el) this.#emit("ref", this.#el);
   }
 
   /**
@@ -199,7 +209,7 @@ class RefClass {
     }
 
     if (this.#classList.length) {
-      this.#classList.forEach(c => this.classList.add(c));
+      this.#classList.forEach((c) => this.classList.add(c));
       this.#classList.length = 0;
     }
 
@@ -210,28 +220,32 @@ class RefClass {
 
     const attrProps = Object.keys(this.#attr);
     if (attrProps.length) {
-      attrProps.forEach(p => this.setAttribute(p, this.#attr[p]));
+      attrProps.forEach((p) => this.setAttribute(p, this.#attr[p]));
       this.#attr = {};
     }
 
     const styleProps = Object.keys(this.#style);
     if (styleProps.length) {
-      styleProps.forEach(p => this.style[p] = this.#style[p]);
+      for (const p of styleProps) {
+        this.style[p] = this.#style[p];
+      }
       this.#style = {};
     }
 
     const datasetProps = Object.keys(this.#dataset);
     if (datasetProps.length) {
-      datasetProps.forEach(p => this.dataset[p] = this.#dataset[p]);
+      for (const p of datasetProps) {
+        this.dataset[p] = this.#dataset[p];
+      }
       this.#dataset = {};
     }
 
     if (this.#content) {
       this.content = this.#content;
-      this.#content = null
+      this.#content = null;
     }
 
-    this.#emit('ref', el);
+    this.#emit("ref", el);
   }
 
   /**
@@ -381,7 +395,7 @@ class RefClass {
       return;
     }
 
-    this.innerHTML = '';
+    this.innerHTML = "";
     if (!Array.isArray(value)) {
       value = [value];
     }
@@ -412,7 +426,7 @@ class ClassList {
   }
 
   remove(...classes) {
-    this.#list = this.#list.filter(c => !classes.includes(c));
+    this.#list = this.#list.filter((c) => !classes.includes(c));
   }
 
   contains(className) {

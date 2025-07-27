@@ -44,13 +44,13 @@ type Dataset = {
 };
 
 type EnterKeyHint =
-  | 'enter'
-  | 'done'
-  | 'go'
-  | 'next'
-  | 'previous'
-  | 'search'
-  | 'send';
+  | "enter"
+  | "done"
+  | "go"
+  | "next"
+  | "previous"
+  | "search"
+  | "send";
 
 interface Tag {
   <K extends HTMLTagNames>(
@@ -136,17 +136,22 @@ interface Ref<T = HTMLElement> {
    */
   append(...els: Node[]): void;
   /**
+   * Prepend child to the element
+   * @param els child element
+   */
+  prepend(...els: Node[]): void;
+  /**
    * Attach event listener
    * @param event event name
    * @param cb callback function
    */
-  on(event: 'ref', cb: (this: Ref, ref: T) => void): void;
+  on(event: "ref", cb: (this: Ref, ref: T) => void): void;
   /**
    * Remove event listener
    * @param event event name
    * @param cb callback function
    */
-  off(event: 'ref', cb: (this: Ref, ref: T) => void): void;
+  off(event: "ref", cb: (this: Ref, ref: T) => void): void;
   /**
    * Called when reference is set
    */
@@ -220,19 +225,21 @@ interface Ref<T = HTMLElement> {
   content: Node | Array<Node>;
 }
 
-declare module 'html-tag-js' {
+declare module "html-tag-js" {
   const tag: Tag;
 
   export default tag;
 }
 
-declare module 'html-tag-js/ref' {
+declare module "html-tag-js/ref" {
   const Ref: {
-    <T = HTMLElement>(onref?: (this: Ref, element: HTMLElement) => void): Ref<T>;
+    <T = HTMLElement>(
+      onref?: (this: Ref, element: HTMLElement) => void,
+    ): Ref<T>;
     /**
      * Check if the value is object of RefConstructor
      * @param value Object to check
-     * @returns 
+     * @returns
      */
     isRef: (value: any) => boolean;
   };
@@ -240,13 +247,13 @@ declare module 'html-tag-js/ref' {
   export default Ref;
 }
 
-declare module 'html-tag-js/reactive' {
+declare module "html-tag-js/reactive" {
   const Reactive: {
     <T = string>(value?: T): Reactive<T>;
     /**
      * Check if the value is object of ReactiveConstructor
      * @param value Object to check
-     * @returns 
+     * @returns
      */
     isReactive: (value: any) => boolean;
   };
@@ -256,29 +263,29 @@ declare module 'html-tag-js/reactive' {
 
 declare namespace JSX {
   interface IntrinsicElements {
-    "audio": HTMLAudioElementAttributes;
-    "a": HTMLAnchorElementAttributes;
-    "button": HTMLButtonElementAttributes;
-    "canvas": HTMLCanvasElementAttributes;
-    "embed": HTMLEmbedElementAttributes;
-    "form": HTMLFormElementAttributes;
-    "iframe": HTMLIFrameElementAttributes;
-    "img": HTMLImageElementAttributes;
-    "input": HTMLInputElementAttributes;
-    "li": HTMLListElementAttributes;
-    "link": HTMLLinkElementAttributes;
-    "meta": HTMLMetaElementAttributes;
-    "textarea": HTMLTextAreaElementAttributes;
-    "script": HTMLScriptElementAttributes;
-    "style": HTMLStyleElementAttributes;
-    "select": HTMLSelectElementAttributes;
-    "source": HTMLSourceElementAttributes;
-    "td": HTMLTableCellElementAttributes;
-    "video": HTMLVideoElementAttributes;
+    audio: HTMLAudioElementAttributes;
+    a: HTMLAnchorElementAttributes;
+    button: HTMLButtonElementAttributes;
+    canvas: HTMLCanvasElementAttributes;
+    embed: HTMLEmbedElementAttributes;
+    form: HTMLFormElementAttributes;
+    iframe: HTMLIFrameElementAttributes;
+    img: HTMLImageElementAttributes;
+    input: HTMLInputElementAttributes;
+    li: HTMLListElementAttributes;
+    link: HTMLLinkElementAttributes;
+    meta: HTMLMetaElementAttributes;
+    textarea: HTMLTextAreaElementAttributes;
+    script: HTMLScriptElementAttributes;
+    style: HTMLStyleElementAttributes;
+    select: HTMLSelectElementAttributes;
+    source: HTMLSourceElementAttributes;
+    td: HTMLTableCellElementAttributes;
+    video: HTMLVideoElementAttributes;
     [name: string]: HTMLElementAttributes;
   }
 
   type Element = HTMLElement;
 }
 
-declare const tag: typeof import('html-tag-js').default;
+declare const tag: typeof import("html-tag-js").default;

@@ -1,223 +1,257 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test 'html-tag-js'</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Test 'html-tag-js'</title>
+    <script src="../dist/polyfill.js"></script>
+    <script src="../dist/ref.js"></script>
+    <script src="../dist/tag.js"></script>
+    <script src="../dist/reactive.js"></script>
+  </head>
 
-  <script src="../dist/polyfill.js"></script>
-  <script src="../dist/ref.js"></script>
-  <script src="../dist/tag.js"></script>
-  <script src="../dist/reactive.js"></script>
-</head>
-
-<body>
-  <h1>HTML-TAG-JS</h1>
-  <p>This is a test page for the 'html-tag-js' library.</p>
-  <ul>
-    <li><a href="counter.html">counter.html</a></li>
-    <li><a href="example.html">example.html</a></li>
-    <li><a href="svg.html">svg.html</a></li>
-  </ul>
-  <div id="app">
-    <div id="dynamic" style="background-color: green;">
-      <div>Dynamic content loading...</div>
+  <body>
+    <h1>HTML-TAG-JS</h1>
+    <p>This is a test page for the 'html-tag-js' library.</p>
+    <ul>
+      <li><a href="counter.html">counter.html</a></li>
+      <li><a href="example.html">example.html</a></li>
+      <li><a href="svg.html">svg.html</a></li>
+    </ul>
+    <div id="app">
+      <div id="dynamic" style="background-color: green">
+        <div>Dynamic content loading...</div>
+      </div>
     </div>
-  </div>
 
-  <script>
-    document.body.append(tag("label", null, 'icon-menu', ["icon-menu"], {
-      attr: {
-        "for": 'menu-toggler'
-      }
-    }));
+    <script>
+      document.body.append(
+        tag("label", null, "icon-menu", ["icon-menu"], {
+          attr: {
+            for: "menu-toggler",
+          },
+        }),
+      );
 
-    document.body.append(tag("button", "my-button", ["Click me"], {
-      "data-title": 'My Button',
-      onclick: function () {
-        console.log('Button clicked');
-      },
-    }))
+      document.body.append(
+        tag("button", "my-button", ["Click me"], {
+          "data-title": "My Button",
+          onclick: function () {
+            console.log("Button clicked");
+          },
+        }),
+      );
 
-    document.body.append(tag("img", undefined, {
-      src: "https://foxbiz.app/logo_text.png",
-      alt: "FoxBiz Logo",
-      style: { width: '100px', height: '100px' }
-    }))
-    document.body.append(tag("span", ['This is a span']));
-    document.body.append(tag("span", "my-class", ["This is a span with class"]));
-    document.body.append(tag("span", null, "my-id", ["This is a span with id"]));
-    document.body.append(tag("span", null, "my-id2", {
-      style: { height: '100px', width: '100px', backgroundColor: 'red', display: 'block' },
-    }));
+      document.body.append(
+        tag("img", undefined, {
+          src: "https://foxbiz.app/logo_text.png",
+          alt: "FoxBiz Logo",
+          style: { width: "100px", height: "100px" },
+        }),
+      );
+      document.body.append(tag("span", ["This is a span"]));
+      document.body.append(
+        tag("span", "my-class", ["This is a span with class"]),
+      );
+      document.body.append(
+        tag("span", null, "my-id", ["This is a span with id"]),
+      );
+      document.body.append(
+        tag("span", null, "my-id2", {
+          style: {
+            height: "100px",
+            width: "100px",
+            backgroundColor: "red",
+            display: "block",
+          },
+        }),
+      );
 
-    const p = Ref(function () {
-      p.style.backgroundColor = 'yellow';
-      console.log(p);
-    });
+      const p = Ref(function () {
+        p.style.backgroundColor = "yellow";
+        console.log(p);
+      });
 
-    p.setAttribute('data', 'data');
-    p.content = new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([
-          tag('span', {
-            textContent: 'This is a span',
-            style: "color: blue; font-weight: bold;",
-          }),
-          tag('br'),
-          tag('span', {
-            textContent: 'This is another span',
-          }),
-        ]);
-      }, 1000);
-    });
-
-    console.log('p isRef:', Ref.isRef(p));
-
-    dynamic.content = [
-      (() => {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve([
-              tag('span', {
-                textContent: 'This is a span dynamic 1',
-              }),
-              tag('br'),
-              tag('span', {
-                textContent: 'This is a span dynamic 2',
-              }),
-              tag('br'),
-              tag('span', {
-                textContent: 'This is a span dynamic 3',
-              }),
-            ]);
-          }, 1000);
-        })
-      })(),
-    ]
-
-    p.style.display = 'block';
-    p.style.color = 'red';
-    p.style.width = '100px';
-    p.style.height = '100px';
-
-    app.append(
-      tag('button', {
-        textContent: 'This is a button',
-        onclick: function () {
-          p.textContent = 'The button was clicked';
-        },
-      }),
-      tag('p', {
-        ref: p,
-        textContent: 'This is a paragraph',
-        attr: {
-          data: undefined,
-        },
-        children: [
-          tag('span', {
-            textContent: 'This is a span',
-          }),
-          ['\nThis is a text'],
-          ['\nAnother text']
-        ]
-      }),
-      tag('span', {
-        children: [null, undefined, tag.text('This is a span'), tag('br')],
-      })
-    );
-
-    app.append(
-      tag('div', {
-        children: [
-          Promise.resolve([
-            tag('span', {
-              textContent: 'This is a span promise 1',
+      p.setAttribute("data", "data");
+      p.content = new Promise((resolve) => {
+        setTimeout(() => {
+          resolve([
+            tag("span", {
+              textContent: "This is a span",
+              style: "color: blue; font-weight: bold;",
             }),
-            tag('br'),
-            tag('span', {
-              textContent: 'This is a span promise 2',
+            tag("br"),
+            tag("span", {
+              textContent: "This is another span",
             }),
-            tag('br'),
-            tag('span', {
-              textContent: 'This is a span promise 3',
-            })
-          ])
-        ]
-      })
-    );
+          ]);
+        }, 1000);
+      });
 
-    app.append(
-      tag('div', {
-        children: [
-          Promise.resolve(
-            tag('span', {
-              textContent: 'This is a span promise 4',
-            })
-          )
-        ]
-      })
-    );
+      console.log("p isRef:", Ref.isRef(p));
 
-    app.append(
-      tag('div', {
-        children: [
-          [
-            tag('span', {
-              innerText: 'This is a span\n',
+      dynamic.content = [
+        (() => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve([
+                tag("span", {
+                  textContent: "This is a span dynamic 1",
+                }),
+                tag("br"),
+                tag("span", {
+                  textContent: "This is a span dynamic 2",
+                }),
+                tag("br"),
+                tag("span", {
+                  textContent: "This is a span dynamic 3",
+                }),
+              ]);
+            }, 1000);
+          });
+        })(),
+      ];
+
+      p.style.display = "block";
+      p.style.color = "red";
+      p.style.width = "100px";
+      p.style.height = "100px";
+
+      app.append(
+        tag("button", {
+          textContent: "This is a button",
+          onclick: function () {
+            p.textContent = "The button was clicked";
+          },
+        }),
+        tag("p", {
+          ref: p,
+          textContent: "This is a paragraph",
+          attr: {
+            data: undefined,
+          },
+          children: [
+            tag("span", {
+              textContent: "This is a span",
             }),
+            ["\nThis is a text"],
+            ["\nAnother text"],
+          ],
+        }),
+        tag("span", {
+          children: [null, undefined, tag.text("This is a span"), tag("br")],
+        }),
+      );
+
+      app.append(
+        tag("div", {
+          children: [
+            Promise.resolve([
+              tag("span", {
+                textContent: "This is a span promise 1",
+              }),
+              tag("br"),
+              tag("span", {
+                textContent: "This is a span promise 2",
+              }),
+              tag("br"),
+              tag("span", {
+                textContent: "This is a span promise 3",
+              }),
+            ]),
+          ],
+        }),
+      );
+
+      app.append(
+        tag("div", {
+          children: [
+            Promise.resolve(
+              tag("span", {
+                textContent: "This is a span promise 4",
+              }),
+            ),
+          ],
+        }),
+      );
+
+      app.append(
+        tag("div", {
+          children: [
             [
-              tag('span', {
-                innerText: 'This is a span\n',
+              tag("span", {
+                innerText: "This is a span\n",
               }),
-              ['This is a text'],
-              tag('br'),
-              ['Another text'],
+              [
+                tag("span", {
+                  innerText: "This is a span\n",
+                }),
+                ["This is a text"],
+                tag("br"),
+                ["Another text"],
+              ],
+              tag("br"),
+              ["This is a text"],
+              tag("br"),
+              ["Another text"],
             ],
-            tag('br'),
-            ['This is a text'],
-            tag('br'),
-            ['Another text']
-          ]
-        ]
-      })
-    );
+          ],
+        }),
+      );
 
-    const text = Reactive('This is a reactive text');
-    const count = Reactive(0);
+      const text = Reactive("This is a reactive text");
+      const count = Reactive(0);
 
-    console.log('text isReactive:', Reactive.isReactive(text));
-    console.log('count isReactive:', Reactive.isReactive(count));
+      console.log("text isReactive:", Reactive.isReactive(text));
+      console.log("count isReactive:", Reactive.isReactive(count));
 
-    app.append(
-      tag('hr'),
-      tag('p', {
-        children: [
-          tag('div', {
-            children: [
-              "You've clicked the button ",
-              count,
-              " times"
-            ]
-          }),
-          tag('br'),
-          tag('button', {
-            textContent: 'Click me',
-            onclick: function () {
-              count.value++;
-              text.value = 'The button was clicked';
-            }
-          })
-        ]
-      })
-    );
+      app.append(
+        tag("hr"),
+        tag("p", {
+          children: [
+            tag("div", {
+              children: ["You've clicked the button ", count, " times"],
+            }),
+            tag("br"),
+            tag("button", {
+              textContent: "Click me",
+              onclick: function () {
+                count.value++;
+                text.value = "The button was clicked";
+              },
+            }),
+          ],
+        }),
+      );
 
-    text.onChange = function (value) {
-      console.log(value);
-    };
-  </script>
-</body>
+      text.onChange = function (value) {
+        console.log(value);
+      };
 
+      const myRef = Ref();
+
+      document.body.append(
+        tag("div", {
+          ref: myRef,
+          children: [
+            tag("span", {
+              textContent: "This is a span",
+            }),
+            tag("br"),
+            tag("span", {
+              textContent: "This is another span",
+            }),
+          ],
+        }),
+      );
+
+      myRef.prepend(
+        tag("div", {
+          children: ["This is a div"],
+        }),
+      );
+    </script>
+  </body>
 </html>

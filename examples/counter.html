@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../dist/polyfill.js"></script>
+  <script src="../dist/reactive.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="count">0</div>
+  <button id="increment">Increment</button>
+
+  <script>
+    const counter = Reactive(0);
+    count.content = counter;
+
+    increment.onclick = () => {
+      console.log('Incrementing counter', counter.value);
+      counter.value++;
+    }
+  </script>
+</body>
+
+</html>

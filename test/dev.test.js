@@ -9,18 +9,18 @@ const config = {
   ],
 };
 
-test(`<alert.error />`, () => {
-  const code = `<alert.error />`;
-  const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`tag(alert.error);`);
-});
+test('Test JSX to Tag Transformation', () => {
+  const code = `
+const id = 'test';
+<div id={id} className="test-class" onClick={() => {}} onMouseOver={() => {}}>
+  <div className="inner"></div>  
+</div>
+`;
 
-test(`<svg xmlns:xlink="http://www.w3.org/1999/xlink"></svg>`, () => {
-  const code = `<svg xmlns:xlink="http://www.w3.org/1999/xlink"></svg>`;
   const transformed = babel.transformSync(code, config);
-  expect(transformed.code).toBe(`tag("svg", {
-  attr: {
-    "xmlns:xlink": "http://www.w3.org/1999/xlink"
-  }
+  expect(transformed.code).toBe(`const id = 'test';
+tag("div", "test-class", id, ["\\n  ", tag("div", "inner"), "  \\n"], {
+  onMouseOver: () => {},
+  onClick: () => {}
 });`);
 });

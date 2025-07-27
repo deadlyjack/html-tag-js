@@ -1,31 +1,81 @@
-const svgElements = ['svg', 'path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse', 'g', 'defs', 'use', 'symbol', 'text', 'tspan', 'textPath', 'marker', 'linearGradient', 'radialGradient'];
+const svgElements = [
+  "svg",
+  "path",
+  "circle",
+  "rect",
+  "line",
+  "polyline",
+  "polygon",
+  "ellipse",
+  "g",
+  "defs",
+  "use",
+  "symbol",
+  "text",
+  "tspan",
+  "textPath",
+  "marker",
+  "linearGradient",
+  "radialGradient",
+];
+
+/**
+ * @typedef {[tagName: string|function|Node, options:object, children: []]} tagArgs
+ * @typedef {[tagName: string|function|Node, className: string, id: string, children: [], options: object]} tagArgsOverload
+ * @typedef {[tagName: string|function|Node, className: string, options: object}]} tagArgsOverload2
+ * @typedef {[tagName: string|function|Node, className: string, children: []]} tagArgsOverload2
+ * @typedef {[tagName: string|function|Node, children: []]} tagArgsOverload2
+ * @typedef {[tagName: string|function|Node, children: [], options: object]} tagArgsOverload2
+ */
 
 /**
  * Creates an HTML element with the specified tag name, options, and children.
- * @param {string|function|Node} tagName 
- * @param {object} options 
- * @param {Array} children 
- * @returns 
+ * @param {tagArgs|tagArgsOverload} args
+ * @returns
  */
-export default function tag(tagName, options = {}, children = []) {
-  if (typeof options === 'string') {
-    options = {
-      innerHTML: options,
+export default function tag(...args) {
+  if (typeof args[1] === "string" || typeof args[2] === "string") {
+    const [tagName] = args;
+    const id = typeof args[2] === "string" ? args[2] : undefined;
+    const className = typeof args[1] === "string" ? args[1] : undefined;
+    const options =
+      args.find(
+        (arg) => arg && !Array.isArray(arg) && typeof arg === "object",
+      ) || {};
+    const children = args.find((arg) => Array.isArray(arg)) || [];
+
+    if (id) {
+      options.id = id;
     }
+
+    if (className) {
+      options.className = className;
+    }
+
+    return create(tagName, children, options);
   }
-  return create(tagName, options, children);
+
+  args = args.filter((arg) => arg !== undefined && arg !== null);
+
+  if (Array.isArray(args[1])) {
+    const [tagName, children = [], options = {}] = args;
+    return create(tagName, children, options);
+  }
+
+  const [tagName, options = {}, children = []] = args;
+  return create(tagName, children, options);
 }
 
 /**
  * Creates an HTML element with the specified tag name, options, and children.
  *
  * @param {string|function|Node} tagName - The tag name of the element to create. It can be a string, a function, or a Node object.
- * @param {Object} [options={}] - The options for the element.
  * @param {Array} [children=[]] - The children of the element.
+ * @param {Object} [options={}] - The options for the element.
  * @returns {Node} The created HTML element.
  * @throws {Error} If the tag name is invalid.
  */
-function create(tagName, options = {}, children = []) {
+function create(tagName, children = [], options = {}) {
   let $el;
 
   if (Array.isArray(options)) {
@@ -33,11 +83,11 @@ function create(tagName, options = {}, children = []) {
     options = {};
   }
 
-  if (typeof tagName === 'function') {
+  if (typeof tagName === "function") {
     return tagName(options, children);
   } else if (tagName instanceof Node) {
     $el = tagName;
-  } else if (typeof tagName === 'string') {
+  } else if (typeof tagName === "string") {
     if (svgElements.includes(tagName)) {
       $el = document.createElementNS("http://www.w3.org/2000/svg", tagName);
     } else {
@@ -59,18 +109,18 @@ function create(tagName, options = {}, children = []) {
     if (option === undefined) return;
 
     switch (prop) {
-      case 'child':
+      case "child":
         addChildren($el, [option]);
         break;
 
-      case 'children':
+      case "children":
         if (!Array.isArray(option)) {
-          throw new Error('children must be an array of Nodes');
+          throw new Error("children must be an array of Nodes");
         }
         addChildren($el, option.flat());
         break;
 
-      case 'attr':
+      case "attr":
         Object.keys(option).forEach((attr) => {
           const value = option[attr];
           if (value === undefined) return;
@@ -78,16 +128,27 @@ function create(tagName, options = {}, children = []) {
         });
         break;
 
-      case 'style':
-      case 'dataset':
-        Object.keys(option).forEach((key) => {
-          const value = option[key];
-          if (value === undefined) return;
-          $el[prop][key] = value;
-        });
+      case "style":
+        if (typeof option === "string") {
+          $el.setAttribute("style", option);
+        } else {
+          Object.keys(option).forEach((key) => {
+            const value = option[key];
+            if (value === undefined) return;
+            $el.style[key] = value;
+          });
+        }
         break;
 
-      case 'on':
+      case "dataset":
+        for (const key in option) {
+          const value = option[key];
+          if (value === undefined) return;
+          $el.dataset[key] = value;
+        }
+        break;
+
+      case "on":
         Object.keys(option).forEach((event) => {
           const handlers = option[event];
           if (handlers === undefined) return;
@@ -95,11 +156,14 @@ function create(tagName, options = {}, children = []) {
             $el.addEventListener(event, handler);
           });
         });
-
         break;
 
       default:
-        if (svgElements.includes(tagName) && ['number', 'string', 'bigint'].includes(typeof option)) {
+        if (
+          (svgElements.includes(tagName) &&
+            ["number", "string", "bigint"].includes(typeof option)) ||
+          /-/.test(prop)
+        ) {
           $el.setAttribute(prop, option);
         } else {
           $el[prop] = option;
@@ -117,8 +181,8 @@ function create(tagName, options = {}, children = []) {
 
 /**
  * Add children to an element
- * @param {HTMLElement} $el 
- * @param {Array<HTMLElement|Promise>} children 
+ * @param {HTMLElement} $el
+ * @param {Array<HTMLElement|Promise>} children
  */
 export function addChildren($el, children) {
   for (let child of children) {
@@ -136,17 +200,17 @@ export function addChildren($el, children) {
 
 /**
  * Processes a given child element and returns a valid DOM Node.
- * 
+ *
  * @param {any} child - The child element to process. It can be of various types including function, Node, string, number, bigint, symbol, undefined, or Promise.
  * @returns {Node|null} - Returns a valid DOM Node or null if the child cannot be processed.
  */
 function getChild(child) {
-  if (typeof child === 'function') {
+  if (typeof child === "function") {
     return getChild(child());
   }
 
   if (child instanceof Promise) {
-    const $placeholder = document.createTextNode('');
+    const $placeholder = document.createTextNode("");
     child.then((child) => {
       if (Array.isArray(child)) {
         child = child.flat();
@@ -169,13 +233,13 @@ function getChild(child) {
     });
     child = $placeholder;
   } else if (child instanceof Text) {
-    if ('clone' in child) {
+    if ("clone" in child) {
       child = child.clone();
     }
   } else if (!(child instanceof Node)) {
     const type = typeof child;
-    if (!['number', 'bigint', 'string'].includes(type)) return null;
-    if (type === 'string' && !child) return null;
+    if (!["number", "bigint", "string"].includes(type)) return null;
+    if (type === "string" && !child) return null;
     child = tag.text(`${child}`);
   }
 
@@ -201,6 +265,6 @@ Object.defineProperties(tag, {
   text: {
     value(text) {
       return document.createTextNode(text);
-    }
+    },
   },
 });

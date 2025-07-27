@@ -380,12 +380,12 @@ class RefClass {
       this.#content = value;
       return;
     }
+
     this.innerHTML = '';
-    if (Array.isArray(value)) {
-      addChildren(this.#el, value);
-    } else {
-      this.#el.append(value);
+    if (!Array.isArray(value)) {
+      value = [value];
     }
+    addChildren(this.#el, value);
   }
 
   /**

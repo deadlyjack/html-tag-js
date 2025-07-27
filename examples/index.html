@@ -15,6 +15,12 @@
 
 <body>
   <h1>HTML-TAG-JS</h1>
+  <p>This is a test page for the 'html-tag-js' library.</p>
+  <ul>
+    <li><a href="counter.html">counter.html</a></li>
+    <li><a href="example.html">example.html</a></li>
+    <li><a href="svg.html">svg.html</a></li>
+  </ul>
   <div id="app">
     <div id="dynamic" style="background-color: green;">
       <div>Dynamic content loading...</div>
@@ -22,13 +28,51 @@
   </div>
 
   <script>
+    document.body.append(tag("label", null, 'icon-menu', ["icon-menu"], {
+      attr: {
+        "for": 'menu-toggler'
+      }
+    }));
+
+    document.body.append(tag("button", "my-button", ["Click me"], {
+      "data-title": 'My Button',
+      onclick: function () {
+        console.log('Button clicked');
+      },
+    }))
+
+    document.body.append(tag("img", undefined, {
+      src: "https://foxbiz.app/logo_text.png",
+      alt: "FoxBiz Logo",
+      style: { width: '100px', height: '100px' }
+    }))
+    document.body.append(tag("span", ['This is a span']));
+    document.body.append(tag("span", "my-class", ["This is a span with class"]));
+    document.body.append(tag("span", null, "my-id", ["This is a span with id"]));
+    document.body.append(tag("span", null, "my-id2", {
+      style: { height: '100px', width: '100px', backgroundColor: 'red', display: 'block' },
+    }));
+
     const p = Ref(function () {
       p.style.backgroundColor = 'yellow';
       console.log(p);
     });
 
     p.setAttribute('data', 'data');
-    p.content = 'This is a paragraph content';
+    p.content = new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([
+          tag('span', {
+            textContent: 'This is a span',
+            style: "color: blue; font-weight: bold;",
+          }),
+          tag('br'),
+          tag('span', {
+            textContent: 'This is another span',
+          }),
+        ]);
+      }, 1000);
+    });
 
     console.log('p isRef:', Ref.isRef(p));
 

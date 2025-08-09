@@ -1,7 +1,9 @@
+const { rmdirSync } = require('fs');
 const path = require('path');
 
 module.exports = (webpack, options) => {
   const { mode = 'development' } = options;
+  rmdirSync(path.resolve(__dirname, 'dist'), { recursive: true, force: true });
   return [{
     context: __dirname,
     mode,
